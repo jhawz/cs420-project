@@ -7,7 +7,7 @@
 #include <sfml/Graphics.hpp>
 #include <vector>
 
-class Animation:public sf::Sprite{
+class Animation{
 public:
     Animation();
     void setAnimationPeriod(int minisec);
