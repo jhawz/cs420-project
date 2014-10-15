@@ -1,6 +1,7 @@
 #include "Animation.h"
 
 Animation::Animation(){
+    repeatable=true;
     curFrame=0;
     period=sf::milliseconds(100);
     frameCount=0;
