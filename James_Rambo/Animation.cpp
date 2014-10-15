@@ -14,7 +14,6 @@ void Animation::setAnimationPeriod(int minisec){
 
 void Animation::addFrame(sf::IntRect frame){
     m_frames.push_back(frame);
-    setTextureRect(m_frames[curFrame]);
     frameCount++;
 }
 
