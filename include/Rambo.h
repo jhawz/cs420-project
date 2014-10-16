@@ -3,10 +3,10 @@
 
 #include <cstdio>
 #include <iostream>
-#include <sfml/Graphics.hpp>
+#include <SFML/Graphics.hpp>
 #include "Animation.h"
 
-class Rambo:public sf::Sprite{
+class Rambo : public sf::Sprite {
 public:
     Rambo();
     ~Rambo();
@@ -16,12 +16,12 @@ public:
     void leftRun();
     void standStill();
     void jump();
-    
+
 private:
     bool rightdir;
     bool running;
-    float vx,vy,vxmax,vymax,vxmin,vymin;
-    float ax,ay;
+    float vx, vy, vxmax, vymax, vxmin, vymin;
+    float ax, ay;
     Animation *curAnim;
     Animation *run;
     Animation *stand;

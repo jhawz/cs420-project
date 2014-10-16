@@ -3,11 +3,11 @@
 
 #include <cstdio>
 #include <iostream>
-#include <sfml/System/Time.hpp>
-#include <sfml/Graphics.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics.hpp>
 #include <vector>
 
-class Animation{
+class Animation {
 public:
     Animation();
     void setAnimationPeriod(int minisec);
@@ -18,7 +18,7 @@ public:
     bool isEnded();
     bool play();
     sf::IntRect getCurFrame();
-    
+
 private:
     std::vector<sf::IntRect> m_frames;
     bool repeatable;
