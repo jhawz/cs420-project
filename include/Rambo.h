@@ -20,11 +20,13 @@ public:
 private:
     bool rightdir;
     bool running;
+    bool shortJumping;
     float vx, vy, vxmax, vymax, vxmin, vymin;
     float ax, ay;
     Animation *curAnim;
     Animation *run;
     Animation *stand;
+    Animation *shortJump;
 };
 
 #endif /* defined(__Rambo__) */

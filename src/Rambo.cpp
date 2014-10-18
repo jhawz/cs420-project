@@ -3,6 +3,7 @@
 Rambo::Rambo() {
     run = new Animation();
     stand = new Animation();
+    shortJump = new Animation();
     curAnim = stand;
     curAnim->restart();
     rightdir = true;
@@ -11,6 +12,7 @@ Rambo::Rambo() {
 Rambo::~Rambo() {
     delete run;
     delete stand;
+    delete shortJump;
 }
 
 void Rambo::rightRun() {
@@ -65,6 +67,9 @@ void Rambo::prepareFrameInfo() {
     run->addFrame(sf::IntRect(230, 221, 25, 42));
     run->setAnimationPeriod(40);
     stand->addFrame(sf::IntRect(12, 36, 25, 42));
+    shortJump->addFrame(sf::IntRect(19, 319, 20, 28));
+    shortJump->addFrame(sf::IntRect(46, 300, 26, 46));
+    shortJump->addFrame(sf::IntRect(83, 295, 17, 51));
 }
 
 void Rambo::update() {
@@ -75,6 +80,12 @@ void Rambo::update() {
         if (rightdir) {
             vx = 8;
         } else vx = -8;
+    }
+    if (!shortJumping) {
+        vy = 0;
+    } 
+    else {
+        vy = -4;
     }
     /*if (vx<vxmax&&vx>vxmin) {
         vx+=ax;
@@ -100,4 +111,10 @@ void Rambo::jump() {
     vymax=16;
     vymin=-16;
     ay=0.5;*/
+    if (curAnim != shortJump) {
+        curAnim->end();
+        curAnim = shortJump;
+        shortJumping = true;
+    }
+    if (curAnim->isEnded())curAnim->restart();
 }

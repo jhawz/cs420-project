@@ -43,11 +43,11 @@ int main(int argc, char** argv) {
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             rambo.rightRun();
-        }
-        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             rambo.leftRun();
-        }
-        else {
+        } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            rambo.jump();
+        } else {
             rambo.standStill();
         }
         //rambo.update should appear here instead;
