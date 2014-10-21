@@ -1,48 +1,61 @@
-#include "Rambo.h"
 
-Rambo::Rambo() {
+#include "Enemy.h"
+
+Enemy::Enemy() {
     run = new Animation();
     stand = new Animation();
-    shortJump = new Animation();
     curAnim = stand;
     curAnim->restart();
     rightdir = true;
+    alive = true;
+    attack = true;
 }
 
-Rambo::~Rambo() {
+Enemy::~Enemy() {
     delete run;
     delete stand;
-    delete shortJump;
 }
 
-void Rambo::rightRun() {
+bool Enemy::isAlive() {
+    return alive;
+}
+
+bool Enemy::isAttacking() {
+    return attack;
+}
+
+void Enemy::setAttack(bool x) {
+    attack = x;
+}
+
+void Enemy::rightRun() {
     if (!rightdir) {
         rightdir = true;
-        setScale(1, 1);
-    }
-    if (curAnim != run) {
-        curAnim->end();
-        curAnim = run;
-    }
-
-    if (curAnim->isEnded())curAnim->restart();
-    running = true;
-}
-
-void Rambo::leftRun() {
-    if (rightdir) {
-        rightdir = false;
         setScale(-1, 1);
     }
     if (curAnim != run) {
         curAnim->end();
         curAnim = run;
     }
+
     if (curAnim->isEnded())curAnim->restart();
     running = true;
 }
 
-void Rambo::standStill() {
+void Enemy::leftRun() {
+    if (rightdir) {
+        rightdir = false;
+        setScale(1, 1);
+    }
+    if (curAnim != run) {
+        curAnim->end();
+        curAnim = run;
+    }
+    if (curAnim->isEnded())curAnim->restart();
+    running = true;
+}
+
+void Enemy::standStill() {
     if (curAnim != stand) {
         curAnim->end();
         curAnim = stand;
@@ -56,23 +69,20 @@ void Rambo::standStill() {
     //ax=0;ay=0;
 }
 
-void Rambo::prepareFrameInfo() {
-    run->addFrame(sf::IntRect(14, 86, 25, 42));
-    run->addFrame(sf::IntRect(44, 86, 25, 42));
-    run->addFrame(sf::IntRect(74, 86, 25, 42));
-    run->addFrame(sf::IntRect(115, 86, 25, 42));
-    run->addFrame(sf::IntRect(148, 86, 25, 42));
-    run->addFrame(sf::IntRect(174, 86, 25, 42));
-    run->addFrame(sf::IntRect(205, 86, 25, 42));
-    run->addFrame(sf::IntRect(245, 86, 25, 42));
+void Enemy::setPistol() {
+    run->addFrame(sf::IntRect(11, 597, 30, 43));
+    run->addFrame(sf::IntRect(49, 597, 30, 43));
+    run->addFrame(sf::IntRect(84, 597, 30, 43));
+    run->addFrame(sf::IntRect(113, 597, 30, 43));
+    run->addFrame(sf::IntRect(144, 597, 30, 43));
+    run->addFrame(sf::IntRect(180, 597, 30, 43));
+    run->addFrame(sf::IntRect(215, 597, 30, 43));
+    run->addFrame(sf::IntRect(244, 597, 30, 43));
     run->setAnimationPeriod(40);
-    stand->addFrame(sf::IntRect(10, 23, 25, 42));
-    shortJump->addFrame(sf::IntRect(19, 319, 20, 28));
-    shortJump->addFrame(sf::IntRect(46, 300, 26, 46));
-    shortJump->addFrame(sf::IntRect(83, 295, 17, 51));
+    stand->addFrame(sf::IntRect(300, 597, 30, 43));
 }
 
-void Rambo::update() {
+void Enemy::update() {
     if (curAnim->play()) {
         setTextureRect(curAnim->getCurFrame());
     }
@@ -80,12 +90,6 @@ void Rambo::update() {
         if (rightdir) {
             vx = 8;
         } else vx = -8;
-    }
-    if (!shortJumping) {
-        vy = 0;
-    } 
-    else {
-        vy = -4;
     }
     /*if (vx<vxmax&&vx>vxmin) {
         vx+=ax;
@@ -103,18 +107,4 @@ void Rambo::update() {
     }*/
 
     move(vx, vy);
-}
-
-void Rambo::jump() {
-    /*running=false;
-    vy=-15.99;
-    vymax=16;
-    vymin=-16;
-    ay=0.5;*/
-    if (curAnim != shortJump) {
-        curAnim->end();
-        curAnim = shortJump;
-        shortJumping = true;
-    }
-    if (curAnim->isEnded())curAnim->restart();
 }

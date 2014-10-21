@@ -2,15 +2,16 @@
 #include <SFML/System/Time.hpp>
 #include <iostream>
 #include "Rambo.h"
+#include "Enemy.h"
 #include "Animation.h"
 
 int main(int argc, char** argv) {
     sf::Clock clock;
     sf::Time period = sf::milliseconds(20);
     // create main window
-    sf::RenderWindow GameWindow(sf::VideoMode(1024, 768, 32), "Hello World - SFML");
+    sf::RenderWindow GameWindow(sf::VideoMode(800, 600, 32), "Hello World - SFML");
     sf::Image image;
-    if (!image.loadFromFile("sprites/bond_sheet.png")) {
+    if (!image.loadFromFile("sprites/SpriteSheet.png")) {
         std::cout << "Error loading texture image" << std::endl;
         return 1;
     }
@@ -26,6 +27,11 @@ int main(int argc, char** argv) {
     rambo.setTexture(texture);
     rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
     rambo.setPosition(0, 400);
+
+    Enemy enemy_1;
+    enemy_1.setTexture(texture);
+    enemy_1.setPistol();
+    enemy_1.setPosition(800, 400);
 
     // start main loop
     while (GameWindow.isOpen()) {
@@ -50,17 +56,37 @@ int main(int argc, char** argv) {
         } else {
             rambo.standStill();
         }
+
+        if (enemy_1.isAlive()) {
+            if (enemy_1.getPosition().x >= rambo.getPosition().x + 100
+                    && enemy_1.isAttacking() == true) {
+                enemy_1.leftRun();
+            } 
+            if (enemy_1.getPosition().x < rambo.getPosition().x + 100
+                    && enemy_1.isAttacking() == true) {
+                std::cout << "retreat" << std::endl;
+                enemy_1.setAttack(false);
+            } 
+            if (enemy_1.getPosition().x <= rambo.getPosition().x + 600
+                    && enemy_1.isAttacking() == false) {
+                enemy_1.rightRun();
+            }
+            if (enemy_1.getPosition().x > rambo.getPosition().x + 600
+                    && enemy_1.isAttacking() == false) {
+                enemy_1.setAttack(true);
+            }
+        }
+
         //rambo.update should appear here instead;
         rambo.update();
+        enemy_1.update();
 
         // clear screen and fill with blue
         GameWindow.clear(sf::Color::White);
 
-        //The following method should be removed because this is not the right place for it to appear.
-        /*
-        rambo.prepareFrameInfo();
-         */
+
         GameWindow.draw(rambo);
+        GameWindow.draw(enemy_1);
         // display
         GameWindow.display();
         sf::Time elapsed = clock.getElapsedTime();
