@@ -1,130 +1,343 @@
 #include "Rambo.h"
 
-Rambo::Rambo() {
-    run = new Animation();
-    stand = new Animation();
-    shortJump = new Animation();
-    curAnim = stand;
+Rambo::Rambo(){
+    alive=true;
+    run=new Animation();
+    stand=new Animation();
+    straightShoot=new Animation();
+    upShoot=new Animation();
+    downShoot=new Animation();
+    jumpPrepare=new Animation();
+    jumpUp=new Animation();
+    jumpFloat=new Animation();
+    jumpFall=new Animation();
+    crouch=new Animation();
+    crouchShoot=new Animation();
+    die=new Animation();
+    curAnim=stand;
     curAnim->restart();
-    rightdir = true;
+    rightdir=true;
+    shootlocked=false;
+    ax=0;ay=0;
 }
 
-Rambo::~Rambo() {
+Rambo::~Rambo(){
     delete run;
     delete stand;
-    delete shortJump;
 }
 
-void Rambo::rightRun() {
+void Rambo::setOriginalImg(sf::Image &image){
+    imgOrigin=&image;
+}
+
+bool Rambo::isAlive(){
+    return alive;
+}
+
+void Rambo::rightRun(){
+    if (jumping)return;
+    if (!alive)return;
     if (!rightdir) {
-        rightdir = true;
+        rightdir=true;
         setScale(1, 1);
     }
-    if (curAnim != run) {
+    if (curAnim!=run) {
         curAnim->end();
-        curAnim = run;
+        curAnim=run;
     }
-
-    if (curAnim->isEnded())curAnim->restart();
-    running = true;
+    
+    if(curAnim->isEnded())curAnim->restart();
+    running=true;
 }
 
-void Rambo::leftRun() {
+void Rambo::leftRun(){
+    if (jumping)return;
+    if (!alive)return;
     if (rightdir) {
-        rightdir = false;
-        setScale(-1, 1);
+        rightdir=false;
+        setScale(-1,1);
     }
-    if (curAnim != run) {
+    if (curAnim!=run) {
         curAnim->end();
-        curAnim = run;
+        curAnim=run;
     }
-    if (curAnim->isEnded())curAnim->restart();
-    running = true;
+    if(curAnim->isEnded())curAnim->restart();
+    running=true;
 }
 
-void Rambo::standStill() {
-    if (curAnim != stand) {
+void Rambo::standStill(){
+    if (jumping)return;
+    if (!alive)return;
+    if (curAnim!=stand) {
         curAnim->end();
-        curAnim = stand;
+        curAnim=stand;
     }
     curAnim->restart();
-    running = false;
-    vx = 0;
-    vy = 0;
+    running=false;
+    vx=0;vy=0;
+    ax=0;ay=0;
     //vxmax=0;vymax=0;
     //vxmin=0;vymin=0;
     //ax=0;ay=0;
 }
 
-void Rambo::prepareBondFrameInfo() {
-    run->addFrame(sf::IntRect(14, 86, 25, 42));
-    run->addFrame(sf::IntRect(44, 86, 25, 42));
-    run->addFrame(sf::IntRect(74, 86, 25, 42));
-    run->addFrame(sf::IntRect(115, 86, 25, 42));
-    run->addFrame(sf::IntRect(148, 86, 25, 42));
-    run->addFrame(sf::IntRect(174, 86, 25, 42));
-    run->addFrame(sf::IntRect(205, 86, 25, 42));
-    run->addFrame(sf::IntRect(245, 86, 25, 42));
-    run->setAnimationPeriod(40);
-    stand->addFrame(sf::IntRect(10, 23, 25, 42));
-    shortJump->addFrame(sf::IntRect(19, 319, 20, 28));
-    shortJump->addFrame(sf::IntRect(46, 300, 26, 46));
-    shortJump->addFrame(sf::IntRect(83, 295, 17, 51));
+void Rambo::shoot(){
+    if (jumping)return;
+    if (!alive)return;
+    /*if (shootlocked){
+        if (curAnim==straightShoot) {
+            curAnim->end();
+        }
+        return;
+    }*/
+    curAnim->end();
+    curAnim=straightShoot;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
+    }
+    running=false;
 }
 
-void Rambo::prepareRamboFrameInfo() {
-    run->addFrame(sf::IntRect(11, 987, 25, 42));
-    run->addFrame(sf::IntRect(46, 987, 25, 42));
-    run->addFrame(sf::IntRect(74, 987, 25, 42));
-    run->addFrame(sf::IntRect(109, 987, 25, 42));
-    run->addFrame(sf::IntRect(145, 987, 25, 42));
-    run->setAnimationPeriod(40);
-    stand->addFrame(sf::IntRect(239, 990, 25, 42));
+void Rambo::upshoot(){
+    if (jumping)return;
+    if (!alive)return;
+    /*if (shootlocked){
+        if (curAnim==upShoot) {
+            curAnim->end();
+        }
+        return;
+    }*/
+    curAnim->end();
+    curAnim=upShoot;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
+    }
+    running=false;
 }
 
-void Rambo::update() {
+void Rambo::downshoot(){
+    if (jumping)return;
+    if (!alive)return;
+    /*if (shootlocked){
+        if (curAnim==downShoot) {
+            curAnim->end();
+        }
+        return;
+    }*/
+    curAnim->end();
+    curAnim=downShoot;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
+    }
+    running=false;
+}
+
+void Rambo::crouchStill(){
+    if (!alive)return;
+    curAnim->end();
+    curAnim=crouch;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
+    }
+    running=false;
+}
+
+void Rambo::crouchshoot(){
+    if (!alive)return;
+    curAnim->end();
+    curAnim=crouchShoot;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
+    }
+    running=false;
+}
+
+void Rambo::shotDead(){
+    if (!alive)return;
+    if(curAnim!=die)curAnim->end();
+    curAnim=die;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
+    }
+    alive=false;
+}
+
+void Rambo::prepareFrameInfo(){
+    run->addFrame(sf::IntRect(8,129,25,-42));
+    run->addFrame(sf::IntRect(38,129,25,-42));
+    run->addFrame(sf::IntRect(70,129,25,-42));
+    run->addFrame(sf::IntRect(103,129,25,-42));
+    run->addFrame(sf::IntRect(134,129,25,-42));
+    run->addFrame(sf::IntRect(166,129,25,-42));
+    run->addFrame(sf::IntRect(199,129,25,-42));
+    run->addFrame(sf::IntRect(231,129,25,-42));
+    run->setAnimationPeriod(40);
+    straightShoot->addFrame(sf::IntRect(2,323,30,-42));
+    straightShoot->addFrame(sf::IntRect(34,323,30,-42));
+    straightShoot->addFrame(sf::IntRect(65,323,30,-42));
+    straightShoot->addFrame(sf::IntRect(101,323,30,-42));
+    straightShoot->addFrame(sf::IntRect(130,323,30,-42));
+    straightShoot->setRepeatable(false);
+    straightShoot->setAnimationPeriod(40);
+    upShoot->addFrame(sf::IntRect(193,323,31,-50));
+    upShoot->addFrame(sf::IntRect(226,323,31,-50));
+    upShoot->addFrame(sf::IntRect(257,323,31,-50));
+    upShoot->addFrame(sf::IntRect(293,323,31,-50));
+    upShoot->addFrame(sf::IntRect(321,323,31,-50));
+    upShoot->setAnimationPeriod(40);
+    upShoot->setRepeatable(false);
+    downShoot->addFrame(sf::IntRect(385,323,31,-42));
+    downShoot->addFrame(sf::IntRect(418,323,31,-42));
+    downShoot->addFrame(sf::IntRect(449,323,31,-42));
+    downShoot->addFrame(sf::IntRect(484,323,31,-42));
+    downShoot->addFrame(sf::IntRect(513,323,31,-42));
+    downShoot->setAnimationPeriod(40);
+    downShoot->setRepeatable(false);
+    stand->addFrame(sf::IntRect(6,64,25,-42));
+    stand->setRepeatable(true);
+    jumpPrepare->addFrame(sf::IntRect(582,64,25,-55));
+    jumpPrepare->addFrame(sf::IntRect(582,64,25,-55));
+    jumpPrepare->addFrame(sf::IntRect(582,64,25,-55));
+    jumpPrepare->addFrame(sf::IntRect(582,64,25,-55));
+    jumpUp->addFrame(sf::IntRect(614,64,25,-55));
+    jumpFloat->addFrame(sf::IntRect(646,64,25,-55));
+    jumpFall->addFrame(sf::IntRect(775,129,25,-42));
+    jumpPrepare->setAnimationPeriod(80);
+    jumpPrepare->setRepeatable(false);
+    jumpUp->setRepeatable(true);
+    jumpFloat->setRepeatable(true);
+    jumpFall->setRepeatable(true);
+    crouch->addFrame(sf::IntRect(38,64,25,-42));
+    crouchShoot->addFrame(sf::IntRect(582,323,25,-42));
+    crouchShoot->addFrame(sf::IntRect(615,323,25,-42));
+    crouchShoot->addFrame(sf::IntRect(646,323,25,-42));
+    crouchShoot->addFrame(sf::IntRect(683,323,25,-42));
+    crouchShoot->addFrame(sf::IntRect(717,323,25,-42));
+    crouchShoot->addFrame(sf::IntRect(745,323,25,-42));
+    crouchShoot->setAnimationPeriod(40);
+    crouchShoot->setRepeatable(false);
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(2,194,30,-42));
+    die->addFrame(sf::IntRect(38,194,30,-42));
+    die->addFrame(sf::IntRect(38,194,30,-42));
+    die->addFrame(sf::IntRect(38,194,30,-42));
+    die->addFrame(sf::IntRect(38,194,30,-42));
+    die->addFrame(sf::IntRect(38,194,30,-42));
+    die->addFrame(sf::IntRect(38,194,30,-42));
+    die->addFrame(sf::IntRect(68,194,30,-42));
+    die->addFrame(sf::IntRect(100,194,30,-42));
+    die->setAnimationPeriod(100);
+    die->setRepeatable(false);
+}
+
+
+void Rambo::update(){
     if (curAnim->play()) {
         setTextureRect(curAnim->getCurFrame());
+        lowerBound=getLowBound();
+    }
+    else if (!shootlocked){
+        if (curAnim==straightShoot||curAnim==upShoot||curAnim==downShoot) {
+            clock.restart();
+            shootlocked=true;
+        }
+    }
+    if (shootlocked&&clock.getElapsedTime().asMilliseconds()>1000) {
+        //shootlocked=false;
     }
     if (running) {
         if (rightdir) {
-            vx = 8;
-        } else vx = -8;
+            vx=8;
+        }
+        else vx=-8;
     }
-    if (!shortJumping) {
-        vy = 0;
-    } 
-    else {
-        vy = -4;
-    }
-    /*if (vx<vxmax&&vx>vxmin) {
-        vx+=ax;
-    }
-    if (vx>=vxmax||vx<=vxmin) {
-        vx=0;
-    }
-    if (vy<vymax&&vy>vymin) {
-        vy+=ay;
-    }
-    if (vy>=vymax||vy<=vymin) {
-        vy=0;
-        vymin=0;
-        vymax=0;
-    }*/
-
+    
+    vx+=ax;
+    vy+=ay;
+    
     move(vx, vy);
+    
+    if (jumping) {
+        if (!lowCollide(450)) {
+            if (vy<8&&vy>-8){
+                if (curAnim!=jumpFloat) {
+                    curAnim->end();
+                    curAnim=jumpFloat;
+                    if (curAnim->isEnded())curAnim->restart();
+                }
+            }
+            else if(vy>8){
+                if (curAnim!=jumpFall) {
+                 curAnim->end();
+                 curAnim=jumpFall;
+                 if (curAnim->isEnded())curAnim->restart();
+                 }
+            }
+        }
+        else{
+            jumping=false;
+            standStill();
+        }
+    }
 }
 
-void Rambo::jump() {
-    /*running=false;
-    vy=-15.99;
-    vymax=16;
-    vymin=-16;
-    ay=0.5;*/
-    if (curAnim != shortJump) {
-        curAnim->end();
-        curAnim = shortJump;
-        shortJumping = true;
+void Rambo::jump(){
+    //running=false;
+    curAnim->end();
+    curAnim=jumpPrepare;
+    if (curAnim->isEnded()) {
+        curAnim->restart();
     }
-    if (curAnim->isEnded())curAnim->restart();
+    //while (!curAnim->isEnded());
+    vy=-15.99;
+    ay=0.5;
+    jumping=true;
+    if (curAnim!=jumpUp) {
+        curAnim->end();
+        curAnim=jumpUp;
+        if (curAnim->isEnded())curAnim->restart();
+    }
+    move(0, 1);
+}
+
+int Rambo::getLowBound(){
+    int upmost=curAnim->getCurFrame().top;
+    int lowermost=upmost+curAnim->getCurFrame().height-1;
+    int leftmost=curAnim->getCurFrame().left;
+    int rightmost=curAnim->getCurFrame().width+leftmost-1;
+    bool atMiddle;
+    for (int i=leftmost; i<=rightmost; i++) {
+        if (imgOrigin->getPixel(i, lowermost)!=sf::Color::White) {
+            return lowermost;
+        }
+    }
+    while (lowermost-upmost>=1) {
+        atMiddle=false;
+        int middle=(upmost+lowermost)/2;
+        for (int i=leftmost; i<=rightmost; i++) {
+            if (imgOrigin->getPixel(i, middle)!=sf::Color::White) {
+                atMiddle=true;
+                break;
+            }
+        }
+        if (atMiddle) {
+            upmost=middle;
+        } else {
+            lowermost=middle;
+        }
+    }
+    return lowermost;
+}
+
+bool Rambo::lowCollide(int ground){
+    float collideLine=getPosition().y+lowerBound;
+    if (collideLine>=ground-1) {
+        return true;
+    }
+    else return false;
 }
