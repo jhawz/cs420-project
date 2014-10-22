@@ -64,7 +64,6 @@ int main(int argc, char** argv) {
             } 
             if (enemy_1.getPosition().x < rambo.getPosition().x + 100
                     && enemy_1.isAttacking() == true) {
-                std::cout << "retreat" << std::endl;
                 enemy_1.setAttack(false);
             } 
             if (enemy_1.getPosition().x <= rambo.getPosition().x + 600
