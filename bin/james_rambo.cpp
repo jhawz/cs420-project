@@ -1,9 +1,19 @@
+/* 
+ * File:   james_rambo.cpp
+ * Author: jch
+ *
+ * Created on October 22, 2014, 2:45 PM
+ */
+
+using namespace std;
+
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
 #include <iostream>
 #include "Rambo.h"
 #include "Enemy.h"
 #include "Animation.h"
+#include <cstdlib>
 
 int main(int argc, char** argv) {
     sf::Clock clock;
@@ -61,11 +71,11 @@ int main(int argc, char** argv) {
             if (enemy_1.getPosition().x >= rambo.getPosition().x + 100
                     && enemy_1.isAttacking() == true) {
                 enemy_1.leftRun();
-            } 
+            }
             if (enemy_1.getPosition().x < rambo.getPosition().x + 100
                     && enemy_1.isAttacking() == true) {
                 enemy_1.setAttack(false);
-            } 
+            }
             if (enemy_1.getPosition().x <= rambo.getPosition().x + 600
                     && enemy_1.isAttacking() == false) {
                 enemy_1.rightRun();
