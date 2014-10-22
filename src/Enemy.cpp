@@ -70,16 +70,42 @@ void Enemy::standStill() {
 }
 
 void Enemy::setPistol() {
-    run->addFrame(sf::IntRect(11, 597, 30, 43));
-    run->addFrame(sf::IntRect(49, 597, 30, 43));
-    run->addFrame(sf::IntRect(84, 597, 30, 43));
-    run->addFrame(sf::IntRect(113, 597, 30, 43));
-    run->addFrame(sf::IntRect(144, 597, 30, 43));
-    run->addFrame(sf::IntRect(180, 597, 30, 43));
-    run->addFrame(sf::IntRect(215, 597, 30, 43));
-    run->addFrame(sf::IntRect(244, 597, 30, 43));
+    run->addFrame(sf::IntRect(11, 597, 25, 43));
+    run->addFrame(sf::IntRect(49, 597, 25, 43));
+    run->addFrame(sf::IntRect(83, 597, 25, 43));
+    run->addFrame(sf::IntRect(113, 597, 25, 43));
+    run->addFrame(sf::IntRect(144, 597, 25, 43));
+    run->addFrame(sf::IntRect(180, 597, 25, 43));
+    run->addFrame(sf::IntRect(215, 597, 25, 43));
+    run->addFrame(sf::IntRect(244, 597, 25, 43));
     run->setAnimationPeriod(40);
     stand->addFrame(sf::IntRect(300, 597, 30, 43));
+}
+
+void Enemy::setSmg() {
+    run->addFrame(sf::IntRect(538, 597, 25, 43));
+    run->addFrame(sf::IntRect(574, 597, 25, 43));
+    run->addFrame(sf::IntRect(608, 597, 25, 43));
+    run->addFrame(sf::IntRect(640, 597, 25, 43));
+    run->addFrame(sf::IntRect(671, 597, 25, 43));
+    run->addFrame(sf::IntRect(707, 597, 25, 43));
+    run->addFrame(sf::IntRect(739, 597, 25, 43));
+    run->addFrame(sf::IntRect(771, 597, 25, 43));
+    run->setAnimationPeriod(40);
+    stand->addFrame(sf::IntRect(0, 664, 30, 43));
+}
+
+void Enemy::setMachineGun() {
+    run->addFrame(sf::IntRect(238, 661, 25, 43));
+    run->addFrame(sf::IntRect(279, 661, 25, 43));
+    run->addFrame(sf::IntRect(313, 661, 20, 43));
+    run->addFrame(sf::IntRect(344, 661, 25, 43));
+    run->addFrame(sf::IntRect(371, 661, 25, 43));
+    run->addFrame(sf::IntRect(412, 661, 25, 43));
+    run->addFrame(sf::IntRect(445, 661, 25, 43));
+    run->addFrame(sf::IntRect(473, 661, 25, 43));
+    run->setAnimationPeriod(40);
+    stand->addFrame(sf::IntRect(538, 665, 30, 43));
 }
 
 void Enemy::update() {

@@ -19,29 +19,42 @@ int main(int argc, char** argv) {
     sf::Clock clock;
     sf::Time period = sf::milliseconds(20);
     // create main window
-    sf::RenderWindow GameWindow(sf::VideoMode(800, 600, 32), "Hello World - SFML");
+    sf::RenderWindow GameWindow(sf::VideoMode(800, 600, 32), "James Rambo: Will Finger's Revenge");
+
+    /*
     sf::Image image;
     if (!image.loadFromFile("sprites/SpriteSheet.png")) {
         std::cout << "Error loading texture image" << std::endl;
         return 1;
     }
     image.createMaskFromColor(image.getPixel(1, 1));
+     */
 
     sf::Texture texture;
-    if (!texture.loadFromImage(image)) {
+    if (!texture.loadFromFile("sprites/SpriteSheet.png")) {
         std::cout << "Error initializing the texture" << std::endl;
         std::cout << "" << std::endl;
     }
     texture.setSmooth(true);
     Rambo rambo;
     rambo.setTexture(texture);
-    rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
+    rambo.prepareRamboFrameInfo(); //In this method, it prepares for the frames needed by the animations.
     rambo.setPosition(0, 400);
 
     Enemy enemy_1;
     enemy_1.setTexture(texture);
     enemy_1.setPistol();
     enemy_1.setPosition(800, 400);
+
+    Enemy enemy_2;
+    enemy_2.setTexture(texture);
+    enemy_2.setSmg();
+    enemy_2.setPosition(740, 400);
+
+    Enemy enemy_3;
+    enemy_3.setTexture(texture);
+    enemy_3.setMachineGun();
+    enemy_3.setPosition(700, 400);
 
     // start main loop
     while (GameWindow.isOpen()) {
@@ -86,16 +99,56 @@ int main(int argc, char** argv) {
             }
         }
 
-        //rambo.update should appear here instead;
-        rambo.update();
-        enemy_1.update();
+        if (enemy_2.isAlive()) {
+            if (enemy_2.getPosition().x >= rambo.getPosition().x + 150
+                    && enemy_2.isAttacking() == true) {
+                enemy_2.leftRun();
+            }
+            if (enemy_2.getPosition().x < rambo.getPosition().x + 150
+                    && enemy_2.isAttacking() == true) {
+                enemy_2.setAttack(false);
+            }
+            if (enemy_2.getPosition().x <= rambo.getPosition().x + 600
+                    && enemy_2.isAttacking() == false) {
+                enemy_2.rightRun();
+            }
+            if (enemy_2.getPosition().x > rambo.getPosition().x + 600
+                    && enemy_2.isAttacking() == false) {
+                enemy_2.setAttack(true);
+            }
+        }
 
-        // clear screen and fill with blue
+        if (enemy_3.isAlive()) {
+            if (enemy_3.getPosition().x >= rambo.getPosition().x + 50
+                    && enemy_3.isAttacking() == true) {
+                enemy_3.leftRun();
+            }
+            if (enemy_3.getPosition().x < rambo.getPosition().x + 50
+                    && enemy_3.isAttacking() == true) {
+                enemy_3.setAttack(false);
+            }
+            if (enemy_3.getPosition().x <= rambo.getPosition().x + 600
+                    && enemy_3.isAttacking() == false) {
+                enemy_3.rightRun();
+            }
+            if (enemy_3.getPosition().x > rambo.getPosition().x + 600
+                    && enemy_3.isAttacking() == false) {
+                enemy_3.setAttack(true);
+            }
+        }
+
         GameWindow.clear(sf::Color::White);
 
-
+        //rambo.update should appear here instead;
+        rambo.update();
         GameWindow.draw(rambo);
+        enemy_1.update();
         GameWindow.draw(enemy_1);
+        enemy_2.update();
+        GameWindow.draw(enemy_2);
+        enemy_3.update();
+        GameWindow.draw(enemy_3);
+
         // display
         GameWindow.display();
         sf::Time elapsed = clock.getElapsedTime();

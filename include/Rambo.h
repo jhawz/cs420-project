@@ -10,7 +10,8 @@ class Rambo : public sf::Sprite {
 public:
     Rambo();
     ~Rambo();
-    void prepareFrameInfo();
+    void prepareRamboFrameInfo();
+    void prepareBondFrameInfo();
     void update();
     void rightRun();
     void leftRun();

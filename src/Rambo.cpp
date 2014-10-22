@@ -56,7 +56,7 @@ void Rambo::standStill() {
     //ax=0;ay=0;
 }
 
-void Rambo::prepareFrameInfo() {
+void Rambo::prepareBondFrameInfo() {
     run->addFrame(sf::IntRect(14, 86, 25, 42));
     run->addFrame(sf::IntRect(44, 86, 25, 42));
     run->addFrame(sf::IntRect(74, 86, 25, 42));
@@ -70,6 +70,16 @@ void Rambo::prepareFrameInfo() {
     shortJump->addFrame(sf::IntRect(19, 319, 20, 28));
     shortJump->addFrame(sf::IntRect(46, 300, 26, 46));
     shortJump->addFrame(sf::IntRect(83, 295, 17, 51));
+}
+
+void Rambo::prepareRamboFrameInfo() {
+    run->addFrame(sf::IntRect(11, 987, 25, 42));
+    run->addFrame(sf::IntRect(46, 987, 25, 42));
+    run->addFrame(sf::IntRect(74, 987, 25, 42));
+    run->addFrame(sf::IntRect(109, 987, 25, 42));
+    run->addFrame(sf::IntRect(145, 987, 25, 42));
+    run->setAnimationPeriod(40);
+    stand->addFrame(sf::IntRect(239, 990, 25, 42));
 }
 
 void Rambo::update() {
