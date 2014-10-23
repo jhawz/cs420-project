@@ -1,3 +1,11 @@
+//
+//  Rambo.cpp
+//  jamesrambotest
+//
+//  Created by gyp on 10/12/14.
+//  Copyright (c) 2014 gyp. All rights reserved.
+//
+
 #include "Rambo.h"
 
 Rambo::Rambo(){
@@ -200,6 +208,7 @@ void Rambo::prepareFrameInfo(){
     jumpPrepare->addFrame(sf::IntRect(582,64,25,-55));
     jumpPrepare->addFrame(sf::IntRect(582,64,25,-55));
     jumpUp->addFrame(sf::IntRect(614,64,25,-55));
+    //jumpUp->addFrame(sf::IntRect(775,129,25,-42));
     jumpFloat->addFrame(sf::IntRect(646,64,25,-55));
     jumpFall->addFrame(sf::IntRect(775,129,25,-42));
     jumpPrepare->setAnimationPeriod(80);
@@ -263,7 +272,7 @@ void Rambo::update(){
     move(vx, vy);
     
     if (jumping) {
-        if (!lowCollide(450)) {
+        if (!lowCollide(400)) {
             if (vy<8&&vy>-8){
                 if (curAnim!=jumpFloat) {
                     curAnim->end();
@@ -282,6 +291,7 @@ void Rambo::update(){
         else{
             jumping=false;
             standStill();
+            setPosition(getPosition().x, 400);
         }
     }
 }
@@ -335,7 +345,7 @@ int Rambo::getLowBound(){
 }
 
 bool Rambo::lowCollide(int ground){
-    float collideLine=getPosition().y+lowerBound;
+    float collideLine=getPosition().y;//+lowerBound;
     if (collideLine>=ground-1) {
         return true;
     }
