@@ -9,6 +9,8 @@ using namespace std;
 
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Audio/Music.hpp>
+#include <SFML/Audio.hpp>
 #include <iostream>
 #include "Rambo.h"
 #include "Enemy.h"
@@ -21,20 +23,20 @@ int main(int argc, char** argv) {
     // create main window
     sf::RenderWindow GameWindow(sf::VideoMode(800, 548, 32), "James Rambo: Will Finger's Revenge");
 
-    
+
     sf::Image image;
     if (!image.loadFromFile("sprites/SpriteSheet.png")) {
         std::cout << "Error loading texture image" << std::endl;
         return 1;
     }
     image.createMaskFromColor(image.getPixel(1, 1));
-    
+
     sf::Texture background;
     if (!background.loadFromFile("sprites/background.png")) {
         std::cout << "Error initializing the texture" << std::endl;
         std::cout << "" << std::endl;
     }
-    
+
     sf::Sprite bgsprite;
     bgsprite.setTexture(background);
 
@@ -47,7 +49,7 @@ int main(int argc, char** argv) {
     Rambo rambo;
     rambo.setTexture(texture);
     rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
-    rambo.setPosition(0, 340);
+    rambo.setPosition(50, 340);
     rambo.setOriginalImg(image);
 
     Enemy enemy_1;
@@ -64,20 +66,32 @@ int main(int argc, char** argv) {
     enemy_3.setTexture(texture);
     enemy_3.setMachineGun();
     enemy_3.setPosition(700, 340);
+    
+    sf::Music theme;
+    theme.openFromFile("music/bond_theme.ogg");
+    theme.setLoop(true);
+    theme.setVolume(50.0);
+    theme.play();
+    
+    sf::SoundBuffer gunshot;
+    gunshot.loadFromFile("sounds/gun.wav");
+    
+    sf::Sound pistol;
+    pistol.setBuffer(gunshot);
 
     // start main loop
     while (GameWindow.isOpen()) {
         clock.restart();
         // process events
-        sf::Event Event;
-        while (GameWindow.pollEvent(Event)) {
+        sf::Event event;
+        while (GameWindow.pollEvent(event)) {
             // Exit
-            if (Event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed)
                 GameWindow.close();
-            //No matter whether there is an event or not, rambo.update() should be called so it should not appear here.
-            /*
-                        rambo.update();
-             */
+            // Escape pressed : exit
+            if (event.type == sf::Event::KeyPressed && event.key.code == sf::Keyboard::Escape) {
+                GameWindow.close();
+            }
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             rambo.rightRun();
@@ -87,6 +101,10 @@ int main(int argc, char** argv) {
             rambo.jump();
         } else {
             rambo.standStill();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            pistol.play();
+            rambo.shoot();
         }
 
         if (enemy_1.isAlive()) {
@@ -146,19 +164,19 @@ int main(int argc, char** argv) {
             }
         }
 
-        GameWindow.clear();
-        GameWindow.draw(bgsprite);
-
         //rambo.update should appear here instead;
         rambo.update();
-        GameWindow.draw(rambo);
         enemy_1.update();
-        GameWindow.draw(enemy_1);
         enemy_2.update();
-        GameWindow.draw(enemy_2);
         enemy_3.update();
-        GameWindow.draw(enemy_3);
 
+        GameWindow.clear();
+
+        GameWindow.draw(bgsprite);
+        GameWindow.draw(rambo);
+        GameWindow.draw(enemy_1);
+        GameWindow.draw(enemy_2);
+        GameWindow.draw(enemy_3);
         // display
         GameWindow.display();
         sf::Time elapsed = clock.getElapsedTime();
