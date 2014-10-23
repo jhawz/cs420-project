@@ -272,7 +272,7 @@ void Rambo::update(){
     move(vx, vy);
     
     if (jumping) {
-        if (!lowCollide(400)) {
+        if (!lowCollide(340)) {
             if (vy<8&&vy>-8){
                 if (curAnim!=jumpFloat) {
                     curAnim->end();
@@ -291,7 +291,7 @@ void Rambo::update(){
         else{
             jumping=false;
             standStill();
-            setPosition(getPosition().x, 400);
+            setPosition(getPosition().x, 340);
         }
     }
 }

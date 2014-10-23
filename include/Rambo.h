@@ -3,8 +3,8 @@
 
 #include <cstdio>
 #include <iostream>
-#include <sfml/Graphics.hpp>
-#include <sfml/System/Time.hpp>
+#include <SFML/Graphics.hpp>
+#include <SFML/System/Time.hpp>
 #include "Animation.h"
 
 class Rambo:public sf::Sprite{

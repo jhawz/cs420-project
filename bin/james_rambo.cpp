@@ -19,42 +19,51 @@ int main(int argc, char** argv) {
     sf::Clock clock;
     sf::Time period = sf::milliseconds(20);
     // create main window
-    sf::RenderWindow GameWindow(sf::VideoMode(800, 600, 32), "James Rambo: Will Finger's Revenge");
+    sf::RenderWindow GameWindow(sf::VideoMode(800, 548, 32), "James Rambo: Will Finger's Revenge");
 
-    /*
+    
     sf::Image image;
     if (!image.loadFromFile("sprites/SpriteSheet.png")) {
         std::cout << "Error loading texture image" << std::endl;
         return 1;
     }
     image.createMaskFromColor(image.getPixel(1, 1));
-     */
+    
+    sf::Texture background;
+    if (!background.loadFromFile("sprites/background.png")) {
+        std::cout << "Error initializing the texture" << std::endl;
+        std::cout << "" << std::endl;
+    }
+    
+    sf::Sprite bgsprite;
+    bgsprite.setTexture(background);
 
     sf::Texture texture;
-    if (!texture.loadFromFile("sprites/SpriteSheet.png")) {
+    if (!texture.loadFromImage(image)) {
         std::cout << "Error initializing the texture" << std::endl;
         std::cout << "" << std::endl;
     }
     texture.setSmooth(true);
     Rambo rambo;
     rambo.setTexture(texture);
-    rambo.prepareRamboFrameInfo(); //In this method, it prepares for the frames needed by the animations.
-    rambo.setPosition(0, 400);
+    rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
+    rambo.setPosition(0, 340);
+    rambo.setOriginalImg(image);
 
     Enemy enemy_1;
     enemy_1.setTexture(texture);
     enemy_1.setPistol();
-    enemy_1.setPosition(800, 400);
+    enemy_1.setPosition(800, 340);
 
     Enemy enemy_2;
     enemy_2.setTexture(texture);
     enemy_2.setSmg();
-    enemy_2.setPosition(740, 400);
+    enemy_2.setPosition(740, 340);
 
     Enemy enemy_3;
     enemy_3.setTexture(texture);
     enemy_3.setMachineGun();
-    enemy_3.setPosition(700, 400);
+    enemy_3.setPosition(700, 340);
 
     // start main loop
     while (GameWindow.isOpen()) {
@@ -137,7 +146,8 @@ int main(int argc, char** argv) {
             }
         }
 
-        GameWindow.clear(sf::Color::White);
+        GameWindow.clear();
+        GameWindow.draw(bgsprite);
 
         //rambo.update should appear here instead;
         rambo.update();

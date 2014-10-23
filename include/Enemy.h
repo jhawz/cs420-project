@@ -5,8 +5,8 @@
  * Created on October 18, 2014, 10:51 PM
  */
 
-#ifndef SAILOR_H
-#define	SAILOR_H
+#ifndef ENEMY_H
+#define	ENEMY_H
 
 #include <cstdio>
 #include <iostream>
@@ -43,5 +43,5 @@ private:
     Animation *stand;
 };
 
-#endif	/* SAILOR_H */
+#endif	/* ENEMY_H */
 
