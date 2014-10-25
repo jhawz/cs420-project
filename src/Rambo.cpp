@@ -296,6 +296,9 @@ void Rambo::update() {
 }
 
 void Rambo::jump() {
+    if (jumping) {
+        return;
+    }
     //running=false;
     curAnim->end();
     curAnim = jumpPrepare;
@@ -303,7 +306,7 @@ void Rambo::jump() {
         curAnim->restart();
     }
     //while (!curAnim->isEnded());
-    vy = -15.99;
+    vy = -9.99;
     ay = 0.5;
     jumping = true;
     if (curAnim != jumpUp) {
