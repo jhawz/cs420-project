@@ -47,6 +47,7 @@ void Projectile::leftFly() {
 
 void Projectile::setBullet() {
     fired->addFrame(sf::IntRect(485, 481, 2, 8));
+    fired->setRepeatable(true);
     fired->setAnimationPeriod(40);
 }
 
@@ -56,8 +57,8 @@ void Projectile::update() {
     }
     if (active) {
         if (rightdir) {
-            vx = 4;
-        } else vx = -4;
+            vx = 8;
+        } else vx = -8;
     }
     move(vx, vy);
 }
