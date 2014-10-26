@@ -15,6 +15,7 @@ using namespace std;
 #include "Rambo.h"
 #include "Enemy.h"
 #include "Animation.h"
+#include "Projectile.h"
 #include <cstdlib>
 
 int main(int argc, char** argv) {
@@ -52,6 +53,12 @@ int main(int argc, char** argv) {
     rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
     rambo.setPosition(50, 340);
     rambo.setOriginalImg(image);
+    
+    Projectile bullet;
+    bullet.setTexture(texture);
+    bullet.setBullet();
+    bullet.setPosition(55, 340);
+    
 
     Enemy enemy_1;
     enemy_1.setTexture(texture);
@@ -72,7 +79,7 @@ int main(int argc, char** argv) {
     bond_theme.openFromFile("music/bond_theme.ogg");
     bond_theme.setLoop(true);
     bond_theme.setVolume(50.0);
-    bond_theme.play();
+    //bond_theme.play();
 
     // start main loop
     while (GameWindow.isOpen()) {
@@ -91,8 +98,14 @@ int main(int argc, char** argv) {
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             rambo.rightRun();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                rambo.jump();
+            }
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             rambo.leftRun();
+            if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+                rambo.jump();
+            }
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
             rambo.jump();
         } else {
@@ -163,6 +176,7 @@ int main(int argc, char** argv) {
 
         //rambo.update should appear here instead;
         rambo.update();
+        bullet.update();
         enemy_1.update();
         enemy_2.update();
         enemy_3.update();
@@ -171,6 +185,7 @@ int main(int argc, char** argv) {
 
         GameWindow.draw(background_texture);
         GameWindow.draw(rambo);
+        GameWindow.draw(bullet);
         GameWindow.draw(enemy_1);
         GameWindow.draw(enemy_2);
         GameWindow.draw(enemy_3);
