@@ -9,6 +9,7 @@ Enemy::Enemy() {
     rightdir = true;
     alive = true;
     attack = true;
+    vy=0;
 }
 
 Enemy::~Enemy() {
