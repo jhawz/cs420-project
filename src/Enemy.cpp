@@ -114,8 +114,8 @@ void Enemy::update() {
     }
     if (running) {
         if (rightdir) {
-            vx = 8;
-        } else vx = -8;
+            vx = 4;
+        } else vx = -4;
     }
     /*if (vx<vxmax&&vx>vxmin) {
         vx+=ax;

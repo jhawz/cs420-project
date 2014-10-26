@@ -20,25 +20,26 @@ using namespace std;
 int main(int argc, char** argv) {
     sf::Clock clock;
     sf::Time period = sf::milliseconds(20);
+    sf::Clock shot_clock;
     // create main window
     sf::RenderWindow GameWindow(sf::VideoMode(800, 548, 32), "James Rambo: Will Finger's Revenge");
 
 
     sf::Image image;
-    if (!image.loadFromFile("sprites/SpriteSheet.png")) {
+    if (!image.loadFromFile("textures/SpriteSheet.png")) {
         std::cout << "Error loading texture image" << std::endl;
         return 1;
     }
     image.createMaskFromColor(image.getPixel(1, 1));
 
     sf::Texture background;
-    if (!background.loadFromFile("sprites/background.png")) {
+    if (!background.loadFromFile("textures/background.png")) {
         std::cout << "Error initializing the texture" << std::endl;
         std::cout << "" << std::endl;
     }
 
-    sf::Sprite bgsprite;
-    bgsprite.setTexture(background);
+    sf::Sprite background_texture;
+    background_texture.setTexture(background);
 
     sf::Texture texture;
     if (!texture.loadFromImage(image)) {
@@ -66,18 +67,12 @@ int main(int argc, char** argv) {
     enemy_3.setTexture(texture);
     enemy_3.setMachineGun();
     enemy_3.setPosition(700, 340);
-    
-    sf::Music theme;
-    theme.openFromFile("music/bond_theme.ogg");
-    theme.setLoop(true);
-    theme.setVolume(50.0);
-    theme.play();
-    
-    sf::SoundBuffer gunshot;
-    gunshot.loadFromFile("sounds/gun.wav");
-    
-    sf::Sound pistol;
-    pistol.setBuffer(gunshot);
+
+    sf::Music bond_theme;
+    bond_theme.openFromFile("music/bond_theme.ogg");
+    bond_theme.setLoop(true);
+    bond_theme.setVolume(50.0);
+    bond_theme.play();
 
     // start main loop
     while (GameWindow.isOpen()) {
@@ -93,6 +88,7 @@ int main(int argc, char** argv) {
                 GameWindow.close();
             }
         }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
             rambo.rightRun();
         } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
@@ -102,9 +98,10 @@ int main(int argc, char** argv) {
         } else {
             rambo.standStill();
         }
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-            pistol.play();
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
+                shot_clock.getElapsedTime().asSeconds() > 1) {
             rambo.shoot();
+            shot_clock.restart();
         }
 
         if (enemy_1.isAlive()) {
@@ -172,7 +169,7 @@ int main(int argc, char** argv) {
 
         GameWindow.clear();
 
-        GameWindow.draw(bgsprite);
+        GameWindow.draw(background_texture);
         GameWindow.draw(rambo);
         GameWindow.draw(enemy_1);
         GameWindow.draw(enemy_2);

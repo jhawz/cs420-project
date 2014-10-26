@@ -1,13 +1,14 @@
-#ifndef __Rambo__
-#define __Rambo__
-
 #include <cstdio>
 #include <iostream>
 #include <SFML/Graphics.hpp>
 #include <SFML/System/Time.hpp>
+#include <SFML/Audio.hpp>
 #include "Animation.h"
 
-class Rambo:public sf::Sprite{
+#ifndef RAMBO_H
+#define RAMBO_H
+
+class Rambo : public sf::Sprite {
 public:
     Rambo();
     ~Rambo();
@@ -26,7 +27,9 @@ public:
     void shotDead();
     bool isAlive();
     bool lowCollide(int ground);
-    
+    bool isRunning();
+    bool getRight();
+
 private:
     int getLowBound();
     sf::Clock clock;
@@ -36,8 +39,8 @@ private:
     bool running;
     bool shootlocked;
     int lowerBound;
-    float vx,vy,vxmax,vymax,vxmin,vymin;
-    float ax,ay;
+    float vx, vy, vxmax, vymax, vxmin, vymin;
+    float ax, ay;
     Animation *curAnim;
     Animation *run;
     Animation *stand;
@@ -52,6 +55,9 @@ private:
     Animation *crouchShoot;
     Animation *die;
     sf::Image *imgOrigin;
+    sf::SoundBuffer gunshot;
+    sf::Sound pistol;
+    sf::Clock shot_clock;
 };
 
 #endif /* defined(__Rambo__) */

@@ -28,6 +28,8 @@ Rambo::Rambo() {
     shootlocked = false;
     ax = 0;
     ay = 0;
+    gunshot.loadFromFile("sounds/gun.wav");
+    pistol.setBuffer(gunshot);
 }
 
 Rambo::~Rambo() {
@@ -41,6 +43,14 @@ void Rambo::setOriginalImg(sf::Image &image) {
 
 bool Rambo::isAlive() {
     return alive;
+}
+
+bool Rambo::isRunning() {
+    return running;
+}
+
+bool Rambo::getRight() {
+    return rightdir;
 }
 
 void Rambo::rightRun() {
@@ -94,6 +104,7 @@ void Rambo::standStill() {
 
 void Rambo::shoot() {
     if (jumping)return;
+    if (running) return;
     if (!alive)return;
     /*if (shootlocked){
         if (curAnim==straightShoot) {
@@ -102,6 +113,7 @@ void Rambo::shoot() {
         return;
     }*/
     curAnim->end();
+    pistol.play();
     curAnim = straightShoot;
     if (curAnim->isEnded()) {
         curAnim->restart();
@@ -174,22 +186,33 @@ void Rambo::shotDead() {
 }
 
 void Rambo::prepareFrameInfo() {
-    run->addFrame(sf::IntRect(8, 129, 25, -42));
-    run->addFrame(sf::IntRect(38, 129, 25, -42));
-    run->addFrame(sf::IntRect(70, 129, 25, -42));
-    run->addFrame(sf::IntRect(103, 129, 25, -42));
-    run->addFrame(sf::IntRect(134, 129, 25, -42));
-    run->addFrame(sf::IntRect(166, 129, 25, -42));
-    run->addFrame(sf::IntRect(199, 129, 25, -42));
-    run->addFrame(sf::IntRect(231, 129, 25, -42));
+    run->addFrame(sf::IntRect(14, 129, 25, -42));
+    run->addFrame(sf::IntRect(44, 129, 25, -42));
+    run->addFrame(sf::IntRect(76, 129, 25, -42));
+    run->addFrame(sf::IntRect(109, 129, 25, -42));
+    run->addFrame(sf::IntRect(140, 129, 25, -42));
+    run->addFrame(sf::IntRect(172, 129, 25, -42));
+    run->addFrame(sf::IntRect(205, 129, 25, -42));
+    run->addFrame(sf::IntRect(237, 129, 25, -42));
     run->setAnimationPeriod(40);
-    straightShoot->addFrame(sf::IntRect(7, 320, 30, -42));
-    straightShoot->addFrame(sf::IntRect(40, 320, 30, -42));
-    straightShoot->addFrame(sf::IntRect(71, 320, 30, -42));
-    straightShoot->addFrame(sf::IntRect(109, 320, 30, -42));
-    straightShoot->addFrame(sf::IntRect(138, 320, 30, -42));
-    straightShoot->addFrame(sf::IntRect(6, 64, 30, -42));
-    straightShoot->setAnimationPeriod(60);
+    straightShoot->addFrame(sf::IntRect(7, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(40, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(71, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(109, 320, 25, -42));
+    straightShoot->addFrame(sf::IntRect(138, 320, 25, -42));
+    straightShoot->setAnimationPeriod(100);
     straightShoot->setRepeatable(false);
     upShoot->addFrame(sf::IntRect(193, 323, 31, -50));
     upShoot->addFrame(sf::IntRect(226, 323, 31, -50));
@@ -205,7 +228,7 @@ void Rambo::prepareFrameInfo() {
     downShoot->addFrame(sf::IntRect(513, 323, 31, -42));
     downShoot->setAnimationPeriod(40);
     downShoot->setRepeatable(false);
-    stand->addFrame(sf::IntRect(6, 64, 25, -42));
+    stand->addFrame(sf::IntRect(7, 320, 25, -42));
     stand->setRepeatable(true);
     jumpPrepare->addFrame(sf::IntRect(606, 64, 25, -55));
     jumpPrepare->addFrame(sf::IntRect(606, 64, 25, -55));
@@ -263,8 +286,8 @@ void Rambo::update() {
     }
     if (running) {
         if (rightdir) {
-            vx = 8;
-        } else vx = -8;
+            vx = 4;
+        } else vx = -4;
     }
 
     vx += ax;
