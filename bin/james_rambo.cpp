@@ -53,12 +53,10 @@ int main(int argc, char** argv) {
     rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
     rambo.setPosition(50, 340);
     rambo.setOriginalImg(image);
-    
+
     Projectile bullet;
     bullet.setTexture(texture);
     bullet.setBullet();
-    bullet.setPosition(55, 340);
-    
 
     Enemy enemy_1;
     enemy_1.setTexture(texture);
@@ -114,6 +112,8 @@ int main(int argc, char** argv) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S) &&
                 shot_clock.getElapsedTime().asSeconds() > 1) {
             rambo.shoot();
+            bullet.setPosition(rambo.getPosition().x, rambo.getPosition().y + 15);
+            bullet.fire();
             shot_clock.restart();
         }
 
@@ -176,7 +176,7 @@ int main(int argc, char** argv) {
 
         //rambo.update should appear here instead;
         rambo.update();
-        bullet.update();
+
         enemy_1.update();
         enemy_2.update();
         enemy_3.update();
@@ -185,7 +185,10 @@ int main(int argc, char** argv) {
 
         GameWindow.draw(background_texture);
         GameWindow.draw(rambo);
-        GameWindow.draw(bullet);
+        if (bullet.isActive()) {
+            bullet.update();
+            GameWindow.draw(bullet);
+        }
         GameWindow.draw(enemy_1);
         GameWindow.draw(enemy_2);
         GameWindow.draw(enemy_3);

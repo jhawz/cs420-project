@@ -22,6 +22,8 @@ public:
     void rightFly();
     void leftFly();
     void setBullet();
+    void fire();
+    void deactivate();
 
 private:
     bool active;

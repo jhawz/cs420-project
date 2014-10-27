@@ -6,7 +6,7 @@ Projectile::Projectile() {
     curAnim = fired;
     curAnim->restart();
     rightdir = true;
-    active = true;
+    active = false;
     vy=0;
 }
 
@@ -16,6 +16,14 @@ Projectile::~Projectile() {
 
 bool Projectile::isActive() {
     return active;
+}
+
+void Projectile::fire(){
+    active = true;
+}
+
+void Projectile::deactivate(){
+    active = false;
 }
 
 void Projectile::rightFly() {
