@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<root>
+    <Actor name="Rambo">
+        <Animation name="run" period="40" repeatable="True" frame_number="8">
+            <Frame seq="0" X="14" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="1" X="44" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="2" X="76" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="3" X="109" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="4" X="140" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="5" X="172" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="6" X="205" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="7" X="237" Y="129" Xoffset="25" Yoffset="-42"></Frame>
+        </Animation>
+        <Animation name="straight_shoot" period="100" repeatable="False" frame_number="17">
+            <Frame seq="0" X="7" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="1" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="2" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="3" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="4" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="5" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="6" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="7" X="40" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="8" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="9" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="10" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="11" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="12" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="13" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="14" X="71" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="15" X="109" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="16" X="138" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+        </Animation>
+        <Animation name="up_shoot" period="40" repeatable="False" frame_number="5">
+            <Frame seq="0" X="193" Y="323" Xoffset="31" Yoffset="-50"></Frame>
+            <Frame seq="1" X="226" Y="323" Xoffset="31" Yoffset="-50"></Frame>
+            <Frame seq="2" X="257" Y="323" Xoffset="31" Yoffset="-50"></Frame>
+            <Frame seq="3" X="293" Y="323" Xoffset="31" Yoffset="-50"></Frame>
+            <Frame seq="4" X="321" Y="323" Xoffset="31" Yoffset="-50"></Frame>
+        </Animation>
+        <Animation name="down_shoot" period="40" repeatable="False" frame_number="5">
+            <Frame seq="0" X="385" Y="323" Xoffset="31" Yoffset="-42"></Frame>
+            <Frame seq="1" X="418" Y="323" Xoffset="31" Yoffset="-42"></Frame>
+            <Frame seq="2" X="449" Y="323" Xoffset="31" Yoffset="-42"></Frame>
+            <Frame seq="3" X="484" Y="323" Xoffset="31" Yoffset="-42"></Frame>
+            <Frame seq="4" X="513" Y="323" Xoffset="31" Yoffset="-42"></Frame>
+        </Animation>
+        <Animation name="stand" period="100" repeatable="True" frame_number="1">
+            <Frame seq="0" X="7" Y="320" Xoffset="25" Yoffset="-42"></Frame>
+        </Animation>
+        <Animation name="jump_prepare" period="320" repeatable="False" frame_number="1">
+            <Frame seq="0" X="606" Y="64" Xoffset="25" Yoffset="-55"></Frame>
+        </Animation>
+        <Animation name="jump_up" period="100" repeatable="True" frame_number="1">
+            <Frame seq="0" X="606" Y="64" Xoffset="25" Yoffset="-55"></Frame>
+        </Animation>
+        <Animation name="jump_float" period="100" repeatable="True" frame_number="1">
+            <Frame seq="0" X="674" Y="64" Xoffset="25" Yoffset="-55"></Frame>
+        </Animation>
+        <Animation name="jump_fall" period="100" repeatable="True" frame_number="1">
+            <Frame seq="0" X="771" Y="64" Xoffset="25" Yoffset="-55"></Frame>
+        </Animation>
+        <Animation name="crouch" period="100" repeatable="True" frame_number="1">
+            <Frame seq="0" X="38" Y="64" Xoffset="25" Yoffset="-42"></Frame>
+        </Animation>
+        <Animation name="crouch_shoot" period="40" repeatable="False" frame_number="6">
+            <Frame seq="0" X="582" Y="323" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="1" X="615" Y="323" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="2" X="646" Y="323" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="3" X="683" Y="323" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="4" X="717" Y="323" Xoffset="25" Yoffset="-42"></Frame>
+            <Frame seq="5" X="745" Y="323" Xoffset="25" Yoffset="-42"></Frame>
+        </Animation>
+        <Animation name="die" period="100" repeatable="False" frame_number="16">
+            <Frame seq="0" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="1" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="2" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="3" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="4" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="5" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="6" X="2" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="7" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="8" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="9" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="10" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="11" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="12" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="13" X="38" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="14" X="68" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+            <Frame seq="15" X="100" Y="194" Xoffset="30" Yoffset="-42"></Frame>
+        </Animation>
+    </Actor>
+</root>
