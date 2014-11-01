@@ -16,6 +16,7 @@ using namespace std;
 #include "Enemy.h"
 #include "Animation.h"
 #include "Projectile.h"
+#include "pugixml.hpp"
 #include <cstdlib>
 
 int main(int argc, char** argv) {
@@ -24,6 +25,11 @@ int main(int argc, char** argv) {
     sf::Clock shot_clock;
     // create main window
     sf::RenderWindow GameWindow(sf::VideoMode(800, 548, 32), "James Rambo: Will Finger's Revenge");
+    
+    pugi::xml_document doc;
+    doc.load_file("rambo.xml");
+    
+    pugi::xml_node rambonode=doc.child("root").find_child_by_attribute("Actor", "name", "Rambo");
 
 
     sf::Image image;
@@ -50,7 +56,7 @@ int main(int argc, char** argv) {
     texture.setSmooth(true);
     Rambo rambo;
     rambo.setTexture(texture);
-    rambo.prepareFrameInfo(); //In this method, it prepares for the frames needed by the animations.
+    rambo.prepareFrameInfo(rambonode); //In this method, it prepares for the frames needed by the animations.
     rambo.setPosition(50, 340);
     rambo.setOriginalImg(image);
 
