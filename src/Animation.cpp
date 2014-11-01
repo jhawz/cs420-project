@@ -7,6 +7,22 @@ Animation::Animation(){
     clock.restart();
 }
 
+void Animation::loadFromXml(pugi::xml_node& node){
+    pugi::xml_node cur;
+    bool rep=node.attribute("repeatable").as_bool();
+    setRepeatable(rep);
+    int p=node.attribute("period").as_int();
+    setAnimationPeriod(p);
+    for (int i=0; i<node.attribute("frame_number").as_int(); i++) {
+        cur=node.find_child_by_attribute("Frame", "seq", std::to_string(i).c_str());
+        addFrame(sf::IntRect(cur.attribute("X").as_int(),
+                             cur.attribute("Y").as_int(),
+                             cur.attribute("Xoffset").as_int(),
+                             cur.attribute("Yoffset").as_int()));
+    }
+    
+}
+
 void Animation::setAnimationPeriod(int minisec){
     period=sf::milliseconds(minisec);
 }
@@ -67,4 +83,5 @@ void Animation::end(){
 bool Animation::isEnded(){
     return ended;
 }
+
 
