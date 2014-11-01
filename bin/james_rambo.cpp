@@ -27,7 +27,7 @@ int main(int argc, char** argv) {
     sf::RenderWindow GameWindow(sf::VideoMode(800, 548, 32), "James Rambo: Will Finger's Revenge");
     
     pugi::xml_document doc;
-    doc.load_file("rambo.xml");
+    doc.load_file("actors.xml");
     
     pugi::xml_node rambonode=doc.child("root").find_child_by_attribute("Actor", "name", "Rambo");
 
