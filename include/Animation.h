@@ -2,14 +2,17 @@
 #define __Animation__
 
 #include <cstdio>
+#include <cstdlib>
 #include <iostream>
-#include <SFML/System/Time.hpp>
-#include <SFML/Graphics.hpp>
+#include <sfml/System/Time.hpp>
+#include <sfml/Graphics.hpp>
 #include <vector>
+#include "pugixml.hpp"
 
-class Animation {
+class Animation{
 public:
     Animation();
+    void loadFromXml(pugi::xml_node& node);
     void setAnimationPeriod(int minisec);
     void setRepeatable(bool rep);
     void addFrame(sf::IntRect frame);
@@ -18,7 +21,7 @@ public:
     bool isEnded();
     bool play();
     sf::IntRect getCurFrame();
-
+    
 private:
     std::vector<sf::IntRect> m_frames;
     bool repeatable;
@@ -28,6 +31,7 @@ private:
     sf::Time period;
     sf::Clock clock;
 };
+
 
 
 #endif /* defined(__Animation__) */
