@@ -4,16 +4,18 @@
 #include <SFML/System/Time.hpp>
 #include <SFML/Audio.hpp>
 #include "Animation.h"
+#include "pugixml.hpp"
 
 #ifndef RAMBO_H
 #define RAMBO_H
 
-class Rambo : public sf::Sprite {
+class Rambo:public sf::Sprite{
 public:
     Rambo();
     ~Rambo();
     void setOriginalImg(sf::Image &image);
-    void prepareFrameInfo();
+    void prepareFrameInfo(pugi::xml_node& node);
+    void setMoving(bool moving);
     void update();
     void rightRun();
     void leftRun();
@@ -27,9 +29,7 @@ public:
     void shotDead();
     bool isAlive();
     bool lowCollide(int ground);
-    bool isRunning();
-    bool getRight();
-
+    
 private:
     int getLowBound();
     sf::Clock clock;
@@ -39,8 +39,8 @@ private:
     bool running;
     bool shootlocked;
     int lowerBound;
-    float vx, vy, vxmax, vymax, vxmin, vymin;
-    float ax, ay;
+    float vx,vy,vxmax,vymax,vxmin,vymin;
+    float ax,ay;
     Animation *curAnim;
     Animation *run;
     Animation *stand;
@@ -55,9 +55,7 @@ private:
     Animation *crouchShoot;
     Animation *die;
     sf::Image *imgOrigin;
-    sf::SoundBuffer gunshot;
-    sf::Sound pistol;
-    sf::Clock shot_clock;
 };
+
 
 #endif /* defined(__Rambo__) */
