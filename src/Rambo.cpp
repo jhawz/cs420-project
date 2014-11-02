@@ -10,28 +10,13 @@
 
 Rambo::Rambo(){
     alive=true;
-    run=new Animation();
-    stand=new Animation();
-    straightShoot=new Animation();
-    upShoot=new Animation();
-    downShoot=new Animation();
-    jumpPrepare=new Animation();
-    jumpUp=new Animation();
-    jumpFloat=new Animation();
-    jumpFall=new Animation();
-    crouch=new Animation();
-    crouchShoot=new Animation();
-    die=new Animation();
-    curAnim=stand;
-    curAnim->restart();
     rightdir=true;
     shootlocked=false;
     ax=0;ay=0;
 }
 
 Rambo::~Rambo(){
-    delete run;
-    delete stand;
+    
 }
 
 void Rambo::setOriginalImg(sf::Image &image){
@@ -49,9 +34,9 @@ void Rambo::rightRun(){
         rightdir=true;
         setScale(1, 1);
     }
-    if (curAnim!=run) {
+    if (curAnim!=animations["run"]) {
         curAnim->end();
-        curAnim=run;
+        curAnim=animations["run"];
     }
     
     if(curAnim->isEnded())curAnim->restart();
@@ -67,9 +52,9 @@ void Rambo::leftRun(){
         rightdir=false;
         setScale(-1,1);
     }
-    if (curAnim!=run) {
+    if (curAnim!=animations["run"]) {
         curAnim->end();
-        curAnim=run;
+        curAnim=animations["run"];
     }
     if(curAnim->isEnded())curAnim->restart();
     running=true;
@@ -81,9 +66,9 @@ void Rambo::standStill(){
     running=false;
     if (jumping)return;
     if (!alive)return;
-    if (curAnim!=stand) {
+    if (curAnim!=animations["stand"]) {
         curAnim->end();
-        curAnim=stand;
+        curAnim=animations["stand"];
     }
     curAnim->restart();
     vy=0;ay=0;
@@ -103,7 +88,7 @@ void Rambo::shoot(){
         return;
     }*/
     curAnim->end();
-    curAnim=straightShoot;
+    curAnim=animations["straight_shoot"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -120,7 +105,7 @@ void Rambo::upshoot(){
         return;
     }*/
     curAnim->end();
-    curAnim=upShoot;
+    curAnim=animations["up_shoot"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -137,7 +122,7 @@ void Rambo::downshoot(){
         return;
     }*/
     curAnim->end();
-    curAnim=downShoot;
+    curAnim=animations["down_shoot"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -147,7 +132,7 @@ void Rambo::downshoot(){
 void Rambo::crouchStill(){
     if (!alive)return;
     curAnim->end();
-    curAnim=crouch;
+    curAnim=animations["crouch"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -157,7 +142,7 @@ void Rambo::crouchStill(){
 void Rambo::crouchshoot(){
     if (!alive)return;
     curAnim->end();
-    curAnim=crouchShoot;
+    curAnim=animations["crouch_shoot"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -166,8 +151,8 @@ void Rambo::crouchshoot(){
 
 void Rambo::shotDead(){
     if (!alive)return;
-    if(curAnim!=die)curAnim->end();
-    curAnim=die;
+    if(curAnim!=animations["die"])curAnim->end();
+    curAnim=animations["die"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -175,30 +160,16 @@ void Rambo::shotDead(){
 }
 
 void Rambo::prepareFrameInfo(pugi::xml_node& node){
-    pugi::xml_node runnode=node.find_child_by_attribute("Animation", "name", "run");
-    run->loadFromXml(runnode);
-    pugi::xml_node strshootnode=node.find_child_by_attribute("Animation", "name", "straight_shoot");
-    straightShoot->loadFromXml(strshootnode);
-    pugi::xml_node upshootnode=node.find_child_by_attribute("Animation", "name", "up_shoot");
-    upShoot->loadFromXml(upshootnode);
-    pugi::xml_node dshootnode=node.find_child_by_attribute("Animation", "name", "down_shoot");
-    downShoot->loadFromXml(dshootnode);
-    pugi::xml_node standnode=node.find_child_by_attribute("Animation", "name", "stand");
-    stand->loadFromXml(standnode);
-    pugi::xml_node jprepnode=node.find_child_by_attribute("Animation", "name", "jump_prepare");
-    jumpPrepare->loadFromXml(jprepnode);
-    pugi::xml_node jupnode=node.find_child_by_attribute("Animation", "name", "jump_up");
-    jumpUp->loadFromXml(jupnode);
-    pugi::xml_node jflnode=node.find_child_by_attribute("Animation", "name", "jump_float");
-    jumpFloat->loadFromXml(jflnode);
-    pugi::xml_node jfallnode=node.find_child_by_attribute("Animation", "name", "jump_fall");
-    jumpFall->loadFromXml(jfallnode);
-    pugi::xml_node crouchnode=node.find_child_by_attribute("Animation", "name", "crouch");
-    crouch->loadFromXml(crouchnode);
-    pugi::xml_node cshootnode=node.find_child_by_attribute("Animation", "name", "crouch_shoot");
-    crouchShoot->loadFromXml(cshootnode);
-    pugi::xml_node dienode=node.find_child_by_attribute("Animation", "name", "die");
-    die->loadFromXml(dienode);
+    std::istringstream ss(std::string(node.child("Animation_List").text().as_string()));
+    std::string token;
+    while (std::getline(ss, token,',')) {
+        pugi::xml_node curnode=node.find_child_by_attribute("Animation", "name", token.c_str());
+        Animation* a=new Animation();
+        a->loadFromXml(curnode);
+        animations.insert(std::pair<std::string,Animation*>(token,a));
+    }
+    curAnim=animations["stand"];
+    curAnim->restart();
 }
 
 
@@ -208,7 +179,7 @@ void Rambo::update(){
         lowerBound=getLowBound();
     }
     else if (!shootlocked){
-        if (curAnim==straightShoot||curAnim==upShoot||curAnim==downShoot) {
+        if (curAnim==animations["straight_shoot"]||curAnim==animations["up_shoot"]||curAnim==animations["down_shoot"]) {
             clock.restart();
             shootlocked=true;
         }
@@ -231,16 +202,16 @@ void Rambo::update(){
     if (jumping) {
         if (!lowCollide(400)) {
             if (vy<8&&vy>-8){
-                if (curAnim!=jumpFloat) {
+                if (curAnim!=animations["jump_float"]) {
                     curAnim->end();
-                    curAnim=jumpFloat;
+                    curAnim=animations["jump_float"];
                     if (curAnim->isEnded())curAnim->restart();
                 }
             }
             else if(vy>8){
-                if (curAnim!=jumpFall) {
+                if (curAnim!=animations["jump_fall"]) {
                  curAnim->end();
-                 curAnim=jumpFall;
+                 curAnim=animations["jump_fall"];
                  if (curAnim->isEnded())curAnim->restart();
                  }
             }
@@ -267,7 +238,7 @@ void Rambo::jump(){
     }
     //running=false;
     curAnim->end();
-    curAnim=jumpPrepare;
+    curAnim=animations["jump_prepare"];
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
@@ -275,9 +246,9 @@ void Rambo::jump(){
     vy=-9.99;
     ay=0.5;
     jumping=true;
-    if (curAnim!=jumpUp) {
+    if (curAnim!=animations["jump_up"]) {
         curAnim->end();
-        curAnim=jumpUp;
+        curAnim=animations["jump_up"];
         if (curAnim->isEnded())curAnim->restart();
     }
     move(0, 1);
