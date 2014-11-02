@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <root>
     <Actor name="Rambo">
+    <Animation_List>run,straight_shoot,up_shoot,down_shoot,stand,jump_prepare,jump_up,jump_float,jump_fall,crouch,crouch_shoot,die</Animation_List>
         <Animation name="run" period="40" repeatable="True" frame_number="8">
             <Frame seq="0" X="14" Y="129" Xoffset="25" Yoffset="-42"></Frame>
             <Frame seq="1" X="44" Y="129" Xoffset="25" Yoffset="-42"></Frame>
