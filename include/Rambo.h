@@ -1,8 +1,11 @@
 #include <cstdio>
 #include <iostream>
-#include <SFML/Graphics.hpp>
-#include <SFML/System/Time.hpp>
-#include <SFML/Audio.hpp>
+#include <sstream>
+#include <utility>
+#include <map>
+#include <string>
+#include <sfml/Graphics.hpp>
+#include <sfml/System/Time.hpp>
 #include "Animation.h"
 #include "pugixml.hpp"
 
@@ -41,19 +44,8 @@ private:
     int lowerBound;
     float vx,vy,vxmax,vymax,vxmin,vymin;
     float ax,ay;
+    std::map<std::string,Animation*> animations;
     Animation *curAnim;
-    Animation *run;
-    Animation *stand;
-    Animation *straightShoot;
-    Animation *upShoot;
-    Animation *downShoot;
-    Animation *jumpPrepare;
-    Animation *jumpUp;
-    Animation *jumpFloat;
-    Animation *jumpFall;
-    Animation *crouch;
-    Animation *crouchShoot;
-    Animation *die;
     sf::Image *imgOrigin;
 };
 
