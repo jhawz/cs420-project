@@ -18,9 +18,9 @@ protected:
 	sf::Sprite& GetSprite();
 
 private:
-	sf::Sprite  _sprite;
-	sf::Texture _image;
-	std::string _filename;
-	bool _isLoaded;
+	sf::Sprite  sprite;
+	sf::Texture image;
+	std::string filename;
+	bool isLoaded;
 	
 };

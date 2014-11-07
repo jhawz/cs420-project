@@ -7,12 +7,12 @@
 
 void Game::Start(void)
 {
-	if(_gameState != Uninitialized)
+	if(gameState != Uninitialized)
 		return;
 	
-	_mainWindow.create(sf::VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,32),"Pang!");
+	mainWindow.create(sf::VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,32),"Pang!");
 	
-	//_mainWindow.SetFramerateLimit(60);
+	//mainWindow.SetFramerateLimit(60);
 
 //	PlayerPaddle *player1 = new PlayerPaddle();
 //	player1->SetPosition((SCREEN_WIDTH/2),700);
@@ -20,17 +20,17 @@ void Game::Start(void)
 //	GameBall *ball = new GameBall();
 //	ball->SetPosition((SCREEN_WIDTH/2),(SCREEN_HEIGHT/2)-15);
 	
-//	_gameObjectManager.Add("Paddle1",player1);
-//	_gameObjectManager.Add("Ball",ball);
+//	gameObjectManager.Add("Paddle1",player1);
+//	gameObjectManager.Add("Ball",ball);
         
         Enemy *enemy_1 = new Enemy();
         enemy_1->Load("textures/SpriteSheet.png");
         enemy_1->setPistol();
         enemy_1->SetPosition(100,100);
         enemy_1->rightRun();
-        _gameObjectManager.Add("Enemy", enemy_1);
+        gameObjectManager.Add("Enemy", enemy_1);
 
-	_gameState= Game::ShowingSplash;
+	gameState= Game::ShowingSplash;
 
 
 	while(!IsExiting())
@@ -38,12 +38,12 @@ void Game::Start(void)
 		GameLoop();
 	}
 
-	_mainWindow.close();
+	mainWindow.close();
 }
 
 bool Game::IsExiting()
 {
-	if(_gameState == Game::Exiting) 
+	if(gameState == Game::Exiting) 
 		return true;
 	else 
 		return false;
@@ -52,23 +52,23 @@ bool Game::IsExiting()
 
 sf::RenderWindow& Game::GetWindow()
 {
-	return _mainWindow;
+	return mainWindow;
 }
 
 const sf::Event& Game::GetInput() 
 {
 	sf::Event currentEvent;
-	_mainWindow.pollEvent(currentEvent);
+	mainWindow.pollEvent(currentEvent);
 	return currentEvent;
 }
 
 void Game::GameLoop()
 {
 	sf::Event currentEvent;
-	_mainWindow.pollEvent(currentEvent);
+	mainWindow.pollEvent(currentEvent);
 	
 	
-	switch(_gameState)
+	switch(gameState)
 	{
 		case Game::ShowingMenu:
 			{
@@ -82,13 +82,13 @@ void Game::GameLoop()
 			}
 		case Game::Playing:
 			{
-				_mainWindow.clear(sf::Color(0,0,0));
+				mainWindow.clear(sf::Color(0,0,0));
 
-				_gameObjectManager.UpdateAll();
-				_gameObjectManager.DrawAll(_mainWindow);
+				gameObjectManager.UpdateAll();
+				gameObjectManager.DrawAll(mainWindow);
 
-				_mainWindow.display();
-				if(currentEvent.type == sf::Event::Closed) _gameState = Game::Exiting;
+				mainWindow.display();
+				if(currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
 
 				if(currentEvent.type == sf::Event::KeyPressed)
 					{
@@ -103,25 +103,25 @@ void Game::GameLoop()
 void Game::ShowSplashScreen()
 {
 	SplashScreen splashScreen;
-	splashScreen.Show(_mainWindow);
-	_gameState = Game::ShowingMenu;
+	splashScreen.Show(mainWindow);
+	gameState = Game::ShowingMenu;
 }
 
 void Game::ShowMenu()
 {
 	MainMenu mainMenu;
-	MainMenu::MenuResult result = mainMenu.Show(_mainWindow);
+	MainMenu::MenuResult result = mainMenu.Show(mainWindow);
 	switch(result)
 	{
 		case MainMenu::Exit:
-			_gameState = Exiting;
+			gameState = Exiting;
 			break;
 		case MainMenu::Play:
-			_gameState = Playing;
+			gameState = Playing;
 			break;
 	}
 }
 
-Game::GameState Game::_gameState = Uninitialized;
-sf::RenderWindow Game::_mainWindow;
-GameObjectManager Game::_gameObjectManager;
+Game::GameState Game::gameState = Uninitialized;
+sf::RenderWindow Game::mainWindow;
+GameObjectManager Game::gameObjectManager;
