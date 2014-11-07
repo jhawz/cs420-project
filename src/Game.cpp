@@ -25,9 +25,6 @@ void Game::Start(void)
         
         Enemy *enemy_1 = new Enemy();
         enemy_1->Load("textures/SpriteSheet.png");
-        enemy_1->setPistol();
-        enemy_1->SetPosition(100,100);
-        enemy_1->rightRun();
         _gameObjectManager.Add("Enemy", enemy_1);
 
 	_gameState= Game::ShowingSplash;
