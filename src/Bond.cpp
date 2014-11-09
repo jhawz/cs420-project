@@ -8,6 +8,7 @@ Bond::Bond(std::string config,std::string texture):Actor::Actor(){
     
     if (bondnode.empty()) {
         //if there is an error in node initialization
+        std::cout<<"Can't find Bond actor node..."<<std::endl;
         return;
     }
     prepareFrameInfo(bondnode);
