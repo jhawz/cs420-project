@@ -143,3 +143,19 @@ bool Actor::hasAnimation(std::string name){
 bool Actor::isCurAnim(std::string name){
     return curAnim==animations[name];
 }
+
+void Actor::setLeftPress(bool p){
+    leftpressed=p;
+}
+
+void Actor::setRightPress(bool p){
+    rightpressed=p;
+}
+
+void Actor::setUpPress(bool p){
+    uppressed=p;
+}
+
+void Actor::setDownPress(bool p){
+    downpressed=p;
+}
