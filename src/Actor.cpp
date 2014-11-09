@@ -1,4 +1,20 @@
+//
+//  Actor.cpp
+//  jamesrambotest
+//
+//  Created by gyp on 11/4/14.
+//  Copyright (c) 2014 gyp. All rights reserved.
+//
+
 #include "Actor.h"
+
+Actor::Actor(){
+    vx=0;vy=0;
+    ax=0;ay=0;
+    alive=true;
+    rightdir=true;
+    shootlocked=false;
+}
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){
     int t=node.attribute("attack_lock").as_int();
@@ -48,7 +64,7 @@ void Actor::leftRun(){
     vx=-8;vy=0;
     ax=0;ay=0;
 }
-int Actor::getLowBound(){
+float Actor::getLowBound(){
     int upmost=curAnim->getCurFrame().top;
     int lowermost=upmost+curAnim->getCurFrame().height-1;
     int leftmost=curAnim->getCurFrame().left;
@@ -63,7 +79,7 @@ int Actor::getLowBound(){
         atMiddle=false;
         int middle=(upmost+lowermost)/2;
         for (int i=leftmost; i<=rightmost; i++) {
-            if (image->getPixel(i, middle)!=sf::Color::White) {
+            if (image->getPixel(i, middle)!=sf::Color::Transparent) {
                 atMiddle=true;
                 break;
             }
@@ -114,4 +130,12 @@ void Actor::Update(float elapsedTime){
             shootlocked=false;
         }
     }
+}
+
+void Actor::setOriginalImg(sf::Image &img){
+    image=&img;
+}
+
+bool Actor::hasAnimation(std::string name){
+    return (animations.find(name)!=animations.end());
 }
