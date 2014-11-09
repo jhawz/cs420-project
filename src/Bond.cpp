@@ -61,7 +61,7 @@ void Bond::Update(float elapsedTime){
     }
     else{
         jumping=false;
-        SetPosition(GetPosition().x, lowerright.y);
+        SetPosition(GetPosition().x, lowerright.y-64);
         if (vx==8) {
             rightRun();
         }
