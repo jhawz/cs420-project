@@ -78,9 +78,7 @@ void Game::GameLoop()
 				mainWindow.clear(sf::Color(0,0,0));
 
 				gameObjectManager.UpdateAll();
-				std::cout<<"update successfully"<<std::endl;
 				gameObjectManager.DrawAll(mainWindow);
-				std::cout<<"draw successfully"<<std::endl;
 
 				mainWindow.display();
 				if(currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
