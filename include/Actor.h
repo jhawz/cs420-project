@@ -20,6 +20,10 @@ public:
     void animReq(std::string animName,bool withlock);
     void setOriginalImg(sf::Image &img);
     bool hasAnimation(std::string name);
+    void setLeftPress(bool p);
+    void setRightPress(bool p);
+    void setUpPress(bool p);
+    void setDownPress(bool p);
     
 protected:
     float getLowBound();
@@ -31,6 +35,7 @@ protected:
     int lowerBound;
     float vx,vy;
     float ax,ay;
+    bool leftpressed,rightpressed,uppressed,downpressed;
 private:
     std::map<std::string,Animation*> animations;
     Animation *curAnim;
