@@ -19,6 +19,7 @@ Bond::Bond(std::string config,std::string texture):Actor::Actor(){
         return;
     }
     setOriginalImg(*img);
+    std::cout<<"finish constructing"<<std::endl;
 }
 
 void Bond::jump(){
