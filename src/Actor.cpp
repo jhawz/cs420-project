@@ -139,3 +139,7 @@ void Actor::setOriginalImg(sf::Image &img){
 bool Actor::hasAnimation(std::string name){
     return (animations.find(name)!=animations.end());
 }
+
+bool Actor::isCurAnim(std::string name){
+    return curAnim==animations[name];
+}
