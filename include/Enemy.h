@@ -8,40 +8,16 @@
 #ifndef ENEMY_H
 #define	ENEMY_H
 
-#include <cstdio>
-#include <iostream>
-#include <SFML/Graphics.hpp>
+#include "stdafx.h"
 #include "Animation.h"
+#include "pugixml.hpp"
+#include "Actor.h"
 
-class Enemy : public sf::Sprite {
+class Enemy : public Actor {
 public:
-    Enemy();
-    ~Enemy();
-    void update();
-    void rightRun();
-    void leftRun();
-    void standStill();
-    void shoot();
-    void setPistol();
-    void setSmg();
-    void setMachineGun();
-    bool isAlive();
-    bool isAttacking();
-    void setAttack( bool x);
-    
-
-private:
-    bool alive;
-    bool attack;
-    int health;
-    bool rightdir;
-    bool running;
-    float vx, vy, vxmax, vymax, vxmin, vymin;
-    float ax, ay;
-    Animation *curAnim;
-    Animation *run;
-    Animation *stand;
+    Enemy(std::string config,std::string texture,std::string name);
+    void leftwalk();
+    void rightwalk();
 };
 
 #endif	/* ENEMY_H */
-
