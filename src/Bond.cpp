@@ -42,6 +42,7 @@ bool Bond::lowCollide(){
 }
 
 void Bond::Update(float elapsedTime){
+    std::cout<<"starts updating"<<std::endl;
     Actor::Update(elapsedTime);
     if (!lowCollide()) {
         if (ay==0) {
