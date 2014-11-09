@@ -1,5 +1,3 @@
-#include "Bond.h"
-
 Bond::Bond(std::string config,std::string texture):Actor::Actor(){
     pugi::xml_document doc;
     doc.load_file(config.c_str());
@@ -44,7 +42,7 @@ void Bond::Update(float elapsedTime){
     Actor::Update(elapsedTime);
     if (!lowCollide()) {
         if (ay==0) {
-            ay=0.1;
+            ay=0.001;
             jumping=true;
             animReq("jump_fall", false);
         }
