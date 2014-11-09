@@ -4,8 +4,8 @@
 #include <cstdio>
 #include <cstdlib>
 #include <iostream>
-#include <sfml/System/Time.hpp>
-#include <sfml/Graphics.hpp>
+#include <SFML/System/Time.hpp>
+#include <SFML/Graphics.hpp>
 #include <vector>
 #include "pugixml.hpp"
 

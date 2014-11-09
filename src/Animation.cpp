@@ -1,4 +1,5 @@
 #include "Animation.h"
+#include <sstream>
 
 Animation::Animation(){
     curFrame=0;

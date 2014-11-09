@@ -3,6 +3,7 @@
 #include "MainMenu.h"
 #include "SplashScreen.h"
 #include "Enemy.h"
+#include "Bond.h"
 #include "VisibleGameObject.h"
 
 void Game::Start(void)
@@ -10,28 +11,21 @@ void Game::Start(void)
 	if(gameState != Uninitialized)
 		return;
 	
-	mainWindow.create(sf::VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,32),"Pang!");
+	mainWindow.create(sf::VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,32),"James Rambo: Revenge of WillFinger!");
 	
 	//mainWindow.SetFramerateLimit(60);
-
-//	PlayerPaddle *player1 = new PlayerPaddle();
-//	player1->SetPosition((SCREEN_WIDTH/2),700);
-//
-//	GameBall *ball = new GameBall();
-//	ball->SetPosition((SCREEN_WIDTH/2),(SCREEN_HEIGHT/2)-15);
-	
-//	gameObjectManager.Add("Paddle1",player1);
-//	gameObjectManager.Add("Ball",ball);
         
-        Enemy *enemy_1 = new Enemy();
-        enemy_1->Load("textures/SpriteSheet.png");
-        enemy_1->setPistol();
-        enemy_1->SetPosition(100,100);
-        enemy_1->rightRun();
+        Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
+        enemy_1->SetPosition(400,400);
+        
+        //Bond *bond = new Bond("actors.xml", "textures/JB.png");
+        //bond->SetPosition(200,200);
+        //bond->setBoundary(0, 0, 1024, 768);
+        
+        //gameObjectManager.Add("Bond", bond);
         gameObjectManager.Add("Enemy", enemy_1);
 
 	gameState= Game::ShowingSplash;
-
 
 	while(!IsExiting())
 	{
@@ -66,7 +60,6 @@ void Game::GameLoop()
 {
 	sf::Event currentEvent;
 	mainWindow.pollEvent(currentEvent);
-	
 	
 	switch(gameState)
 	{
