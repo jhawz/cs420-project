@@ -48,6 +48,7 @@ void GameObjectManager::UpdateAll() {
 
     while (itr != gameObjects.end()) {
         itr->second->Update(timeDelta);
+        std::cout<<itr->first<<std::endl;
         itr++;
     }
 
