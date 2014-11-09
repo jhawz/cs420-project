@@ -45,10 +45,10 @@ void GameObjectManager::DrawAll(sf::RenderWindow& renderWindow) {
 void GameObjectManager::UpdateAll() {
     std::map<std::string, VisibleGameObject*>::const_iterator itr = gameObjects.begin();
     float timeDelta = clock.restart().asSeconds();
+    std::cout<<"before iteration"<<std::endl;
 
     while (itr != gameObjects.end()) {
         itr->second->Update(timeDelta);
-        std::cout<<itr->first<<std::endl;
         itr++;
     }
 
