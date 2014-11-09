@@ -34,8 +34,8 @@ void Actor::animReq(std::string animName, bool withlock){
     if (curAnim!=animations[animName]&&!withlock) {
         std::cout<<"Mark 1"<<std::endl;
         if(curAnim!=NULL)curAnim->end();
-        curAnim=animations[animName];
         if(animations.find(animName)==animations.end())std::cout<<"Animation not found in the map"<<std::endl;
+        curAnim=animations[animName];
         std::cout<<"Mark 2"<<std::endl;
     }
     else if (withlock){
