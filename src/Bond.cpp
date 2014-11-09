@@ -12,6 +12,7 @@ Bond::Bond(std::string config,std::string texture):Actor::Actor(){
         return;
     }
     prepareFrameInfo(bondnode);
+    std::cout<<"Finish preparing frames"<<std::endl;
     Load(texture);
     jumping=false;
     sf::Image *img=new sf::Image();
@@ -19,7 +20,6 @@ Bond::Bond(std::string config,std::string texture):Actor::Actor(){
         return;
     }
     setOriginalImg(*img);
-    std::cout<<"finish constructing"<<std::endl;
 }
 
 void Bond::jump(){
