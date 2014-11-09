@@ -1,3 +1,5 @@
+#include "Bond.h"
+
 Bond::Bond(std::string config,std::string texture):Actor::Actor(){
     pugi::xml_document doc;
     doc.load_file(config.c_str());
