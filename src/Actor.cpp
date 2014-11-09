@@ -32,20 +32,15 @@ void Actor::prepareFrameInfo(pugi::xml_node& node){
 
 void Actor::animReq(std::string animName, bool withlock){
     if (curAnim!=animations[animName]&&!withlock) {
-        std::cout<<"Mark 1"<<std::endl;
-        if(curAnim!=NULL)curAnim->end();
+        if(curAnim!=NULL){std::cout<<"curAnim is not NULL"<<std::endl;curAnim->end();std::cout<<"and is ended."<<std::endl;}
         if(animations.find(animName)==animations.end())std::cout<<"Animation not found in the map"<<std::endl;
         curAnim=animations[animName];
-        std::cout<<"Mark 2"<<std::endl;
     }
     else if (withlock){
-        std::cout<<"Mark 3"<<std::endl;
         return;
     }
     if (curAnim->isEnded()) {
-        std::cout<<"Mark 4"<<std::endl;
         curAnim->restart();
-        std::cout<<"Mark 5"<<std::endl;
     }
 }
 
