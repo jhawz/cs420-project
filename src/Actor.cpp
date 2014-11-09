@@ -104,7 +104,7 @@ void Actor::attack(){
 
 void Actor::die(){
     if (!alive)return;
-    
+    vx=0;vy=0;ax=0;ay=0;
     animReq("die", false);
     alive=false;
 }
@@ -113,6 +113,7 @@ void Actor::standStill(){
     if (!alive) {
         return;
     }
+    vx=0;vy=0;ax=0;ay=0;
     animReq("stand", false);
 }
 
