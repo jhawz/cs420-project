@@ -14,6 +14,11 @@ Enemy::Enemy(std::string config,std::string texture,std::string name):Actor::Act
         }
         prepareFrameInfo(enemynode);
         Load(texture);
+        sf::Image *img=new sf::Image();
+        if (!img->loadFromFile(texture)) {
+                return;
+        }
+        setOriginalImg(*img);
 }
 
 void Enemy::leftwalk(){
