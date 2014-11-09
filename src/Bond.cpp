@@ -50,6 +50,7 @@ void Bond::Update(float elapsedTime){
             ay=0.1;
             jumping=true;
             animReq("jump_fall", false);
+            std::cout<<"Falling"<<std::endl;
         }
         else if (vy>-6&&vy<6){
             animReq("jump_float", false);
