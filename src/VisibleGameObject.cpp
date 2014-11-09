@@ -44,7 +44,6 @@ void VisibleGameObject::SetPosition(float x, float y)
 {
 	if(isLoaded)
 	{
-		std::cout<<"Setting position "<<x<<","<<y<<std::endl;
 		sprite.setPosition(x,y);
 	}
 }
