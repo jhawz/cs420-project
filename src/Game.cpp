@@ -20,7 +20,7 @@ void Game::Start(void)
         
         Bond *bond = new Bond("actors.xml", "textures/JB.png");
         bond->SetPosition(200,200);
-        bond->setBoundary(0, 0, 1024, 768);
+        bond->setBoundary(0, 0, 1024, 464);
         
         gameObjectManager.Add("Bond", bond);
         gameObjectManager.Add("Enemy", enemy_1);
@@ -75,7 +75,7 @@ void Game::GameLoop()
 			}
 		case Game::Playing:
 			{
-				mainWindow.clear(sf::Color(0,0,0));
+				mainWindow.clear(sf::Color::White);
 
 				gameObjectManager.UpdateAll();
 				gameObjectManager.DrawAll(mainWindow);
