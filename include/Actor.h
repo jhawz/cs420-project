@@ -20,6 +20,7 @@ public:
     void animReq(std::string animName,bool withlock);
     void setOriginalImg(sf::Image &img);
     bool hasAnimation(std::string name);
+    bool isCurAnim(std::string name);
     void setLeftPress(bool p);
     void setRightPress(bool p);
     void setUpPress(bool p);
