@@ -2,7 +2,7 @@
 #include "Enemy.h"
 
 
-Enemy::Enemy(std::string config,std::string texture,std::string name){
+Enemy::Enemy(std::string config,std::string texture,std::string name):Actor::Actor(){
         pugi::xml_document doc;
         doc.load_file(config.c_str());
         
