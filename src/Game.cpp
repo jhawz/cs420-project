@@ -18,11 +18,11 @@ void Game::Start(void)
         Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
         enemy_1->SetPosition(400,400);
         
-        //Bond *bond = new Bond("actors.xml", "textures/JB.png");
-        //bond->SetPosition(200,200);
-        //bond->setBoundary(0, 0, 1024, 768);
+        Bond *bond = new Bond("actors.xml", "textures/JB.png");
+        bond->SetPosition(200,200);
+        bond->setBoundary(0, 0, 1024, 768);
         
-        //gameObjectManager.Add("Bond", bond);
+        gameObjectManager.Add("Bond", bond);
         gameObjectManager.Add("Enemy", enemy_1);
 
 	gameState= Game::ShowingSplash;
