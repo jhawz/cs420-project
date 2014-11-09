@@ -13,6 +13,10 @@ public:
     Bond(std::string config,std::string texture);
     void Update(float elapsedTime);
     void jump();
+    void leftRun();
+    void rightRun();
+    void standStill();
+    void straightShoot();
     void upshoot();
     void downshoot();
     void crouchStill();
