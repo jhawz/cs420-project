@@ -59,7 +59,7 @@ void Bond::Update(float elapsedTime){
             animReq("jump_fall", false);
         }
     }
-    else{
+    else if(vy>0){
         jumping=false;
         SetPosition(GetPosition().x, lowerright.y-64);
         if (vx==8) {
