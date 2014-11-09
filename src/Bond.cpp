@@ -37,14 +37,14 @@ void Bond::setBoundary(float left, float up, float right, float lower){
 }
 
 bool Bond::lowCollide(){
-    return GetPosition().x+getLowBound()>=lowerright.y;
+    return GetPosition().y+getLowBound()>=lowerright.y;
 }
 
 void Bond::Update(float elapsedTime){
     Actor::Update(elapsedTime);
     if (!lowCollide()) {
         if (ay==0) {
-            ay=0.5;
+            ay=0.1;
             jumping=true;
             animReq("jump_fall", false);
         }
