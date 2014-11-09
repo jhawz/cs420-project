@@ -18,31 +18,33 @@ Actor::Actor(){
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){
     int t=node.attribute("attack_lock").as_int();
-    std::cout<<"shooting lock loaded"<<std::endl;
     shootWait=sf::milliseconds(t);
     std::istringstream ss(std::string(node.child("Animation_List").text().as_string()));
-    std::cout<<"Animation list loaded"<<std::endl;
     std::string token;
     while (std::getline(ss, token,',')) {
         pugi::xml_node curnode=node.find_child_by_attribute("Animation", "name", token.c_str());
         Animation* a=new Animation();
         a->loadFromXml(curnode);
         animations.insert(std::pair<std::string,Animation*>(token,a));
-        std::cout<<"Animation "<<token<<" loaded"<<endl;
     }
     animReq("stand", false);
 }
 
 void Actor::animReq(std::string animName, bool withlock){
     if (curAnim!=animations[animName]&&!withlock) {
+        std::cout<<"Mark 1"<<std::endl;
         if(curAnim!=NULL)curAnim->end();
         curAnim=animations[animName];
+        std::cout<<"Mark 2"<<std::endl;
     }
     else if (withlock){
+        std::cout<<"Mark 3"<<std::endl;
         return;
     }
     if (curAnim->isEnded()) {
+        std::cout<<"Mark 4"<<std::endl;
         curAnim->restart();
+        std::cout<<"Mark 5"<<std::endl;
     }
 }
 
