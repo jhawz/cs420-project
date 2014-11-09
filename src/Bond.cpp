@@ -108,3 +108,26 @@ void Bond::crouchshoot(){
     clock.restart();
 }
 
+void Bond::leftRun(){
+    if (lowCollide()) {
+        Actor::leftRun();
+    }
+}
+
+void Bond::rightRun(){
+    if (lowCollide()) {
+        Actor::rightRun();
+    }
+}
+
+void Bond::standStill(){
+    if (lowCollide()) {
+        Actor::standStill();
+    }
+}
+
+void Bond::straightShoot(){
+    if (lowCollide()) {
+        Actor::attack();
+    }
+}
