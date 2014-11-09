@@ -8,6 +8,7 @@
 
 class Actor:public VisibleGameObject{
 public:
+    Actor();
     void prepareFrameInfo(pugi::xml_node& node);
     void Update(float elapsedTime);
     void rightRun();
@@ -16,14 +17,15 @@ public:
     void attack();
     void die();
     void animReq(std::string animName,bool withlock);
+    void setOriginalImg(sf::Image &img);
+    bool hasAnimation(std::string name);
     
 protected:
-    int getLowBound();
+    float getLowBound();
     sf::Clock clock;
     sf::Time shootWait;
     bool alive;
     bool rightdir;
-    bool running;
     bool shootlocked;
     int lowerBound;
     float vx,vy;
