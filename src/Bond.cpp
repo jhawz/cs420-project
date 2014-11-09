@@ -47,7 +47,7 @@ void Bond::Update(float elapsedTime){
     Actor::Update(elapsedTime);
     if (!lowCollide()) {
         if (ay==0) {
-            ay=0.01;
+            ay=0.1;
             jumping=true;
             animReq("jump_fall", false);
         }
