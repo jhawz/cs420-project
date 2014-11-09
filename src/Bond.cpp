@@ -13,6 +13,11 @@ Bond::Bond(std::string config,std::string texture):Actor::Actor(){
     prepareFrameInfo(bondnode);
     Load(texture);
     jumping=false;
+    sf::Image *img=new sf::Image();
+    if (!img->loadFromFile(texture)) {
+        return;
+    }
+    setOriginalImg(*img);
 }
 
 void Bond::jump(){
