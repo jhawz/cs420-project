@@ -11,6 +11,7 @@ Bond::Bond(std::string config,std::string texture):Actor::Actor(){
         std::cout<<"Can't find Bond actor node..."<<std::endl;
         return;
     }
+    std::cout<<"start preparing frames"<<std::endl;
     prepareFrameInfo(bondnode);
     std::cout<<"Finish preparing frames"<<std::endl;
     Load(texture);
