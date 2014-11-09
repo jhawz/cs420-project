@@ -37,7 +37,7 @@ void Bond::setBoundary(float left, float up, float right, float lower){
 }
 
 bool Bond::lowCollide(){
-    return GetPosition().y+getLowBound()>=lowerright.y;
+    return GetPosition().y+64>=lowerright.y;
 }
 
 void Bond::Update(float elapsedTime){
