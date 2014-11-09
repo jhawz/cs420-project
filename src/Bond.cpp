@@ -62,13 +62,24 @@ void Bond::Update(float elapsedTime){
     else if(vy>0){
         jumping=false;
         SetPosition(GetPosition().x, lowerright.y-64);
-        if (vx==8) {
+        if (rightpressed) {
             rightRun();
         }
-        else if (vx==-8){
+        else if (leftpressed){
             leftRun();
         }
-        else if (vx==0){
+        else{
+            standStill();
+        }
+    }
+    else if(!jumping){
+        if (rightpressed) {
+            rightRun();
+        }
+        else if (leftpressed){
+            leftRun();
+        }
+        else if(isCurAnim("run")){
             standStill();
         }
     }
