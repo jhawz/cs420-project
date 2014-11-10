@@ -161,3 +161,8 @@ void Actor::setUpPress(bool p){
 void Actor::setDownPress(bool p){
     downpressed=p;
 }
+
+void Bond::setBoundary(float left, float up, float right, float lower) {
+    upperleft = sf::Vector2f(left, up);
+    lowerright = sf::Vector2f(right, lower);
+}
