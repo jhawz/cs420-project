@@ -7,6 +7,8 @@ public:
 	virtual ~VisibleGameObject();
 	
 	virtual void Load(std::string filename);
+        virtual void Load(sf::Texture& t, 
+        sf::Vector2i textPos, sf::Vector2i textSize);
 	virtual void Draw(sf::RenderWindow & window);
 	virtual void Update(float elapsedTime);
 

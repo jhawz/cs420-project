@@ -27,6 +27,16 @@ void VisibleGameObject::Load(std::string filename)
 		isLoaded = true;
 	}
 }
+void VisibleGameObject::Load(sf::Texture& t, 
+        sf::Vector2i textPos, sf::Vector2i textRect)
+{
+    image = t;
+    sprite.setTexture(t);
+    sprite.setTextureRect(sf::IntRect(textPos.x, textPos.y, 
+            32, 32));
+    isLoaded = true;
+        
+}
 
 void VisibleGameObject::Draw(sf::RenderWindow & renderWindow)
 {
@@ -38,14 +48,14 @@ void VisibleGameObject::Draw(sf::RenderWindow & renderWindow)
 
 void VisibleGameObject::Update(float elapsedTime)
 {
+    
 }
-
 void VisibleGameObject::SetPosition(float x, float y)
 {
 	if(isLoaded)
-	{
+    {
 		sprite.setPosition(x,y);
-	}
+    }
 }
 
 sf::Vector2f VisibleGameObject::GetPosition() const
