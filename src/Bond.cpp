@@ -36,10 +36,7 @@ void Bond::jump() {
     animReq("jump_up", false);
 }
 
-void Bond::setBoundary(float left, float up, float right, float lower) {
-    upperleft = sf::Vector2f(left, up);
-    lowerright = sf::Vector2f(right, lower);
-}
+
 
 bool Bond::lowCollide() {
     return GetPosition().y + 64 >= lowerright.y;
