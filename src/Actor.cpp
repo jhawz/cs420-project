@@ -27,12 +27,13 @@ void Actor::prepareFrameInfo(pugi::xml_node& node){
         a->loadFromXml(curnode);
         animations.insert(std::pair<std::string,Animation*>(token,a));
     }
+    curAnim=NULL;
     animReq("stand", false);
 }
 
 void Actor::animReq(std::string animName, bool withlock){
     if (curAnim!=animations[animName]&&!withlock) {
-        //if(curAnim!=null){std::cout<<"curAnim is not NULL"<<std::endl;curAnim->end();std::cout<<"and is ended."<<std::endl;}
+        if(curAnim!=NULL){curAnim->end();}
         curAnim=animations[animName];
     }
     else if (withlock){
