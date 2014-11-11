@@ -1,6 +1,9 @@
 #include "stdafx.h"
 #include "GameObjectManager.h"
 #include "Game.h"
+#include <iostream>
+#include "Actor.h"
+#include "Bond.h"
 
 GameObjectManager::GameObjectManager() {
 }
@@ -48,8 +51,57 @@ void GameObjectManager::UpdateAll() {
 
     while (itr != gameObjects.end()) {
         itr->second->Update(timeDelta);
+        checkForCollision(itr->second);
         itr++;
     }
-
-
 }
+    void GameObjectManager::setCollisionList(std::vector<int> v)
+    {
+        collisionsList = v;
+    }
+    
+    void GameObjectManager::checkForCollision(VisibleGameObject* obj){
+        //mod will cause the GameObjectManager to skip tiles.
+        
+        if (((int) obj->GetPosition().x) % 32 != 0)
+        {
+            
+        }
+        
+        if (((int) obj->GetPosition().y) % 32 != 0)
+        {
+            int xVal = ((int) obj->GetPosition().x) / 32;
+            int yVal = ((int) obj->GetPosition().y) / 32;
+            int posToFrame = xVal + ((yVal + 2) * 100);
+            
+            //Run binary search
+            int low = 0;
+            int high = collisionsList.size();
+            int mid = 0;
+            while (low < high)
+            {
+                mid = ((low + high) / 2);
+                if (collisionsList[mid] == posToFrame)
+                {
+                    //collided. 
+                    static_cast<Bond*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    obj->SetPosition(obj->GetPosition().x, yVal * 32);
+                    return;
+                }
+                else if (collisionsList[mid] < posToFrame)
+                {
+                    low = mid + 1;
+                }
+                else
+                {
+                    high = mid - 1;
+                }
+               // std::cout << "LOW = " << low << " MID = " << mid << " HIGH = " <<  high << std::endl;
+            }
+            if (collisionsList[mid - 1] == posToFrame || collisionsList[mid + 1] == posToFrame)
+            {
+                static_cast<Bond*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                obj->SetPosition(obj->GetPosition().x, yVal * 32);
+            }
+        }
+    }

@@ -7,6 +7,7 @@
 //
 
 #include "Actor.h"
+#include <cstddef>
 
 Actor::Actor(){
     vx=0;vy=0;

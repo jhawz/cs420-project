@@ -26,7 +26,7 @@ public:
     void setUpPress(bool p);
     void setDownPress(bool p);
     void setBoundary(float left,float up,float right,float lower);
-    
+        
 protected:
     float getLowBound();
     sf::Clock clock;
@@ -38,11 +38,12 @@ protected:
     float vx,vy;
     float ax,ay;
     bool leftpressed,rightpressed,uppressed,downpressed;
-    sf::Vector2f upperleft,lowerright;
 private:
     std::map<std::string,Animation*> animations;
     Animation *curAnim;
     sf::Image *image;
+    sf::Vector2f upperleft;
+    sf::Vector2f lowerright;
 };
 
 #endif

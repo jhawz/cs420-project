@@ -21,9 +21,11 @@ public:
     void downshoot();
     void crouchStill();
     void crouchshoot();
+    void setBoundary(float left, float up, float right, float lower);
 private:
     bool lowCollide();
     bool jumping;
+    sf::Vector2f upperleft,lowerright;
 };
 
 #endif

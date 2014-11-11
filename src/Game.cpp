@@ -14,38 +14,41 @@ void Game::Start(void)
 		return;
 	
 	mainWindow.create(sf::VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,32),"James Rambo: Revenge of WillFinger!");
-        
-        VisibleGameObject *background = new VisibleGameObject;
-        background->Load("textures/BackgroundOne_1.png");
-        gameObjectManager.Add("Background", background);
 	
 	//mainWindow.SetFramerateLimit(60);
-               sf::Texture text;
+                      sf::Texture text;
         MapLoader* m = new MapLoader();
         m->loadMap("data/Level1.txt");
-        std::vector<std::string> testList = m->getTileCodes();
+        std::vector<std::string> codeList = m->getTileCodes();
+        std::vector<int> collisionList;
         text.loadFromFile("textures/TiledEight32New.png");
-        for (int x = 0; x < testList.size(); x++)
+        for (int x = 0; x < codeList.size(); x++)
         {
+            if (codeList[x] != "0")
+            {
             Tile* newTile = new Tile();
-            newTile->buildTile(std::stoi(testList[x]), text, 
-                    sf::Vector2i(((std::stoi(testList[x]) - 1) % 15) * 32, 
-                    ((std::stoi(testList[x]) - 1) / 15) * 32),
+            newTile->buildTile(std::stoi(codeList[x]), text, 
+                    sf::Vector2i(((std::stoi(codeList[x]) - 1) % 15) * 32, 
+                    ((std::stoi(codeList[x]) - 1) / 15) * 32),
                 sf::Vector2i(32, 32));
             newTile->SetPosition((x % 100) * 32, (x / 100) * 32);
+            collisionList.push_back(x % 100 + ((x / 100) * 100));
             gameObjectManager.Add("Tile" + std::to_string(x), newTile);
+            }
         }
+        gameObjectManager.setCollisionList(collisionList);
         delete m;
+        
         Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
-        enemy_1->SetPosition(400,350);
+        enemy_1->SetPosition(400,400);
         
         Bond *bond = new Bond("actors.xml", "textures/JB.png");
         bond->SetPosition(200,200);
-        bond->setBoundary(0, 0, 800, 414);
+        bond->setBoundary(0, 0, 1024, 464);
         
         gameObjectManager.Add("Bond", bond);
         gameObjectManager.Add("Enemy", enemy_1);
-
+        
 	gameState= Game::ShowingSplash;
 
 	while(!IsExiting())
@@ -100,7 +103,7 @@ void Game::GameLoop()
 
 				gameObjectManager.UpdateAll();
 				gameObjectManager.DrawAll(mainWindow);
-
+                                
 				mainWindow.display();
 				if(currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
 

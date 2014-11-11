@@ -15,10 +15,11 @@ public:
 
 	void DrawAll(sf::RenderWindow& renderWindow);
 	void UpdateAll();
-
+        void setCollisionList(std::vector<int> v);
+        void checkForCollision(VisibleGameObject* obj);
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
-
+        std::vector<int> collisionsList;
 	sf::Clock clock;
 
 	struct GameObjectDeallocator

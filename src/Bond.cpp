@@ -36,6 +36,11 @@ void Bond::jump() {
     animReq("jump_up", false);
 }
 
+void Bond::setBoundary(float left, float up, float right, float lower) {
+    upperleft = sf::Vector2f(left, up);
+    lowerright = sf::Vector2f(right, lower);
+}
+
 bool Bond::lowCollide() {
     return GetPosition().y + 64 >= lowerright.y;
 }
@@ -54,9 +59,6 @@ void Bond::Update(float elapsedTime) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         jump();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        straightShoot();
     }
 
     Actor::Update(elapsedTime);
@@ -149,3 +151,5 @@ void Bond::straightShoot() {
         Actor::attack();
     }
 }
+
+   
