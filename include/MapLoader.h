@@ -28,6 +28,7 @@ public:
 	std::vector<sf::Sprite> getSprites();
         std::vector<string> getTileCodes();
         std::vector<Tile*> getTiles();
+        VisibleGameObject* getBackground(int worldCode);
         bool collidedWith(sf::IntRect otherObj);
         int getTestValue();
 };

@@ -18,10 +18,12 @@ void Game::Start(void)
 	//mainWindow.SetFramerateLimit(60);
                       sf::Texture text;
         MapLoader* m = new MapLoader();
+        VisibleGameObject* bg = m->getBackground(1);
         m->loadMap("data/Level1.txt");
         std::vector<std::string> codeList = m->getTileCodes();
         std::vector<int> collisionList;
         text.loadFromFile("textures/TiledEight32New.png");
+        gameObjectManager.Add("Background", bg);
         for (int x = 0; x < codeList.size(); x++)
         {
             if (codeList[x] != "0")

@@ -35,6 +35,34 @@ void MapLoader::loadMap(std::string fileName)
 		count++;
 	}
 }
+VisibleGameObject* MapLoader::getBackground(int worldCode)
+{
+    VisibleGameObject* bg = new VisibleGameObject();
+    switch (worldCode)
+    {
+        case 1:
+            bg->Load("textures/BackgroundOne_1.png");
+            break;
+        case 2:
+            bg->Load("textures/BackgroundOne_1.png");
+            break;
+        case 3:
+            bg->Load("textures/BackgroundOne_1.png");
+            break;
+        case 4:
+            bg->Load("textures/BackgroundOne_1.png");
+            break;
+        case 5:
+            bg->Load("textures/BackgroundOne_1.png");
+            break;
+        default:
+            break;
+            
+    }
+    bg->SetPosition(0, 0);
+    
+    return bg;
+}
 std::string MapLoader::splitString(std::string dat, char &delim)
 {
 	std::istringstream s(dat);
