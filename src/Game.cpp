@@ -14,6 +14,10 @@ void Game::Start(void)
 		return;
 	
 	mainWindow.create(sf::VideoMode(SCREEN_WIDTH,SCREEN_HEIGHT,32),"James Rambo: Revenge of WillFinger!");
+        
+        VisibleGameObject *background = new VisibleGameObject;
+        background->Load("textures/BackgroundOne_1.png");
+        gameObjectManager.Add("Background", background);
 	
 	//mainWindow.SetFramerateLimit(60);
                sf::Texture text;
@@ -33,11 +37,11 @@ void Game::Start(void)
         }
         delete m;
         Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
-        enemy_1->SetPosition(400,400);
+        enemy_1->SetPosition(400,350);
         
         Bond *bond = new Bond("actors.xml", "textures/JB.png");
         bond->SetPosition(200,200);
-        bond->setBoundary(0, 0, 1024, 464);
+        bond->setBoundary(0, 0, 800, 414);
         
         gameObjectManager.Add("Bond", bond);
         gameObjectManager.Add("Enemy", enemy_1);
