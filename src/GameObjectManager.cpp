@@ -4,6 +4,7 @@
 #include <iostream>
 #include "Actor.h"
 #include "Bond.h"
+#include "Enemy.h"
 
 GameObjectManager::GameObjectManager() {
 }
@@ -84,7 +85,15 @@ void GameObjectManager::UpdateAll() {
                 if (collisionsList[mid] == posToFrame)
                 {
                     //collided. 
-                    static_cast<Bond*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    if (static_cast<Actor*>(obj)->type == 1)
+                    {
+                        static_cast<Bond*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    }
+                    else
+                    {
+                        static_cast<Enemy*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    }
+                    
                     obj->SetPosition(obj->GetPosition().x, yVal * 32);
                     return;
                 }
@@ -100,8 +109,17 @@ void GameObjectManager::UpdateAll() {
             }
             if (collisionsList[mid - 1] == posToFrame || collisionsList[mid + 1] == posToFrame)
             {
-                static_cast<Bond*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    if (static_cast<Actor*>(obj)->type == 1)
+                    {
+                        static_cast<Bond*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    }
+                    else
+                    {
+                        static_cast<Enemy*>(obj)->setBoundary(0, 0, 3200, (yVal + 2) * 32);
+                    }
+                    
                 obj->SetPosition(obj->GetPosition().x, yVal * 32);
+                return;
             }
         }
     }

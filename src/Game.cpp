@@ -42,7 +42,8 @@ void Game::Start(void)
         delete m;
         
         Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
-        enemy_1->SetPosition(400,400);
+        enemy_1->SetPosition(300 ,200);
+        enemy_1->setBoundary(0, 0, 1024, 464);
         
         Bond *bond = new Bond("actors.xml", "textures/JB.png");
         bond->SetPosition(200,200);

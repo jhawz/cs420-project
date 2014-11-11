@@ -19,6 +19,8 @@ Enemy::Enemy(std::string config,std::string texture,std::string name):Actor::Act
                 return;
         }
         setOriginalImg(*img);
+        alive = true;
+        type = 2;
 }
 
 void Enemy::leftwalk(){
@@ -42,3 +44,41 @@ void Enemy::rightwalk(){
     vx=-2;vy=0;
     ax=0;ay=0;
 }
+
+void Enemy::Update(float elapsedTime)
+{
+    Actor::Update(elapsedTime);
+  //  std::cout << " In Enemy Update " << "Low Collide = " << lowerright.y << std::endl;
+
+    if (!lowCollide()) {
+        if (ay == 0)
+            ay = 2;
+            std::cout << " still falling! = " << GetPosition().y << " and lowerright: " << lowerright.y << std::endl;
+    }
+    else if (lowCollide()) {
+       // jumping = false;
+        ay = 0;
+        vy = 0;
+        SetPosition(GetPosition().x, lowerright.y - 64);
+            standStill();
+    } else  {
+        if (rightpressed) {
+            rightRun();
+        } else if (leftpressed) {
+            leftRun();
+        } else if (isCurAnim("run")) {
+            standStill();
+        }
+    }
+    
+    }
+
+    void Enemy::setBoundary(float left, float up, float right, float lower) {
+        upperleft = sf::Vector2f(left, up);
+        lowerright = sf::Vector2f(right, lower);
+}
+
+    bool Enemy::lowCollide() {
+    return GetPosition().y + 64 >= lowerright.y;
+}
+

@@ -133,6 +133,7 @@ void Actor::Update(float elapsedTime){
             shootlocked=false;
         }
     }
+
 }
 
 void Actor::setOriginalImg(sf::Image &img){
@@ -166,4 +167,8 @@ void Actor::setDownPress(bool p){
 void Actor::setBoundary(float left, float up, float right, float lower) {
     upperleft = sf::Vector2f(left, up);
     lowerright = sf::Vector2f(right, lower);
+}
+
+bool Actor::lowCollide() {
+    return GetPosition().y + 64 >= lowerright.y;
 }

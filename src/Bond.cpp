@@ -23,6 +23,7 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
         return;
     }
     setOriginalImg(*img);
+    type = 1;
 }
 
 void Bond::jump() {
@@ -60,8 +61,12 @@ void Bond::Update(float elapsedTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         jump();
     }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+        straightShoot();
+    }
 
     Actor::Update(elapsedTime);
+    
     if (!lowCollide()) {
         if (ay == 0) {
             ay = 2;
