@@ -97,7 +97,7 @@ void Game::GameLoop() {
         {
 
             cameraPosition.x = gameObjectManager.Get("Bond")->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
-            cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y + 32 - (SCREEN_HEIGHT / 2);
+            cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y - (SCREEN_HEIGHT);
 
             if (cameraPosition.x < 0)
                 cameraPosition.x = 0;
