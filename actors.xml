@@ -4,9 +4,9 @@
     <Animation_List>stand,run,straight_shoot,up_shoot,down_shoot,jump_shoot,jump_prepare,jump_up,jump_float,jump_fall,crouch_shoot,crouch,die</Animation_List>
         <Animation name="stand" whole_line="True" line="6" repeatable="True" period="100" frame_number="1"></Animation>
         <Animation name="run" whole_line="True" line="0" repeatable="True" period="40" frame_number="8"></Animation>
-        <Animation name="straight_shoot" whole_line="True" line="2" repeatable="False" period="100" frame_number="3"></Animation>
-        <Animation name="up_shoot" whole_line="True" line="3" repeatable="False" period="100" frame_number="3"></Animation>
-        <Animation name="down_shoot" whole_line="True" line="4" repeatable="False" period="100" frame_number="3"></Animation>
+        <Animation name="straight_shoot" whole_line="True" line="2" repeatable="False" period="100" frame_number="5"></Animation>
+        <Animation name="up_shoot" whole_line="True" line="3" repeatable="False" period="100" frame_number="5"></Animation>
+        <Animation name="down_shoot" whole_line="True" line="4" repeatable="False" period="100" frame_number="5"></Animation>
         <Animation name="jump_shoot" whole_line="False" line="1" repeatable="False" period="100" frame_number="2">3,4</Animation>
         <Animation name="jump_prepare" whole_line="False" line="1" repeatable="False" period="320" frame_number="1">0</Animation>
         <Animation name="jump_up" whole_line="False" line="1" repeatable="True" period="100" frame_number="1">1</Animation>
@@ -16,6 +16,7 @@
         <Animation name="crouch" whole_line="False" line="5" repeatable="False" period="100" frame_number="3">0,1,7</Animation>
         <Animation name="die" whole_line="False" line="7" repeatable="False" period="100" frame_number="16">0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,3</Animation>
     </Actor>
+    
     <Actor name="Pistol" attack_lock="500">
         <Animation_List>stand,run,walk,straight_shoot,die</Animation_List>
         <Animation name="stand" whole_line="False" line="1" repeatable="True" period="100" frame_number="1">0</Animation>
