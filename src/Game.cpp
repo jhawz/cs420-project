@@ -103,9 +103,13 @@ void Game::GameLoop() {
                 cameraPosition.x = 0;
             if (cameraPosition.y < 0)
                 cameraPosition.y = 0;
+            if (cameraPosition.x > LEVEL_WIDTH - SCREEN_WIDTH)
+                cameraPosition.x = LEVEL_WIDTH - SCREEN_WIDTH;
+            if (cameraPosition.y > LEVEL_HEIGHT)
+                cameraPosition.y = LEVEL_HEIGHT;
 
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
-            
+
             mainWindow.clear(sf::Color::White);
             mainWindow.setView(view);
 

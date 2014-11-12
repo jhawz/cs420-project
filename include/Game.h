@@ -10,6 +10,8 @@ public:
     const static sf::Event& GetInput();
     const static int SCREEN_WIDTH = 800;
     const static int SCREEN_HEIGHT = 600;
+    const static int LEVEL_WIDTH = 3200;
+    const static int LEVEL_HEIGHT = 608;
 
 private:
     static bool IsExiting();
