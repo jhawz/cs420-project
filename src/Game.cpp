@@ -96,14 +96,16 @@ void Game::GameLoop() {
         case Game::Playing:
         {
 
-            //cameraPosition.x = bond->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
-            //cameraPosition.y = bond->GetPosition().y + 32 - (SCREEN_HEIGHT / 2);
+            cameraPosition.x = gameObjectManager.Get("Bond")->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
+            cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y + 32 - (SCREEN_HEIGHT / 2);
 
-            //if (cameraPosition.x < 0)
-            //    cameraPosition.x = 0;
-            //if (cameraPosition.y < 0)
-            //    cameraPosition.y = 0;
+            if (cameraPosition.x < 0)
+                cameraPosition.x = 0;
+            if (cameraPosition.y < 0)
+                cameraPosition.y = 0;
 
+            view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
+            
             mainWindow.clear(sf::Color::White);
             mainWindow.setView(view);
 
