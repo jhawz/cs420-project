@@ -78,6 +78,8 @@ const sf::Event& Game::GetInput() {
     return currentEvent;
 }
 
+
+
 void Game::GameLoop() {
     sf::Event currentEvent;
     mainWindow.pollEvent(currentEvent);

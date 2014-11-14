@@ -6,4 +6,5 @@ void Tile::buildTile(int tileVal, sf::Texture& img, sf::Vector2i textPos, sf::Ve
 
     tileCode = tileVal;
     Load(img, textPos, textRect);
+    type = 0;
 }

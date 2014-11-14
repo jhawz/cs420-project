@@ -15,7 +15,7 @@ public:
 	virtual void SetPosition(float x, float y);
 	virtual sf::Vector2f GetPosition() const;
 	virtual bool IsLoaded() const;
-
+        int type;
 protected:
 	sf::Sprite& GetSprite();
 

@@ -22,6 +22,7 @@ public:
     void crouchStill();
     void crouchshoot();
     void setBoundary(float left, float up, float right, float lower);
+    sf::IntRect getBoundary();
 private:
     bool lowCollide();
     bool jumping;

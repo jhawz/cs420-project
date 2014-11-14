@@ -17,11 +17,11 @@ public:
 	void UpdateAll();
         void setCollisionList(std::vector<int> v);
         void checkForCollision(VisibleGameObject* obj);
+        void keepOnMap(VisibleGameObject* obj);
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
-	sf::Clock clock;
-
+	sf::Clock clock;        
 	struct GameObjectDeallocator
 	{
 		void operator()(const std::pair<std::string,VisibleGameObject*> & p) const
@@ -29,4 +29,5 @@ private:
 			delete p.second;
 		}
 	};
+        bool collidedWith(int gridPos);
 };

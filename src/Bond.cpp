@@ -37,6 +37,10 @@ void Bond::jump() {
     animReq("jump_up", false);
 }
 
+sf::IntRect Bond::getBoundary(){
+    return sf::IntRect(upperleft.x, upperleft.y, lowerright.x, lowerright.y);
+}
+
 void Bond::setBoundary(float left, float up, float right, float lower) {
     upperleft = sf::Vector2f(left, up);
     lowerright = sf::Vector2f(right, lower);
