@@ -90,10 +90,16 @@ void GameObjectManager::UpdateAll() {
         int yVal = ((int) obj->GetPosition().y) / 32;
         int posToFrame = xVal + ((yVal) * 100);
 
-        if (collidedWith(posToFrame + 1))
+        if (collidedWith(posToFrame - 1))
         {
-            newLeft = (xVal * 32);
-            obj->SetPosition((xVal - 1) * 32, obj->GetPosition().y);
+            newLeft = ((xVal + 1) * 32);
+         //   obj->SetPosition((xVal) * 32, obj->GetPosition().y);
+        }
+        //chances are we won't have a on left on right collision at the same time
+        else if (collidedWith(posToFrame + 1))
+        {
+            newRight = ((xVal) * 32);
+           // obj->SetPosition((xVal - 1) * 32, obj->GetPosition().y);
         }
             //Check above
         if (collidedWith(posToFrame + (2 * 100)))
@@ -102,7 +108,7 @@ void GameObjectManager::UpdateAll() {
         }
         else
         {
-            newBottom = (yVal + 4) * 32;
+            newBottom = (yVal + 6) * 32;
         }
         if (obj->type == 1)
         {
@@ -126,6 +132,7 @@ void GameObjectManager::UpdateAll() {
             int mid = 0;
             while (low < high)
             {
+                //std::cout << "HIGH = " << high << " MID = " << mid << " LOW = " << low << std::endl;
                 mid = ((low + high) / 2);
                 if (collisionsList[mid] == gridPos)
                 {
@@ -150,8 +157,7 @@ void GameObjectManager::UpdateAll() {
         }   //No collisions detected.
             return false;
     }
-    void GameObjectManager::keepOnMap(VisibleGameObject* obj)
-    {
+    void GameObjectManager::keepOnMap(VisibleGameObject* obj){
         if (obj->GetPosition().x < 0)
             obj->SetPosition(32, obj->GetPosition().y);
         else if (obj->GetPosition().x > 3200)
@@ -159,9 +165,9 @@ void GameObjectManager::UpdateAll() {
         
         if (obj->GetPosition().y < 0)
             obj->SetPosition(obj->GetPosition().x, 0);
-        else if (obj->GetPosition().y > 964)
+        else if (obj->GetPosition().y > 600)
         {
-            obj->SetPosition(obj->GetPosition().x, 964);
+            obj->SetPosition(obj->GetPosition().x, 600);
             static_cast<Actor*>(obj)->die();
         }
 
