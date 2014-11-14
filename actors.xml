@@ -8,7 +8,7 @@
         <Animation name="up_shoot" whole_line="True" line="3" repeatable="False" period="100" frame_number="5"></Animation>
         <Animation name="down_shoot" whole_line="True" line="4" repeatable="False" period="100" frame_number="5"></Animation>
         <Animation name="jump_shoot" whole_line="False" line="1" repeatable="False" period="100" frame_number="2">3,4</Animation>
-        <Animation name="jump_prepare" whole_line="False" line="1" repeatable="False" period="320" frame_number="1">0</Animation>
+        <Animation name="jump_prepare" whole_qline="False" line="1" repeatable="False" period="320" frame_number="1">0</Animation>
         <Animation name="jump_up" whole_line="False" line="1" repeatable="True" period="100" frame_number="1">1</Animation>
         <Animation name="jump_float" whole_line="False" line="1" repeatable="True" period="100" frame_number="1">2</Animation>
         <Animation name="jump_fall" whole_line="False" line="1" repeatable="True" period="100" frame_number="1">5</Animation>

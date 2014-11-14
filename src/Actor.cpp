@@ -98,7 +98,7 @@ float Actor::getLowBound(){
 void Actor::attack(){
     if (!alive)return;
     if (shootlocked)return;
-    
+
     animReq("straight_shoot", shootlocked);
     shootlocked=true;
     clock.restart();

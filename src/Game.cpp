@@ -115,10 +115,9 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
-            if (cameraPosition.y > LEVEL_HEIGHT){
+
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y
-            , SCREEN_WIDTH, SCREEN_HEIGHT));
-            }
+                    , SCREEN_WIDTH, SCREEN_HEIGHT));
 
             mainWindow.clear(sf::Color::White);
             mainWindow.setView(view);
@@ -150,7 +149,7 @@ void Game::ShowStory() {
     storyScreen.Show(mainWindow, 0);
     gameState = Game::Playing;
     return;
-    
+
 }
 
 void Game::ShowMenu() {

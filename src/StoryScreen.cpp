@@ -62,14 +62,15 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
                     ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))// Looks for a key pressed & key must be esc key
                 renderWindow.close();
 
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && (story_state == story_1)) { // Looks for key pressed & it being in state
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && (story_state == story_1)) { // Looks for key pressed & it being in state
                 return story_state;
             }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && (story_state == story_2)) {
-                story_state = story_3;
-            }
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right) && (story_state == story_3)) {
-                story_state = story_4;
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && (story_state == story_2)) { // Looks for key pressed & it being in state
+                return story_state;
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && (story_state == story_3)) {
+                story_state = story_state;
+            } else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && (story_state == story_4)) {
+                story_state = story_state;
             }
 
         }
