@@ -7,7 +7,7 @@ class MainMenu
 {
 
 public:
-	enum MenuResult { Nothing, Exit, Play };	
+	enum MenuResult { Nothing, Exit, Play, Story };	
 	
 	struct MenuItem
 		{
@@ -21,5 +21,5 @@ public:
 private:
 	MenuResult GetMenuResponse(sf::RenderWindow& window);
 	MenuResult HandleClick(int x, int y);
-	std::list<MenuItem> _menuItems;
+	std::list<MenuItem> menuItems;
 };

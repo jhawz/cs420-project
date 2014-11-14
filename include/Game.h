@@ -19,10 +19,11 @@ private:
 
     static void ShowSplashScreen();
     static void ShowMenu();
+    static void ShowStory();
 
     enum GameState {
         Uninitialized, ShowingSplash, Paused,
-        ShowingMenu, Playing, Exiting
+        ShowingMenu, Playing, Exiting, ShowingStory
     };
 
     static GameState gameState;
