@@ -53,7 +53,7 @@ void GameObjectManager::UpdateAll() {
         {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
-            keepOnMap(itr->second);
+        //    keepOnMap(itr->second);
         }
         itr++;
     }
@@ -71,18 +71,9 @@ void GameObjectManager::UpdateAll() {
         //grid position. Can't be colliding (unless it's completely inside a 
         //tile, which this loop should prevent...)  
         int newTop = 0;
-        int newLeft = 0;
+        int newLeft = 32;
         int newRight = 3200;
         int newBottom = 700;
-       // if (obj->type == 1)
-       // {
-        //    Bond* b = static_cast<Bond*>(obj);
-         //   newTop = b->getBoundary().top;
-         //   newLeft = b->getBoundary().left;
-         //   newRight = b->getBoundary().width;
-          //  newBottom = b->getBoundary().height;
-          //  std::cout << "Char's current x position: " << obj->GetPosition().x << std::endl;
-        //}
         
         int xVal = ((int) obj->GetPosition().x) / 32;
         int yVal = ((int) obj->GetPosition().y) / 32;
@@ -92,13 +83,12 @@ void GameObjectManager::UpdateAll() {
         if (collidedWith(posToFrame - 1) || collidedWith(posToFrame + 100 - 1))
         {
             newLeft = ((xVal + 1) * 32);
-         //   obj->SetPosition((xVal) * 32, obj->GetPosition().y);
         }
         //chances are we won't have a on left on right collision at the same time
         //so roll else if. Second collidedWith check for same reason as above.
         else if (collidedWith(posToFrame + 1) || collidedWith(posToFrame + 100 + 1))
         {
-            newRight = ((xVal + 1) * 32);
+            newRight = ((xVal) * 32);
         }
             //Check below
         if (collidedWith(posToFrame + (2 * 100)))
@@ -118,6 +108,7 @@ void GameObjectManager::UpdateAll() {
         {
             static_cast<Bond*>(obj)->setBoundary(newLeft, 
                 newTop, newRight, newBottom);
+            std::cout << "left boundary " << newLeft << std::endl;
         }
         else if(obj->type == 2)
         {
@@ -162,8 +153,8 @@ void GameObjectManager::UpdateAll() {
             return false;
     }
     void GameObjectManager::keepOnMap(VisibleGameObject* obj){
-        if (obj->GetPosition().x < 0)
-            obj->SetPosition(0, obj->GetPosition().y);
+        if (obj->GetPosition().x < 32)
+            obj->SetPosition(32, obj->GetPosition().y);
         else if (obj->GetPosition().x > 3200 - 32)
             obj->SetPosition(3200 - 32, obj->GetPosition().y);
         
@@ -174,6 +165,4 @@ void GameObjectManager::UpdateAll() {
             obj->SetPosition(obj->GetPosition().x, 600);
             static_cast<Actor*>(obj)->die();
         }
-
-
     }

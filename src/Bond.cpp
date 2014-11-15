@@ -32,7 +32,7 @@ void Bond::jump() {
     }
     animReq("jump_prepare", false);
     vy = -9.99;
-    ay = 0.5;
+    ay = 1.25;
     jumping = true;
     animReq("jump_up", false);
 }
@@ -57,7 +57,7 @@ bool Bond::rightCollide() {
 
 bool Bond::leftCollide() {
   //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
-    return GetPosition().x <= upperleft.x - 30;
+    return GetPosition().x <= upperleft.x;
 }
 
 bool Bond::topCollide() {

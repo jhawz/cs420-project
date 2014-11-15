@@ -24,7 +24,7 @@ void Game::Start(void) {
     text.loadFromFile("textures/TiledEight32New.png");
     gameObjectManager.Add("Background", bg);
     for (int x = 0; x < codeList.size(); x++) {
-        if (codeList[x] != "0") {
+        if (std::stoi(codeList[x]) > 0) {
             Tile* newTile = new Tile();
             newTile->buildTile(std::stoi(codeList[x]), text,
                     sf::Vector2i(((std::stoi(codeList[x]) - 1) % 15) * 32,
