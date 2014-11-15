@@ -53,7 +53,6 @@ void Enemy::Update(float elapsedTime)
     if (!lowCollide()) {
         if (ay == 0)
             ay = 2;
-            std::cout << " still falling! = " << GetPosition().y << " and lowerright: " << lowerright.y << std::endl;
     }
     else if (lowCollide()) {
        // jumping = false;

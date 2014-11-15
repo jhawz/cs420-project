@@ -31,8 +31,10 @@ void Game::Start(void) {
                     sf::Vector2i(((std::stoi(codeList[x]) - 1) % 15) * 32,
                     ((std::stoi(codeList[x]) - 1) / 15) * 32),
                     sf::Vector2i(32, 32));
+            
             newTile->SetPosition((x % 100) * 32, (x / 100) * 32);
             collisionList.push_back(x % 100 + ((x / 100) * 100));
+            std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
             gameObjectManager.Add("Tile" + std::to_string(x), newTile);
         }
     }

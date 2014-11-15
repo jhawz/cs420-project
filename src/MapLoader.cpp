@@ -30,8 +30,7 @@ void MapLoader::loadMap(std::string fileName)
 	{
 		int newVal;
 		std::istringstream (readString) >> newVal;
-                tileSet.push_back(readString);
-                
+                tileSet.push_back(readString);                
 		count++;
 	}
 }
