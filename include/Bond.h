@@ -25,6 +25,8 @@ public:
     sf::IntRect getBoundary();
 private:
     bool lowCollide();
+    bool leftCollide();
+    bool rightCollide();
     bool jumping;
     sf::Vector2f upperleft,lowerright;
 };
