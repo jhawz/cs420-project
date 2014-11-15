@@ -7,7 +7,6 @@
 #include "VisibleGameObject.h"
 #include "MapLoader.h"
 #include "Tile.h"
-#include "StoryScreen.h"
 
 void Game::Start(void) {
     if (gameState != Uninitialized)
@@ -96,12 +95,6 @@ void Game::GameLoop() {
             ShowSplashScreen();
             break;
         }
-        case Game::ShowingStory:
-        {
-            ShowStory();
-            break;
-        }
-
         case Game::Playing:
         {
 
@@ -117,9 +110,7 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
-
-            view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y
-                    , SCREEN_WIDTH, SCREEN_HEIGHT));
+            view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
             mainWindow.clear(sf::Color::White);
             mainWindow.setView(view);
@@ -145,15 +136,6 @@ void Game::ShowSplashScreen() {
     gameState = Game::ShowingMenu;
 }
 
-void Game::ShowStory() {
-    StoryScreen storyScreen;
-    // TODO Story state needs to be passed to this 
-    storyScreen.Show(mainWindow, 0);
-    gameState = Game::Playing;
-    return;
-
-}
-
 void Game::ShowMenu() {
     MainMenu mainMenu;
     MainMenu::MenuResult result = mainMenu.Show(mainWindow);
@@ -162,7 +144,7 @@ void Game::ShowMenu() {
             gameState = Exiting;
             break;
         case MainMenu::Play:
-            gameState = ShowingStory;
+            gameState = Playing;
             break;
     }
 }
