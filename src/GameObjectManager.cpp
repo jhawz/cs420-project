@@ -30,7 +30,6 @@ VisibleGameObject* GameObjectManager::Get(std::string name) const {
     if (results == gameObjects.end())
         return NULL;
     return results->second;
-
 }
 
 int GameObjectManager::GetObjectCount() const {
@@ -38,7 +37,6 @@ int GameObjectManager::GetObjectCount() const {
 }
 
 void GameObjectManager::DrawAll(sf::RenderWindow& renderWindow) {
-
     std::map<std::string, VisibleGameObject*>::const_iterator itr = gameObjects.begin();
     while (itr != gameObjects.end()) {
         itr->second->Draw(renderWindow);
@@ -55,7 +53,7 @@ void GameObjectManager::UpdateAll() {
         {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
-            keepOnMap(itr->second);
+        //    keepOnMap(itr->second);
         }
         itr++;
     }
@@ -73,47 +71,44 @@ void GameObjectManager::UpdateAll() {
         //grid position. Can't be colliding (unless it's completely inside a 
         //tile, which this loop should prevent...)  
         int newTop = 0;
-        int newLeft = 0;
-        int newRight = 1000;
-        int newBottom = 3200;
-       /* 
-        if (obj->type == 1)
-        {
-            Bond* b = static_cast<Bond*>(obj);
-            newTop = b->getBoundary().top;
-            newLeft = b->getBoundary().left;
-            newRight = b->getBoundary().width;
-            newBottom = b->getBoundary().height;
-        }
-        */
+        int newLeft = 32;
+        int newRight = 3200;
+        int newBottom = 700;
+        
         int xVal = ((int) obj->GetPosition().x) / 32;
         int yVal = ((int) obj->GetPosition().y) / 32;
         int posToFrame = xVal + ((yVal) * 100);
-
-        if (collidedWith(posToFrame - 1))
+        //check directly left/right as well as 1 row below left/right since
+        //bond is 64 pixels (2 tiles) high.)
+        if (collidedWith(posToFrame - 1) || collidedWith(posToFrame + 100 - 1))
         {
             newLeft = ((xVal + 1) * 32);
-         //   obj->SetPosition((xVal) * 32, obj->GetPosition().y);
         }
         //chances are we won't have a on left on right collision at the same time
-        else if (collidedWith(posToFrame + 1))
+        //so roll else if. Second collidedWith check for same reason as above.
+        else if (collidedWith(posToFrame + 1) || collidedWith(posToFrame + 100 + 1))
         {
             newRight = ((xVal) * 32);
-           // obj->SetPosition((xVal - 1) * 32, obj->GetPosition().y);
         }
-            //Check above
+            //Check below
         if (collidedWith(posToFrame + (2 * 100)))
         {
             newBottom = (yVal + 2) * 32;
         }
         else
         {
-            newBottom = (yVal + 6) * 32;
+            newBottom = (yVal + 4) * 32;
+        }
+            //Check above
+        if (collidedWith(posToFrame - (2 * 100)))
+        {
+            newTop = (yVal - 2) * 32;
         }
         if (obj->type == 1)
         {
             static_cast<Bond*>(obj)->setBoundary(newLeft, 
                 newTop, newRight, newBottom);
+            std::cout << "left boundary " << newLeft << std::endl;
         }
         else if(obj->type == 2)
         {
@@ -158,9 +153,9 @@ void GameObjectManager::UpdateAll() {
             return false;
     }
     void GameObjectManager::keepOnMap(VisibleGameObject* obj){
-        if (obj->GetPosition().x < 0)
+        if (obj->GetPosition().x < 32)
             obj->SetPosition(32, obj->GetPosition().y);
-        else if (obj->GetPosition().x > 3200)
+        else if (obj->GetPosition().x > 3200 - 32)
             obj->SetPosition(3200 - 32, obj->GetPosition().y);
         
         if (obj->GetPosition().y < 0)
@@ -170,6 +165,4 @@ void GameObjectManager::UpdateAll() {
             obj->SetPosition(obj->GetPosition().x, 600);
             static_cast<Actor*>(obj)->die();
         }
-
-
     }
