@@ -13,9 +13,9 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
         std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-    std::cout << "start preparing frames" << std::endl;
+  //  std::cout << "start preparing frames" << std::endl;
     prepareFrameInfo(bondnode);
-    std::cout << "Finish preparing frames" << std::endl;
+   // std::cout << "Finish preparing frames" << std::endl;
     Load(texture);
     jumping = false;
     sf::Image *img = new sf::Image();
@@ -48,6 +48,14 @@ void Bond::setBoundary(float left, float up, float right, float lower) {
 
 bool Bond::lowCollide() {
     return GetPosition().y + 64 >= lowerright.y;
+}
+
+bool Bond::rightCollide() {
+    return GetPosition().x + 32 >= lowerright.x;
+}
+
+bool Bond::leftCollide() {
+    return GetPosition().x - 32 <= upperleft.x;
 }
 
 void Bond::Update(float elapsedTime) {
@@ -93,13 +101,14 @@ void Bond::Update(float elapsedTime) {
             standStill();
         }
     } else if (!jumping) {
-        if (rightpressed) {
+        if (rightpressed && !rightCollide()) {
             rightRun();
-        } else if (leftpressed) {
+        } else if (leftpressed && !leftCollide()) {
             leftRun();
         } else if (isCurAnim("run")) {
             standStill();
         }
+     //   std::cout << "LEFT BOUNDARY: " << upperleft.x << "RIGHT BOUNDARY: " << lowerright.x << std::endl;
     }
 }
 
@@ -160,5 +169,3 @@ void Bond::straightShoot() {
         Actor::attack();
     }
 }
-
-   

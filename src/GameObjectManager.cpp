@@ -76,7 +76,7 @@ void GameObjectManager::UpdateAll() {
         int newLeft = 0;
         int newRight = 1000;
         int newBottom = 3200;
-        
+       /* 
         if (obj->type == 1)
         {
             Bond* b = static_cast<Bond*>(obj);
@@ -85,7 +85,7 @@ void GameObjectManager::UpdateAll() {
             newRight = b->getBoundary().width;
             newBottom = b->getBoundary().height;
         }
-        
+        */
         int xVal = ((int) obj->GetPosition().x) / 32;
         int yVal = ((int) obj->GetPosition().y) / 32;
         int posToFrame = xVal + ((yVal) * 100);
