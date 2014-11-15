@@ -33,7 +33,7 @@ void Game::Start(void) {
             
             newTile->SetPosition((x % 100) * 32, (x / 100) * 32);
             collisionList.push_back(x % 100 + ((x / 100) * 100));
-            std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
+           // std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
             gameObjectManager.Add("Tile" + std::to_string(x), newTile);
         }
     }

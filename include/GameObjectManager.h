@@ -12,7 +12,6 @@ public:
 	void Remove(std::string name);
 	int GetObjectCount() const;
 	VisibleGameObject* Get(std::string name) const;
-
 	void DrawAll(sf::RenderWindow& renderWindow);
 	void UpdateAll();
         void setCollisionList(std::vector<int> v);
