@@ -32,7 +32,7 @@ void Bond::jump() {
     }
     animReq("jump_prepare", false);
     vy = -9.99;
-    ay = 0.5;
+    ay = 1.25;
     jumping = true;
     animReq("jump_up", false);
 }
@@ -51,11 +51,17 @@ bool Bond::lowCollide() {
 }
 
 bool Bond::rightCollide() {
+  //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
     return GetPosition().x + 32 >= lowerright.x;
 }
 
 bool Bond::leftCollide() {
-    return GetPosition().x - 32 <= upperleft.x;
+  //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
+    return GetPosition().x <= upperleft.x;
+}
+
+bool Bond::topCollide() {
+    return GetPosition().y <= upperleft.y + 32;
 }
 
 void Bond::Update(float elapsedTime) {
@@ -78,19 +84,30 @@ void Bond::Update(float elapsedTime) {
     }
 
     Actor::Update(elapsedTime);
-    
     if (!lowCollide()) {
         if (ay == 0) {
             ay = 2;
             jumping = true;
             animReq("jump_fall", false);
-            std::cout << "Falling" << std::endl;
         } else if (vy>-6 && vy < 6) {
             animReq("jump_float", false);
         } else if (vy > 6) {
             animReq("jump_fall", false);
         }
-    } else if (vy > 0) {
+        if (rightpressed) {
+            rightRun();
+        }
+        else if (leftpressed)
+        {
+            leftRun();
+        }
+    } 
+    else if (topCollide()){ //not functioning!
+        //if (jumping)
+            ay = 0;
+        SetPosition(GetPosition().x, upperleft.y);
+    }
+    else if (vy > 0) {
         jumping = false;
         SetPosition(GetPosition().x, lowerright.y - 64);
         if (rightpressed) {

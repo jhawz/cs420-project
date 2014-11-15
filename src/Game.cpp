@@ -25,7 +25,7 @@ void Game::Start(void) {
     text.loadFromFile("textures/TiledEight32New.png");
     gameObjectManager.Add("Background", bg);
     for (int x = 0; x < codeList.size(); x++) {
-        if (codeList[x] != "0") {
+        if (std::stoi(codeList[x]) > 0) {
             Tile* newTile = new Tile();
             newTile->buildTile(std::stoi(codeList[x]), text,
                     sf::Vector2i(((std::stoi(codeList[x]) - 1) % 15) * 32,
@@ -34,7 +34,7 @@ void Game::Start(void) {
             
             newTile->SetPosition((x % 100) * 32, (x / 100) * 32);
             collisionList.push_back(x % 100 + ((x / 100) * 100));
-            std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
+           // std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
             gameObjectManager.Add("Tile" + std::to_string(x), newTile);
         }
     }
