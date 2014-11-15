@@ -29,6 +29,7 @@ private:
     bool rightCollide();
     bool topCollide();
     bool jumping;
+    bool falling;
     sf::Vector2f upperleft,lowerright;
 };
 

@@ -18,6 +18,7 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
    // std::cout << "Finish preparing frames" << std::endl;
     Load(texture);
     jumping = false;
+    falling = false;
     sf::Image *img = new sf::Image();
     if (!img->loadFromFile(texture)) {
         return;
@@ -27,7 +28,8 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 }
 
 void Bond::jump() {
-    if (jumping) {
+    std::cout << "" << std::endl;
+    if ((jumping || falling) && (!isCurAnim("stand") && !isCurAnim("run"))) {
         return;
     }
     animReq("jump_prepare", false);
@@ -47,6 +49,8 @@ void Bond::setBoundary(float left, float up, float right, float lower) {
 }
 
 bool Bond::lowCollide() {
+    //falling = false;
+    //jumping = false;
     return GetPosition().y + 64 >= lowerright.y;
 }
 
@@ -84,15 +88,24 @@ void Bond::Update(float elapsedTime) {
     }
 
     Actor::Update(elapsedTime);
+    if (topCollide()){ //not functioning!
+        //if (jumping)
+        vy = 0;
+     //   std::cout << "in top collide" << std::endl;
+        SetPosition(GetPosition().x, upperleft.y + 32);
+    }
     if (!lowCollide()) {
         if (ay == 0) {
             ay = 2;
             jumping = true;
+          //  falling = true;
             animReq("jump_fall", false);
         } else if (vy>-6 && vy < 6) {
             animReq("jump_float", false);
         } else if (vy > 6) {
             animReq("jump_fall", false);
+            jumping = false;
+            falling = true;
         }
         if (rightpressed) {
             rightRun();
@@ -102,13 +115,9 @@ void Bond::Update(float elapsedTime) {
             leftRun();
         }
     } 
-    else if (topCollide()){ //not functioning!
-        //if (jumping)
-            ay = 0;
-        SetPosition(GetPosition().x, upperleft.y);
-    }
     else if (vy > 0) {
         jumping = false;
+        falling = false;
         SetPosition(GetPosition().x, lowerright.y - 64);
         if (rightpressed) {
             rightRun();

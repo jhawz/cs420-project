@@ -100,15 +100,18 @@ void GameObjectManager::UpdateAll() {
             newBottom = (yVal + 4) * 32;
         }
             //Check above
-        if (collidedWith(posToFrame - (2 * 100)))
-        {
-            newTop = (yVal - 2) * 32;
+        if (collidedWith(posToFrame - (1 * 100)))
+        { 
+            //if (collidedWith(posToFrame - 1 - (1 * 100)))
+        //{
+            newTop = (yVal - 1) * 32;
+        //}
         }
         if (obj->type == 1)
         {
             static_cast<Bond*>(obj)->setBoundary(newLeft, 
                 newTop, newRight, newBottom);
-            std::cout << "left boundary " << newLeft << std::endl;
+          //  std::cout << "left boundary " << newLeft << std::endl;
         }
         else if(obj->type == 2)
         {
