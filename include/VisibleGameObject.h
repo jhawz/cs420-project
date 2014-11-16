@@ -17,8 +17,11 @@ public:
 	virtual bool IsLoaded() const;
         virtual bool IsAlive();
         int type;
+        std::string getObjectType();
+    	bool closeContact(VisibleGameObject &conter);
 protected:
 	sf::Sprite& GetSprite();
+	std::string objectType;
 
 private:
 	sf::Sprite  sprite;
