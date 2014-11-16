@@ -5,6 +5,7 @@
 #include "Actor.h"
 #include "Bond.h"
 #include "Enemy.h"
+#include "Level.h"
 
 GameObjectManager::GameObjectManager() {
 }
@@ -12,7 +13,7 @@ GameObjectManager::GameObjectManager() {
 GameObjectManager::~GameObjectManager() {
     std::for_each(gameObjects.begin(), gameObjects.end(), GameObjectDeallocator());
 }
-
+//
 void GameObjectManager::Add(std::string name, VisibleGameObject* gameObject) {
     gameObjects.insert(std::pair<std::string, VisibleGameObject*>(name, gameObject));
 }
@@ -53,7 +54,7 @@ void GameObjectManager::UpdateAll() {
         {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
-        //    keepOnMap(itr->second);
+            keepOnMap(itr->second);
         }
         itr++;
     }
@@ -168,4 +169,14 @@ void GameObjectManager::UpdateAll() {
             obj->SetPosition(obj->GetPosition().x, 600);
             static_cast<Actor*>(obj)->die();
         }
+    }
+    
+    int GameObjectManager::getLevelCode()
+    {
+        return currentLevel;
+    }
+    
+    void GameObjectManager::setCurLevel(Level* l)
+    {
+        curLevel = l;
     }

@@ -81,7 +81,15 @@ void Bond::Update(float elapsedTime) {
         setRightPress(false);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        jump();
+        if (!jumpPressed)
+        {
+            jump();
+            jumpPressed = true;
+        }
+    }
+    else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
+    {
+        jumpPressed = false;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         straightShoot();

@@ -22,7 +22,7 @@ private:
 
     enum GameState {
         Uninitialized, ShowingSplash, Paused,
-        ShowingMenu, Playing, Exiting
+        ShowingMenu, Playing, Exiting, Loading
     };
 
     static GameState gameState;

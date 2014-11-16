@@ -30,6 +30,7 @@ private:
     bool topCollide();
     bool jumping;
     bool falling;
+    bool jumpPressed;
     sf::Vector2f upperleft,lowerright;
 };
 
