@@ -82,3 +82,20 @@ bool VisibleGameObject::IsAlive()
 {
     return alive;
 }
+
+std::string VisibleGameObject::getObjectType(){
+    return objectType;
+}
+
+bool VisibleGameObject::closeContact(VisibleGameObject &conter){
+    sf::Vector2f myPos,conterPos;
+    myPos=GetPosition();
+    conterPos=conter.GetPosition();
+    if ((myPos.x-conterPos.x<=32)
+        &&(myPos.x-conterPos.x>=-32)
+        &&(myPos.y-conterPos.y<=8)
+        &&(myPos.y-conterPos.y>=-8)) {
+        return true;
+    }
+    else return false;
+}
