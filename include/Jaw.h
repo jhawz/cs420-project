@@ -11,3 +11,5 @@ public:
     Jaw(std::string config, std::string texture);
     void attack(Actor& actor);
 };
+
+#endif
