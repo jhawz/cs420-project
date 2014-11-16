@@ -77,3 +77,8 @@ bool VisibleGameObject::IsLoaded() const
 {
   return isLoaded;
 }
+
+bool VisibleGameObject::IsAlive()
+{
+    return alive;
+}

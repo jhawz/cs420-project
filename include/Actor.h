@@ -27,6 +27,7 @@ public:
     void setDownPress(bool p);
     void setBoundary(float left,float up,float right,float lower);
     bool lowCollide();
+    bool IsAlive();
         
 protected:
     float getLowBound();

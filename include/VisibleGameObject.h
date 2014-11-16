@@ -15,6 +15,7 @@ public:
 	virtual void SetPosition(float x, float y);
 	virtual sf::Vector2f GetPosition() const;
 	virtual bool IsLoaded() const;
+        virtual bool IsAlive();
         int type;
 protected:
 	sf::Sprite& GetSprite();
@@ -24,5 +25,6 @@ private:
 	sf::Texture image;
 	std::string filename;
 	bool isLoaded;
+        bool alive;
 	
 };

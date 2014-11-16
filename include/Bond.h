@@ -31,6 +31,7 @@ private:
     bool jumping;
     bool falling;
     bool jumpPressed;
+    int lives;
     sf::Vector2f upperleft,lowerright;
 };
 

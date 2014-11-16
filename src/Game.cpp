@@ -93,8 +93,12 @@ void Game::GameLoop() {
             gameObjectManager.setCurLevel(l);
             break;
         }
+
         case Game::Playing:
         {
+            if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
+                gameObjectManager.Get("Bond")->SetPosition(200,200);
+            }
 
             cameraPosition.x = gameObjectManager.Get("Bond")->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
             cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y - (SCREEN_HEIGHT);
@@ -108,9 +112,12 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
+            std::cout << "X: " << cameraPosition.x << std::endl;
+            std::cout << "Y: " << cameraPosition.y << std::endl;
+
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
-            mainWindow.clear(sf::Color::White);
+            mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
 
             gameObjectManager.UpdateAll();

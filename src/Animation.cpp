@@ -83,6 +83,7 @@ void Animation::setRepeatable(bool rep){
 void Animation::restart(){
     ended=false;
     curFrame=0;
+    clock.restart();
 }
 
 void Animation::end(){

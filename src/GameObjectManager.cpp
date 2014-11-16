@@ -112,7 +112,6 @@ void GameObjectManager::UpdateAll() {
         {
             static_cast<Bond*>(obj)->setBoundary(newLeft, 
                 newTop, newRight, newBottom);
-          //  std::cout << "left boundary " << newLeft << std::endl;
         }
         else if(obj->type == 2)
         {
