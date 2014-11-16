@@ -40,13 +40,6 @@ MainMenu::MenuResult MainMenu::HandleClick(int x, int y) {
 
     for (it = menuItems.begin(); it != menuItems.end(); it++) {
         sf::Rect<int> menuItemRect = (*it).rect;
-        std::cout << "X: " << x << std::endl;
-        std::cout << "Y: " << y << std::endl;
-        std::cout << "Width > y: " << (menuItemRect.width > y) << std::endl;
-        std::cout << "Top < y: " << (menuItemRect.top < y) << std::endl;
-        std::cout << "Left < x: " << (menuItemRect.left < x) << std::endl;
-        std::cout << "Height > x: " << (menuItemRect.height > x) << std::endl;
-        
         if (menuItemRect.width > y
                 && menuItemRect.top < y
                 && menuItemRect.left < x

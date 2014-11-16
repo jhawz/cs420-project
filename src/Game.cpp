@@ -30,10 +30,10 @@ void Game::Start(void) {
                     sf::Vector2i(((std::stoi(codeList[x]) - 1) % 15) * 32,
                     ((std::stoi(codeList[x]) - 1) / 15) * 32),
                     sf::Vector2i(32, 32));
-            
+
             newTile->SetPosition((x % 100) * 32, (x / 100) * 32);
             collisionList.push_back(x % 100 + ((x / 100) * 100));
-           // std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
+            // std::cout << (x % 100 + ((x / 100) * 100)) << std::endl;
             gameObjectManager.Add("Tile" + std::to_string(x), newTile);
         }
     }
@@ -95,8 +95,12 @@ void Game::GameLoop() {
             ShowSplashScreen();
             break;
         }
+
         case Game::Playing:
         {
+            if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
+                gameObjectManager.Get("Bond")->SetPosition(200,200);
+            }
 
             cameraPosition.x = gameObjectManager.Get("Bond")->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
             cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y - (SCREEN_HEIGHT);
@@ -110,9 +114,12 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
+            std::cout << "X: " << cameraPosition.x << std::endl;
+            std::cout << "Y: " << cameraPosition.y << std::endl;
+
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
-            mainWindow.clear(sf::Color::White);
+            mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
 
             gameObjectManager.UpdateAll();

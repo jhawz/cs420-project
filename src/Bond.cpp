@@ -3,6 +3,9 @@
 #include "Bond.h"
 
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
+    
+    int lives = 3;
+    
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 

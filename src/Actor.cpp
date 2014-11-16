@@ -46,7 +46,6 @@ void Actor::animReq(std::string animName, bool withlock){
 }
 
 void Actor::rightRun(){
-    std::cout << "Right run called" << std::endl;
     if (!alive)return;
     if (!rightdir) {
         rightdir=true;
@@ -58,7 +57,6 @@ void Actor::rightRun(){
 }
 
 void Actor::leftRun(){
-        std::cout << "Left run called" << std::endl;
     if (!alive)return;
     if (rightdir) {
         rightdir=false;
@@ -174,4 +172,8 @@ void Actor::setBoundary(float left, float up, float right, float lower) {
 
 bool Actor::lowCollide() {
     return GetPosition().y + lowerBound >= lowerright.y;
+}
+
+bool Actor::IsAlive(){
+    return alive;
 }
