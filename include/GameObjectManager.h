@@ -20,11 +20,10 @@ public:
         void keepOnMap(VisibleGameObject* obj);
         int getLevelCode();
         void setCurLevel(Level* l);
-        
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
-	sf::Clock clock;        
+	sf::Clock clock;
         int currentLevel = 1;
         Level * curLevel;
 	struct GameObjectDeallocator

@@ -3,9 +3,9 @@
 #include "Bond.h"
 
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
-    
+
     int lives = 3;
-    
+
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 
@@ -16,12 +16,11 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
         std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-  //  std::cout << "start preparing frames" << std::endl;
+    //  std::cout << "start preparing frames" << std::endl;
     prepareFrameInfo(bondnode);
-   // std::cout << "Finish preparing frames" << std::endl;
+    // std::cout << "Finish preparing frames" << std::endl;
     Load(texture);
     jumping = false;
-    falling = false;
     sf::Image *img = new sf::Image();
     if (!img->loadFromFile(texture)) {
         return;
@@ -31,8 +30,7 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 }
 
 void Bond::jump() {
-    std::cout << "" << std::endl;
-    if ((jumping || falling) && (!isCurAnim("stand") && !isCurAnim("run"))) {
+    if (jumping) {
         return;
     }
     animReq("jump_prepare", false);
@@ -42,7 +40,7 @@ void Bond::jump() {
     animReq("jump_up", false);
 }
 
-sf::IntRect Bond::getBoundary(){
+sf::IntRect Bond::getBoundary() {
     return sf::IntRect(upperleft.x, upperleft.y, lowerright.x, lowerright.y);
 }
 
@@ -52,18 +50,16 @@ void Bond::setBoundary(float left, float up, float right, float lower) {
 }
 
 bool Bond::lowCollide() {
-    //falling = false;
-    //jumping = false;
     return GetPosition().y + 64 >= lowerright.y;
 }
 
 bool Bond::rightCollide() {
-  //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
+    //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
     return GetPosition().x + 32 >= lowerright.x;
 }
 
 bool Bond::leftCollide() {
-  //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
+    //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
     return GetPosition().x <= upperleft.x;
 }
 
@@ -84,14 +80,11 @@ void Bond::Update(float elapsedTime) {
         setRightPress(false);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        if (!jumpPressed)
-        {
+        if (!jumpPressed) {
             jump();
             jumpPressed = true;
         }
-    }
-    else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space))
-    {
+    } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
         jumpPressed = false;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
@@ -99,36 +92,28 @@ void Bond::Update(float elapsedTime) {
     }
 
     Actor::Update(elapsedTime);
-    if (topCollide()){ //not functioning!
-        //if (jumping)
-        vy = 0;
-     //   std::cout << "in top collide" << std::endl;
-        SetPosition(GetPosition().x, upperleft.y + 32);
-    }
     if (!lowCollide()) {
         if (ay == 0) {
             ay = 2;
             jumping = true;
-          //  falling = true;
             animReq("jump_fall", false);
         } else if (vy>-6 && vy < 6) {
             animReq("jump_float", false);
         } else if (vy > 6) {
             animReq("jump_fall", false);
-            jumping = false;
-            falling = true;
         }
         if (rightpressed) {
             rightRun();
-        }
-        else if (leftpressed)
-        {
+        } else if (leftpressed) {
             leftRun();
         }
-    } 
-    else if (vy > 0) {
+    }
+    else if (topCollide()) { //not functioning!
+        //if (jumping)
+        ay = 0;
+        SetPosition(GetPosition().x, upperleft.y);
+    } else if (vy > 0) {
         jumping = false;
-        falling = false;
         SetPosition(GetPosition().x, lowerright.y - 64);
         if (rightpressed) {
             rightRun();
@@ -145,7 +130,7 @@ void Bond::Update(float elapsedTime) {
         } else if (isCurAnim("run")) {
             standStill();
         }
-     //   std::cout << "LEFT BOUNDARY: " << upperleft.x << "RIGHT BOUNDARY: " << lowerright.x << std::endl;
+        //   std::cout << "LEFT BOUNDARY: " << upperleft.x << "RIGHT BOUNDARY: " << lowerright.x << std::endl;
     }
 }
 

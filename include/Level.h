@@ -19,8 +19,9 @@
 
 class Level {
 public:
-    Level(){
-        
+
+    Level() {
+
     };
     void setBackGround(VisibleGameObject* backGround);
     VisibleGameObject* getBackground();
@@ -35,8 +36,8 @@ public:
 private:
     VisibleGameObject* backGround;
     sf::Texture levelTiles;
-  //  sf::Texture middleGround;
-  //  sf::Texture ForeGround;
+    //  sf::Texture middleGround;
+    //  sf::Texture ForeGround;
     //std::string levelString;
     std::vector<std::string> tileCodeList;
     std::vector<int> tileColList;

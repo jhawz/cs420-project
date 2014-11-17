@@ -7,16 +7,13 @@
 #include "VisibleGameObject.h"
 #include "MapLoader.h"
 #include "Tile.h"
-#include "Level.h"
 
 void Game::Start(void) {
     if (gameState != Uninitialized)
         return;
 
     mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32)
-    , "James Rambo: Revenge of WillFinger!");
-
-    //mainWindow.SetFramerateLimit(60);    
+            , "James Rambo: Revenge of WillFinger!");
 
     view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
     view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
@@ -64,40 +61,14 @@ void Game::GameLoop() {
         }
         case Game::Loading:
         {
-            Level* l = new Level();
-    
-            l->loadLevel(gameObjectManager.getLevelCode());
-
-            gameObjectManager.setCollisionList(l->getTileColList());
-
-            Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
-            enemy_1->SetPosition(300, 200);
-            enemy_1->setBoundary(0, 0, 800, 464);
-
-            Bond *bond = new Bond("actors.xml", "textures/JB.png");
-            bond->SetPosition(200, 200);
-            bond->setBoundary(0, 0, 800, 464);
-
-            gameObjectManager.Add("Bond", bond);
-            gameObjectManager.Add("Enemy", enemy_1);
-            std::vector<Tile*> tiles = l->getTileList();
-
-            for (int x = 0; x < tiles.size(); x++)
-            {
-                gameObjectManager.Add("Tile" + (std::to_string(x)), tiles[x]);
-               // std::cout << "Next Tile..." << std::endl;
-            }
-
-            gameObjectManager.Add("Background", l->getBackground());
-            gameState = Playing;
-            gameObjectManager.setCurLevel(l);
+            LoadLevel();
             break;
         }
 
         case Game::Playing:
         {
             if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
-                gameObjectManager.Get("Bond")->SetPosition(200,200);
+                gameObjectManager.Get("Bond")->SetPosition(200, 200);
             }
 
             cameraPosition.x = gameObjectManager.Get("Bond")->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
@@ -152,6 +123,35 @@ void Game::ShowMenu() {
             gameState = Loading;
             break;
     }
+}
+
+void Game::LoadLevel() {
+    Level* l = new Level();
+
+    l->loadLevel(gameObjectManager.getLevelCode());
+
+    gameObjectManager.setCollisionList(l->getTileColList());
+
+    Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
+    enemy_1->SetPosition(300, 200);
+    enemy_1->setBoundary(0, 0, 800, 464);
+
+    Bond *bond = new Bond("actors.xml", "textures/JB.png");
+    bond->SetPosition(200, 200);
+    bond->setBoundary(0, 0, 800, 464);
+
+    gameObjectManager.Add("Bond", bond);
+    gameObjectManager.Add("Enemy", enemy_1);
+    std::vector<Tile*> tiles = l->getTileList();
+
+    for (int x = 0; x < tiles.size(); x++) {
+        gameObjectManager.Add("Tile" + (std::to_string(x)), tiles[x]);
+        // std::cout << "Next Tile..." << std::endl;
+    }
+
+    gameObjectManager.Add("Background", l->getBackground());
+    gameState = Playing;
+    gameObjectManager.setCurLevel(l);
 }
 
 Game::GameState Game::gameState = Uninitialized;
