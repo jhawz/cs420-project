@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="bin">
+        <in>james_rambo.cpp</in>
+      </df>
+      <df name="src">
+        <in>Actor.cpp</in>
+        <in>Animation.cpp</in>
+        <in>Bond.cpp</in>
+        <in>Bullet.cpp</in>
+        <in>Enemy.cpp</in>
+        <in>Game.cpp</in>
+        <in>GameObjectManager.cpp</in>
+        <in>Jaw.cpp</in>
+        <in>Level.cpp</in>
+        <in>MainMenu.cpp</in>
+        <in>MapLoader.cpp</in>
+        <in>Powerup.cpp</in>
+        <in>Projectile.cpp</in>
+        <in>Rambo.cpp</in>
+        <in>SFMLSoundProvider.cpp</in>
+        <in>ServiceLocator.cpp</in>
+        <in>SoundFileCache.cpp</in>
+        <in>SplashScreen.cpp</in>
+        <in>StoryScreen.cpp</in>
+        <in>Tile.cpp</in>
+        <in>VisibleGameObject.cpp</in>
+        <in>pugixml.cpp</in>
+        <in>stdafx.cpp</in>
+      </df>
+    </df>
+    <logicalFolder name="ExternalFiles"
+                   displayName="Important Files"
+                   projectFiles="false"
+                   kind="IMPORTANT_FILES_FOLDER">
+      <itemPath>CMakeLists.txt</itemPath>
+      <itemPath>Makefile</itemPath>
+    </logicalFolder>
+  </logicalFolder>
+  <sourceFolderFilter>^(nbproject)$</sourceFolderFilter>
+  <sourceRootList>
+    <Elem>.</Elem>
+  </sourceRootList>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <compilerSet>default</compilerSet>
+        <dependencyChecking>false</dependencyChecking>
+        <rebuildPropChanged>false</rebuildPropChanged>
+      </toolsSet>
+      <codeAssistance>
+      </codeAssistance>
+      <makefileType>
+        <makeTool>
+          <buildCommandWorkingDir>.</buildCommandWorkingDir>
+          <buildCommand>${MAKE} -f Makefile</buildCommand>
+          <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
+          <executablePath></executablePath>
+        </makeTool>
+      </makefileType>
+      <item path="bin/james_rambo.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Actor.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Animation.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Bond.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Bullet.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Enemy.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Game.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/GameObjectManager.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Jaw.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Level.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/MainMenu.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/MapLoader.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Powerup.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Projectile.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Rambo.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/SFMLSoundProvider.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/ServiceLocator.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/SoundFileCache.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/SplashScreen.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/StoryScreen.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Tile.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/VisibleGameObject.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/pugixml.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/stdafx.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+    </conf>
+  </confs>
+</configurationDescriptor>

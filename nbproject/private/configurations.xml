@@ -1,0 +1,130 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="95">
+  <logicalFolder name="root" displayName="root" projectFiles="true" kind="ROOT">
+    <df root="." name="0">
+      <df name="bin">
+        <in>james_rambo.cpp</in>
+      </df>
+      <df name="CMakeFiles">
+        <df name="2.8.12.2">
+          <df name="CompilerIdC">
+            <in>CMakeCCompilerId.c</in>
+          </df>
+          <df name="CompilerIdCXX">
+            <in>CMakeCXXCompilerId.cpp</in>
+          </df>
+        </df>
+      </df>
+      <df name="data">
+      </df>
+      <df name="fonts">
+      </df>
+      <df name="include">
+        <in>Actor.h</in>
+        <in>Animation.h</in>
+        <in>Bond.h</in>
+        <in>Bullet.h</in>
+        <in>Enemy.h</in>
+        <in>Game.h</in>
+        <in>GameObjectManager.h</in>
+        <in>IAudioProvider.h</in>
+        <in>Jaw.h</in>
+        <in>Level.h</in>
+        <in>MainMenu.h</in>
+        <in>MapLoader.h</in>
+        <in>Powerup.h</in>
+        <in>Projectile.h</in>
+        <in>Rambo.h</in>
+        <in>SFMLSoundProvider.h</in>
+        <in>ServiceLocator.h</in>
+        <in>SoundFileCache.h</in>
+        <in>SplashScreen.h</in>
+        <in>StoryScreen.h</in>
+        <in>Tile.h</in>
+        <in>VisibleGameObject.h</in>
+        <in>pugiconfig.hpp</in>
+        <in>pugixml.hpp</in>
+        <in>stdafx.h</in>
+      </df>
+      <df name="music">
+      </df>
+      <df name="sounds">
+      </df>
+      <df name="src">
+        <in>Actor.cpp</in>
+        <in>Animation.cpp</in>
+        <in>Bond.cpp</in>
+        <in>Bullet.cpp</in>
+        <in>Enemy.cpp</in>
+        <in>Game.cpp</in>
+        <in>GameObjectManager.cpp</in>
+        <in>Jaw.cpp</in>
+        <in>Level.cpp</in>
+        <in>MainMenu.cpp</in>
+        <in>MapLoader.cpp</in>
+        <in>Powerup.cpp</in>
+        <in>Projectile.cpp</in>
+        <in>Rambo.cpp</in>
+        <in>SFMLSoundProvider.cpp</in>
+        <in>ServiceLocator.cpp</in>
+        <in>SoundFileCache.cpp</in>
+        <in>SplashScreen.cpp</in>
+        <in>StoryScreen.cpp</in>
+        <in>Tile.cpp</in>
+        <in>VisibleGameObject.cpp</in>
+        <in>pugixml.cpp</in>
+        <in>stdafx.cpp</in>
+      </df>
+      <df name="textures">
+      </df>
+    </df>
+  </logicalFolder>
+  <projectmakefile>Makefile</projectmakefile>
+  <confs>
+    <conf name="Default" type="0">
+      <toolsSet>
+        <developmentServer>localhost</developmentServer>
+        <platform>2</platform>
+      </toolsSet>
+      <compile>
+        <compiledirpicklist>
+          <compiledirpicklistitem>.</compiledirpicklistitem>
+          <compiledirpicklistitem>${AUTO_FOLDER}</compiledirpicklistitem>
+        </compiledirpicklist>
+        <compiledir>${AUTO_FOLDER}</compiledir>
+        <compilecommandpicklist>
+          <compilecommandpicklistitem>${MAKE} ${ITEM_NAME}.o</compilecommandpicklistitem>
+          <compilecommandpicklistitem>${AUTO_COMPILE}</compilecommandpicklistitem>
+        </compilecommandpicklist>
+        <compilecommand>${AUTO_COMPILE}</compilecommand>
+      </compile>
+      <dbx_gdbdebugger version="1">
+        <gdb_pathmaps>
+        </gdb_pathmaps>
+        <gdb_interceptlist>
+          <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
+        </gdb_interceptlist>
+        <gdb_options>
+          <DebugOptions>
+          </DebugOptions>
+        </gdb_options>
+        <gdb_buildfirst gdb_buildfirst_overriden="false" gdb_buildfirst_old="false"/>
+      </dbx_gdbdebugger>
+      <nativedebugger version="1">
+        <engine>gdb</engine>
+      </nativedebugger>
+      <runprofile version="9">
+        <runcommandpicklist>
+          <runcommandpicklistitem>"${OUTPUT_PATH}"</runcommandpicklistitem>
+        </runcommandpicklist>
+        <runcommand>"${OUTPUT_PATH}"</runcommand>
+        <rundir>.</rundir>
+        <buildfirst>false</buildfirst>
+        <terminal-type>0</terminal-type>
+        <remove-instrumentation>0</remove-instrumentation>
+        <environment>
+        </environment>
+      </runprofile>
+    </conf>
+  </confs>
+</configurationDescriptor>

@@ -4,8 +4,10 @@
 
 #include <stdio.h>
 #include "stdafx.h"
+#include <sstream>
 #include "VisibleGameObject.h"
 #include "Animation.h"
+
 
 class Powerup:public VisibleGameObject{
 public:

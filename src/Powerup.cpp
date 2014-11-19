@@ -1,5 +1,24 @@
 #include "Powerup.h"
 
+Powerup::Powerup(std::string config,std::string texture){
+    objectType="Powerup";
+    pugi::xml_document doc;
+    doc.load_file(config.c_str());
+    
+    pugi::xml_node bulletnode = doc.child("root").find_child_by_attribute("Object", "name", "Powerup");
+    
+    if (bulletnode.empty()) {
+        //if there is an error in node initialization
+        std::cout << "Can't find Bond actor node..." << std::endl;
+        return;
+    }
+    //  std::cout << "start preparing frames" << std::endl;
+    prepareFrameInfo(bulletnode);
+    // std::cout << "Finish preparing frames" << std::endl;
+    Load(texture);
+    used=false;
+}
+
 void Powerup::prepareFrameInfo(pugi::xml_node& node){
     std::istringstream ss(std::string(node.child("Animation_List").text().as_string()));
     std::string token;
@@ -21,25 +40,6 @@ void Powerup::animReq(std::string animName){
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
-}
-
-Powerup::Powerup(std::string config,std::string texture){
-    objectType="Powerup";
-    pugi::xml_document doc;
-    doc.load_file(config.c_str());
-    
-    pugi::xml_node bulletnode = doc.child("root").find_child_by_attribute("Object", "name", "Powerup");
-    
-    if (bulletnode.empty()) {
-        //if there is an error in node initialization
-        std::cout << "Can't find Bond actor node..." << std::endl;
-        return;
-    }
-    //  std::cout << "start preparing frames" << std::endl;
-    prepareFrameInfo(bulletnode);
-    // std::cout << "Finish preparing frames" << std::endl;
-    Load(texture);
-    used=false;
 }
 
 void Powerup::Update(float elapsedTime){

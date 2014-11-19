@@ -3,6 +3,7 @@
 
 #include <stdio.h>
 #include "stdafx.h"
+#include <sstream>
 #include "Animation.h"
 #include "pugixml.hpp"
 #include "VisibleGameObject.h"
