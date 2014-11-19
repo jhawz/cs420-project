@@ -15,6 +15,7 @@ Actor::Actor(){
     alive=true;
     rightdir=true;
     shootlocked=false;
+    GetSprite().setTextureRect(sf::IntRect(0, 0, 32, 64));
 }
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){

@@ -80,12 +80,11 @@ void Bond::Update(float elapsedTime) {
         setRightPress(false);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        if (!jumpPressed) {
+        if (jumpDelay <= 0)
+        {
             jump();
-            jumpPressed = true;
+            jumpDelay = 10;
         }
-    } else if (!sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        jumpPressed = false;
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         straightShoot();
@@ -123,6 +122,7 @@ void Bond::Update(float elapsedTime) {
             standStill();
         }
     } else if (!jumping) {
+        jumpDelay--;
         if (rightpressed && !rightCollide()) {
             rightRun();
         } else if (leftpressed && !leftCollide()) {

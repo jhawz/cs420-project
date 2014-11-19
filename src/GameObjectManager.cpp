@@ -53,7 +53,7 @@ void GameObjectManager::UpdateAll() {
         if (itr->second->type > 0) {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
-            keepOnMap(itr->second);
+          //  keepOnMap(itr->second);
         }
         itr++;
     }

@@ -16,7 +16,7 @@ public:
 	virtual sf::Vector2f GetPosition() const;
 	virtual bool IsLoaded() const;
         virtual bool IsAlive();
-        int type;
+        int type = 0;
         std::string getObjectType();
     	bool closeContact(VisibleGameObject &conter);
 protected:

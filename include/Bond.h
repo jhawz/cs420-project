@@ -23,14 +23,13 @@ public:
     void crouchshoot();
     void setBoundary(float left, float up, float right, float lower);
     sf::IntRect getBoundary();
+    int jumpDelay = 10;
 private:
     bool lowCollide();
     bool leftCollide();
     bool rightCollide();
     bool topCollide();
     bool jumping;
-    bool falling;
-    bool jumpPressed;
     int lives;
     sf::Vector2f upperleft,lowerright;
 };
