@@ -25,6 +25,23 @@ public:
     Level() {
 
     };
+    ~Level(){
+        delete backGround;
+        for (int i = 0; i < tileList.size(); i++)
+        {
+            delete tileList[i];
+        }
+        tileList.clear();
+        
+        for (int i = 0; i < enemyList.size(); i++)
+        {
+            delete enemyList[i];
+        }
+        enemyList.clear();
+        
+        delete bond;
+        
+    }
     void setBackGround(VisibleGameObject* backGround);
     VisibleGameObject* getBackground();
     std::string getLevelString();

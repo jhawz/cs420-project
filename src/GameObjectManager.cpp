@@ -26,6 +26,12 @@ void GameObjectManager::Remove(std::string name) {
     }
 }
 
+void GameObjectManager::RemoveAll()
+{
+    gameObjects.clear();
+    delete curLevel;
+}
+
 VisibleGameObject* GameObjectManager::Get(std::string name) const {
     std::map<std::string, VisibleGameObject*>::const_iterator results = gameObjects.find(name);
     if (results == gameObjects.end())
@@ -137,20 +143,6 @@ bool GameObjectManager::collidedWith(int gridPos) {
         return true;
     } //No collisions detected.
     return false;
-}
-
-void GameObjectManager::keepOnMap(VisibleGameObject* obj) {
-    if (obj->GetPosition().x < 32)
-        obj->SetPosition(32, obj->GetPosition().y);
-    else if (obj->GetPosition().x > 3200 - 32)
-        obj->SetPosition(3200 - 32, obj->GetPosition().y);
-
-    if (obj->GetPosition().y < 0)
-        obj->SetPosition(obj->GetPosition().x, 0);
-    else if (obj->GetPosition().y > 600) {
-        obj->SetPosition(obj->GetPosition().x, 600);
-        static_cast<Actor*> (obj)->die();
-    }
 }
 
 int GameObjectManager::getLevelCode() {

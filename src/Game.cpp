@@ -98,7 +98,10 @@ void Game::GameLoop() {
             if (currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
 
             if (currentEvent.type == sf::Event::KeyPressed) {
-                if (currentEvent.key.code == sf::Keyboard::Escape) ShowMenu();
+                if (currentEvent.key.code == sf::Keyboard::Escape) {
+                    gameObjectManager.RemoveAll();
+                    ShowMenu();
+                }
             }
 
             break;
