@@ -13,6 +13,7 @@ class Powerup:public VisibleGameObject{
 public:
     Powerup(std::string config,std::string texture);
     void Update(float elapsedTime);
+    void disappear();
     bool isDead();
 private:
     bool used;
