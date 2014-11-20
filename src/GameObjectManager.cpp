@@ -90,7 +90,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     //bond is 64 pixels (2 tiles) high.)
     if (collidedWith(posToFrame - 1) || collidedWith(posToFrame + 100 - 1)) {
         newLeft = ((xVal + 1) * 32);
-    }        //chances are we won't have a on left on right collision at the same time
+    }   //chances are we won't have a on left on right collision at the same time
         //so roll else if. Second collidedWith check for same reason as above.
     else if (collidedWith(posToFrame + 1) || collidedWith(posToFrame + 100 + 1)) {
         newRight = ((xVal) * 32);
@@ -98,13 +98,22 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     //Check below
     if (collidedWith(posToFrame + (2 * 100))) {
         newBottom = (yVal + 2) * 32;
-    } else {
+    } 
+    else if(((int) obj->GetPosition().x) % 32 != 0 && 
+            collidedWith(posToFrame + (2 * 100) + 1) && 
+            collidedWith(posToFrame + (2 * 100) - 1))
+    {
+        newBottom = (yVal + 2) * 32;
+    }
+    else {
         newBottom = (yVal + 4) * 32;
     }
     //Check above
     if (collidedWith(posToFrame - (2 * 100))) {
         newTop = (yVal - 2) * 32;
     }
+    else if (collidedWith(posToFrame - (2 * 100)) - 1 || 
+            collidedWith(posToFrame - (2 * 100)) + 1)
     if (obj->type == 1) {
         static_cast<Bond*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);

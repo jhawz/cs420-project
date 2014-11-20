@@ -13,7 +13,9 @@ public:
     void prepareFrameInfo(pugi::xml_node& node);
     void Update(float elapsedTime);
     void rightRun();
+    void rightMove();
     void leftRun();
+    void leftMove();
     void standStill();
     void attack();
     void die();

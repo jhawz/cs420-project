@@ -57,6 +57,16 @@ void Actor::rightRun(){
     ax=0;ay=0;
 }
 
+void Actor::rightMove()
+{
+    vx=8;
+}
+
+void Actor::leftMove()
+{
+    vx=-8;
+}
+
 void Actor::leftRun(){
     if (!alive)return;
     if (rightdir) {

@@ -122,8 +122,10 @@ void Bond::Update(float elapsedTime) {
         }
         if (rightpressed) {
             rightRun();
+            Actor::rightMove();
         } else if (leftpressed) {
             leftRun();
+            Actor::leftMove();
         }
     }
     else if (topCollide()) { //not functioning!
@@ -196,6 +198,7 @@ void Bond::leftRun() {
 void Bond::rightRun() {
     if (lowCollide()) {
         Actor::rightRun();
+        Actor::rightMove();
     }
 }
 
