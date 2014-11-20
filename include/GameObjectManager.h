@@ -24,7 +24,7 @@ private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
 	sf::Clock clock;
-        int currentLevel = 1;
+        int currentLevel = 5;
         Level * curLevel;
 	struct GameObjectDeallocator
 	{

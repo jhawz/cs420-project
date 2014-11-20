@@ -29,13 +29,32 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
     type = 1;
 }
 
+Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
+    int lives = 3;
+    
+    pugi::xml_document doc;
+    doc.load_file(config.c_str());
+    
+      pugi::xml_node bondnode = doc.child("root").find_child_by_attribute("Actor", "name", "Bond");
+
+    if (bondnode.empty()) {
+        //if there is an error in node initialization
+        std::cout << "Can't find Bond actor node..." << std::endl;
+        return;
+    }
+      
+       prepareFrameInfo(bondnode);
+       Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
+       type = 1;
+}
+
 void Bond::jump() {
     if (jumping) {
         return;
     }
     animReq("jump_prepare", false);
     vy = -9.99;
-    ay = 1.25;
+    ay = 1.00;
     jumping = true;
     animReq("jump_up", false);
 }

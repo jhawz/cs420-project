@@ -16,6 +16,7 @@
 class Enemy : public Actor {
 public:
     Enemy(std::string config,std::string texture,std::string name);
+    Enemy(std::string config,sf::Texture& t, std::string name);
     void leftwalk();
     void rightwalk();
     void Update(float elapsedTime);

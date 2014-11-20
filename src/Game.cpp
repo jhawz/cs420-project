@@ -83,8 +83,8 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
-            std::cout << "X: " << cameraPosition.x << std::endl;
-            std::cout << "Y: " << cameraPosition.y << std::endl;
+         //   std::cout << "X: " << cameraPosition.x << std::endl;
+         //   std::cout << "Y: " << cameraPosition.y << std::endl;
 
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
@@ -131,23 +131,23 @@ void Game::LoadLevel() {
     l->loadLevel(gameObjectManager.getLevelCode());
 
     gameObjectManager.setCollisionList(l->getTileColList());
-
-    Enemy *enemy_1 = new Enemy("actors.xml", "textures/enemy.png", "Pistol");
-    enemy_1->SetPosition(300, 200);
-    enemy_1->setBoundary(0, 0, 800, 464);
-
-    Bond *bond = new Bond("actors.xml", "textures/JB.png");
-    bond->SetPosition(200, 200);
-    bond->setBoundary(0, 0, 800, 464);
-
-    gameObjectManager.Add("Bond", bond);
-    gameObjectManager.Add("Enemy", enemy_1);
+    
     std::vector<Tile*> tiles = l->getTileList();
 
     for (int x = 0; x < tiles.size(); x++) {
         gameObjectManager.Add("Tile" + (std::to_string(x)), tiles[x]);
-        // std::cout << "Next Tile..." << std::endl;
     }
+    
+    std::vector<Enemy*> enemies = l->getEnemyList();
+    
+    for (int x = 0; x < enemies.size(); x++){
+        std::cout << "Loaded Enemy" << std::endl;
+        gameObjectManager.Add("Enemy" + (std::to_string(x)), enemies[x]);
+    }
+    
+    Bond* b = l->getBond();
+    
+    gameObjectManager.Add("Bond", b);
 
     gameObjectManager.Add("Background", l->getBackground());
     gameState = Playing;

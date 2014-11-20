@@ -127,7 +127,7 @@ void Actor::Update(float elapsedTime){
     SetPosition(pos.x+vx*elapsedTime, pos.y+vy*elapsedTime);
     if (curAnim->play()) {
         GetSprite().setTextureRect(curAnim->getCurFrame());
-        lowerBound = getLowBound();
+     //   lowerBound = getLowBound();
     }
     if (shootlocked) {
         sf::Time waited=clock.getElapsedTime();
@@ -172,7 +172,8 @@ void Actor::setBoundary(float left, float up, float right, float lower) {
 }
 
 bool Actor::lowCollide() {
-    return GetPosition().y + lowerBound >= lowerright.y;
+   // return GetPosition().y + lowerBound >= lowerright.y;
+    return GetPosition().y >= lowerright.y;
 }
 
 bool Actor::IsAlive(){

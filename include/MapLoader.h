@@ -10,14 +10,12 @@ using namespace std;
 
 class MapLoader {
 private:
-	std::vector<string> tileSet;
-	std::vector<sf::Sprite> spriteArray;
-        std::vector<Tile*> tileList;//Is going to replace the spriteArray/tileSet
+	std::vector<std::string> tileSet;
 	sf::Texture tileSheet;
         static const int mapWidth = 100;
         static const int tileSheetWidth = 15;
         static const int tileSheetHeight = 15;
-        int testValue;
+        std::vector<int> firstIDList;
         
 public:
 	MapLoader();
@@ -26,11 +24,12 @@ public:
 	void loadMap(std::string fileName);
 	std::string splitString(std::string dat, char &delim);
 	std::vector<sf::Sprite> getSprites();
-        std::vector<string> getTileCodes();
+        std::vector<std::string> getTileCodes();
         std::vector<Tile*> getTiles();
         VisibleGameObject* getBackground(int worldCode);
         bool collidedWith(sf::IntRect otherObj);
         int getTestValue();
+        std::vector<int> getFirstIDs();
 };
 
 #endif

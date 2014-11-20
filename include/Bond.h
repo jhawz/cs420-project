@@ -11,6 +11,7 @@
 class Bond:public Actor{
 public:
     Bond(std::string config,std::string texture);
+    Bond(std::string config, sf::Texture& t);
     void Update(float elapsedTime);
     void jump();
     void leftRun();

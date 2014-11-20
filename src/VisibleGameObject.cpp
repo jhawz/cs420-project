@@ -33,7 +33,7 @@ void VisibleGameObject::Load(sf::Texture& t,
     image = t;
     sprite.setTexture(t);
     sprite.setTextureRect(sf::IntRect(textPos.x, textPos.y, 
-            32, 32));
+            textRect.x, textRect.y));
     isLoaded = true;
         
 }

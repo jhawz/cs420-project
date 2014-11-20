@@ -3,14 +3,12 @@
 #include <sstream>
 #include <SFML/Graphics.hpp>
 #include <iostream>
+#include <stdlib.h>
 #include "MapLoader.h"
 
 MapLoader::MapLoader()
 {
-    	sf::Image i;
-	i.loadFromFile("textures/TiledEight32New.png");
-	i.createMaskFromColor(sf::Color(255, 255, 255));
-        tileSheet.loadFromImage(i);
+	tileSheet.loadFromFile("textures/TiledEight32New.png");
 }
 MapLoader::~MapLoader()
 {
@@ -24,8 +22,19 @@ void MapLoader::init()
 void MapLoader::loadMap(std::string fileName)
 {
 	std::string readString;
+        std::string firstIDString;
 	std::ifstream reader(fileName);
-	int count = 0;
+        int count = 0;
+        
+        //load in tileTypes on map. These are single line strings containing:
+        //firstgid
+        while (std::getline(reader, readString, ',') && 
+                readString.find("BEGINTILES") == string::npos)
+        {
+            firstIDList.push_back(std::stoi(readString));
+        }
+        //now get actual objects
+	count = 0;
 	while (std::getline(reader, readString, ','))
 	{
 		int newVal;
@@ -62,32 +71,12 @@ VisibleGameObject* MapLoader::getBackground(int worldCode)
     
     return bg;
 }
-std::string MapLoader::splitString(std::string dat, char &delim)
-{
-	std::istringstream s(dat);
-	std::string result;
-
-	s >> result;
-
-	return result;
-
-}
-std::vector<sf::Sprite> MapLoader::getSprites()
-{
-    return spriteArray;
-}
-
 std::vector<std::string> MapLoader::getTileCodes()
 {
     return tileSet;
 }
 
-std::vector<Tile*> MapLoader::getTiles()
+std::vector<int> MapLoader::getFirstIDs()
 {
-    return tileList;
-}
-
-int MapLoader::getTestValue()
-{
-    return testValue;
+    return firstIDList;
 }

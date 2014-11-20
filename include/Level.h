@@ -16,6 +16,8 @@
 #include "VisibleGameObject.h"
 #include "MapLoader.h"
 #include "Tile.h"
+#include "Enemy.h"
+#include "Bond.h"
 
 class Level {
 public:
@@ -25,23 +27,35 @@ public:
     };
     void setBackGround(VisibleGameObject* backGround);
     VisibleGameObject* getBackground();
-    //bool setForeGround(sf::Texture ForeGround);
     std::string getLevelString();
     bool setLevelString(std::string levelString);
     void loadLevel(int levelVal);
     void loadSpecifiedLevel(std::string file);
     std::vector<std::string> getTileCodes();
     std::vector<int> getTileColList();
-    std::vector<Tile*> getTileList();
+    std::vector<Tile*>& getTileList();
+    std::vector<Enemy*>& getEnemyList();
+    Bond* getBond();
+    Tile* buildATile(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
+    Enemy* buildAnEnemy(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
+    Bond* buildABond(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
+    bool isRealObjectOnMap(int objectCode);
+    bool isTile(int objectCode, std::vector<int>& mapIDs);
+    bool isEnemy(int objectCode, std::vector<int>& mapIDs);
+    bool isBond(int objectCode, std::vector<int>& mapIDs);
+    int const tilesPerRow = 100;
+    int const tileHeight = 32;
+    int const tileWidth = 32;
 private:
     VisibleGameObject* backGround;
     sf::Texture levelTiles;
-    //  sf::Texture middleGround;
-    //  sf::Texture ForeGround;
-    //std::string levelString;
+    sf::Texture enemySheet;
+    sf::Texture bondSheet;
     std::vector<std::string> tileCodeList;
     std::vector<int> tileColList;
     std::vector<Tile*> tileList;
+    std::vector<Enemy*> enemyList;
+    Bond* bond;
     sf::Time period;
     sf::Clock clock;
 };

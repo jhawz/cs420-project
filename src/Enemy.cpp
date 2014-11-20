@@ -5,7 +5,8 @@ Enemy::Enemy(std::string config, std::string texture, std::string name) : Actor:
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 
-    pugi::xml_node enemynode = doc.child("root").find_child_by_attribute("Actor", "name", name.c_str());
+    pugi::xml_node enemynode = doc.child("root").find_child_by_attribute("Actor"
+            , "name", name.c_str());
 
     if (enemynode.empty()) {
         //if there is an error in node initialization
@@ -18,6 +19,28 @@ Enemy::Enemy(std::string config, std::string texture, std::string name) : Actor:
         return;
     }
     setOriginalImg(*img);
+    alive = true;
+    type = 2;
+}
+Enemy::Enemy(std::string config, sf::Texture& t, std::string name) : Actor::Actor() {
+    pugi::xml_document doc;
+    doc.load_file(config.c_str());
+    
+    pugi::xml_node enemynode = doc.child("root").find_child_by_attribute("Actor"
+            ,"name", name.c_str());
+    
+    if (enemynode.empty()) {
+        //if there is an error in node initialization
+        return;
+    }
+    prepareFrameInfo(enemynode);
+    Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
+    sf::Image *img = new sf::Image();
+    //if (!img->loadFromMemory(t, std::size_t(t.getSize().x, t.getSize().y)))
+    //{
+   //     return;
+    //}
+    //setOriginalImg(*img);
     alive = true;
     type = 2;
 }
@@ -50,7 +73,6 @@ void Enemy::rightwalk() {
 
 void Enemy::Update(float elapsedTime) {
     Actor::Update(elapsedTime);
-    //  std::cout << " In Enemy Update " << "Low Collide = " << lowerright.y << std::endl;
 
     if (!lowCollide()) {
         if (ay == 0)
