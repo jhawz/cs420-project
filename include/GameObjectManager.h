@@ -20,6 +20,7 @@ public:
         void checkForCollision(VisibleGameObject* obj);
         int getLevelCode();
         void setCurLevel(Level* l);
+        void checkIfActorFired(VisibleGameObject* obj);
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;

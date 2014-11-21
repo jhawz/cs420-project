@@ -99,3 +99,23 @@ bool VisibleGameObject::closeContact(VisibleGameObject &conter){
     }
     else return false;
 }
+
+void VisibleGameObject::setFiring(bool fire){
+    firing = fire;
+}
+
+bool VisibleGameObject::getFiring(){
+    return firing;
+}
+
+bool VisibleGameObject::isFacingRight(){
+    return rightDir;
+}
+
+void VisibleGameObject::setFacingRight(){
+    rightDir = true;
+}
+
+void VisibleGameObject::setFacingLeft(){
+    rightDir = false;
+}

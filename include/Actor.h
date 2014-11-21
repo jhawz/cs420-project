@@ -6,6 +6,7 @@
 #include "Animation.h"
 #include "pugixml.hpp"
 #include "VisibleGameObject.h"
+#include "Bullet.h"
 
 class Actor:public VisibleGameObject{
 public:

@@ -31,21 +31,21 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 
 Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
     int lives = 3;
-    
+
     pugi::xml_document doc;
     doc.load_file(config.c_str());
-    
-      pugi::xml_node bondnode = doc.child("root").find_child_by_attribute("Actor", "name", "Bond");
+
+    pugi::xml_node bondnode = doc.child("root").find_child_by_attribute("Actor", "name", "Bond");
 
     if (bondnode.empty()) {
         //if there is an error in node initialization
         std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-      
-       prepareFrameInfo(bondnode);
-       Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
-       type = 1;
+
+    prepareFrameInfo(bondnode);
+    Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
+    type = 1;
 }
 
 void Bond::jump() {
@@ -87,6 +87,7 @@ bool Bond::topCollide() {
 }
 
 void Bond::Update(float elapsedTime) {
+    std::cout << elapsedTime << std::endl;
 
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         setLeftPress(true);
@@ -99,14 +100,18 @@ void Bond::Update(float elapsedTime) {
         setRightPress(false);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        if (jumpDelay <= 0)
-        {
+        if (jumpDelay <= 0) {
             jump();
             jumpDelay = 10;
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        straightShoot();
+        if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                (!leftpressed) && (!rightpressed) && jumping != true){
+            straightShoot();
+            setFiring(true);
+            shotClock.restart();
+        }
     }
 
     Actor::Update(elapsedTime);
@@ -125,8 +130,7 @@ void Bond::Update(float elapsedTime) {
         } else if (leftpressed) {
             leftRun();
         }
-    }
-    else if (topCollide()) { //not functioning!
+    } else if (topCollide()) { //not functioning!
         //if (jumping)
         ay = 0;
         SetPosition(GetPosition().x, upperleft.y);
@@ -190,12 +194,14 @@ void Bond::crouchshoot() {
 void Bond::leftRun() {
     if (lowCollide()) {
         Actor::leftRun();
+        setFacingLeft();
     }
 }
 
 void Bond::rightRun() {
     if (lowCollide()) {
         Actor::rightRun();
+        setFacingRight();
     }
 }
 

@@ -1,11 +1,11 @@
 #include "stdafx.h"
-#include "GameObjectManager.h"
 #include "Game.h"
 #include <iostream>
 #include "Actor.h"
 #include "Bond.h"
 #include "Enemy.h"
 #include "Level.h"
+#include "Bullet.h"
 
 GameObjectManager::GameObjectManager() {
 }
@@ -26,8 +26,7 @@ void GameObjectManager::Remove(std::string name) {
     }
 }
 
-void GameObjectManager::RemoveAll()
-{
+void GameObjectManager::RemoveAll() {
     gameObjects.clear();
     delete curLevel;
 }
@@ -59,7 +58,9 @@ void GameObjectManager::UpdateAll() {
         if (itr->second->type > 0) {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
-          //  keepOnMap(itr->second);
+            checkIfActorFired(itr->second);
+
+            //  keepOnMap(itr->second);
         }
         itr++;
     }
@@ -90,7 +91,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     //bond is 64 pixels (2 tiles) high.)
     if (collidedWith(posToFrame - 1) || collidedWith(posToFrame + 100 - 1)) {
         newLeft = ((xVal + 1) * 32);
-    }        //chances are we won't have a on left on right collision at the same time
+    }//chances are we won't have a on left on right collision at the same time
         //so roll else if. Second collidedWith check for same reason as above.
     else if (collidedWith(posToFrame + 1) || collidedWith(posToFrame + 100 + 1)) {
         newRight = ((xVal) * 32);
@@ -151,4 +152,31 @@ int GameObjectManager::getLevelCode() {
 
 void GameObjectManager::setCurLevel(Level* l) {
     curLevel = l;
+}
+
+void GameObjectManager::checkIfActorFired(VisibleGameObject* obj) {
+    if (obj->getFiring() == true) {
+        Bullet *bullet;
+        if (obj->isFacingRight()) {
+            bullet = new Bullet("actors.xml", "textures/JB.png", 0);
+            bullet->SetPosition(obj->GetPosition().x -36, obj->GetPosition().y);
+            if (obj->GetPosition().x > 400)
+                bullet->setBoundary(obj->GetPosition().x - 450,
+                    obj->GetPosition().x + 450);
+            else
+                bullet->setBoundary(obj->GetPosition().x - 800,
+                    obj->GetPosition().x + 800);
+        } else {
+            bullet = new Bullet("actors.xml", "textures/JB.png", 1);
+            bullet->SetPosition(obj->GetPosition().x + 36, obj->GetPosition().y);
+            if (obj->GetPosition().x > 400)
+                bullet->setBoundary(obj->GetPosition().x - 450,
+                    obj->GetPosition().x + 450);
+            else
+                bullet->setBoundary(obj->GetPosition().x - 800,
+                    obj->GetPosition().x + 800);
+        }
+        this->Add("Bullet" + (std::to_string(clock.getElapsedTime().asSeconds())), bullet);
+        obj->setFiring(false);
+    }
 }

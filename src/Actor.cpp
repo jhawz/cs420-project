@@ -13,7 +13,6 @@ Actor::Actor(){
     vx=0;vy=0;
     ax=0;ay=0;
     alive=true;
-    rightdir=true;
     shootlocked=false;
     GetSprite().setTextureRect(sf::IntRect(0, 0, 32, 64));
 }
