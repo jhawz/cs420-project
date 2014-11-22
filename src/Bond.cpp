@@ -120,7 +120,7 @@ void Bond::Update(float elapsedTime) {
         vy = 0;
     }
     if (!lowCollide()) {
-        if (state == BOND) {
+        if(state==BOND){
             if (ay == 0) {
                 ay = 2;
                 jumping = true;
@@ -130,11 +130,11 @@ void Bond::Update(float elapsedTime) {
             } else if (vy > 6) {
                 animReq("jump_fall", false);
             }
-            if (rightpressed && !rightCollide()) {
-                Actor::rightMove();
-            } else if (leftpressed && !leftCollide()) {
-                Actor::leftMove();
-            }
+        }
+        if (rightpressed && !rightCollide()) {
+            Actor::rightMove();
+        } else if (leftpressed && !leftCollide()) {
+            Actor::leftMove();
         }
     } else if (vy > 0) {
         jumping = false;
