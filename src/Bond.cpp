@@ -62,6 +62,9 @@ void Bond::jump() {
             break;
         case RAMBO:
             animReq("Rjump", false);
+            vy = -9.99;
+            ay = 0.5;
+            jumping = true;
             break;
         default:
             break;
@@ -143,7 +146,7 @@ void Bond::Update(float elapsedTime) {
             rightRun();
         } else if (leftpressed && !leftCollide()) {
             leftRun();
-        } else if (isCurAnim("run")) {
+        } else if (isCurAnim("run")||isCurAnim("Rrun")) {
             standStill();
         }
     }
