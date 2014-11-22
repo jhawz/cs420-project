@@ -119,7 +119,7 @@ void Bond::Update(float elapsedTime) {
         vy = 0;
     }
     if (!lowCollide()) {
-        //if(state==BOND){
+        if(state==BOND){
             if (ay == 0) {
                 ay = 2;
                 jumping = true;
@@ -134,7 +134,7 @@ void Bond::Update(float elapsedTime) {
             } else if (leftpressed && !leftCollide()) {
                 Actor::leftMove();
             }
-        //}
+        }
     } else if (vy > 0) {
         jumping = false;
         SetPosition(GetPosition().x, lowerright.y - 64);
