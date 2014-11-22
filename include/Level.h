@@ -4,7 +4,6 @@
  *
  * Created on October 17, 2014, 8:25 PM
  */
-
 #ifndef LEVEL_H
 #define	LEVEL_H
 
@@ -40,7 +39,6 @@ public:
         enemyList.clear();
         
         delete bond;
-        
     }
     void setBackGround(VisibleGameObject* backGround);
     VisibleGameObject* getBackground();
@@ -76,5 +74,4 @@ private:
     sf::Time period;
     sf::Clock clock;
 };
-
 #endif	/* LEVEL_H */

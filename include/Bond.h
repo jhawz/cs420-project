@@ -24,6 +24,7 @@ public:
     void crouchshoot();
     void setBoundary(float left, float up, float right, float lower);
     sf::IntRect getBoundary();
+    void input();
     int jumpDelay = 10;
     sf::Clock shotClock;
 private:

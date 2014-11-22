@@ -15,6 +15,9 @@ Actor::Actor(){
     alive=true;
     shootlocked=false;
     GetSprite().setTextureRect(sf::IntRect(0, 0, 32, 64));
+    GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 
+            0);
+    setFacingRight();
 }
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){
@@ -54,6 +57,16 @@ void Actor::rightRun(){
     animReq("run", false);
     vx=8;vy=0;
     ax=0;ay=0;
+}
+
+void Actor::rightMove()
+{
+    vx=8;
+}
+
+void Actor::leftMove()
+{
+    vx=-8;
 }
 
 void Actor::leftRun(){

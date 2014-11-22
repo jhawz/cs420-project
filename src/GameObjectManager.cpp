@@ -90,24 +90,70 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     int xVal = ((int) obj->GetPosition().x) / 32;
     int yVal = ((int) obj->GetPosition().y) / 32;
     int posToFrame = xVal + ((yVal) * 100);
+    int returnCollisionValue = -1;
     //check directly left/right as well as 1 row below left/right since
     //bond is 64 pixels (2 tiles) high.)
-    if (collidedWith(posToFrame - 1) || collidedWith(posToFrame + 100 - 1)) {
-        newLeft = ((xVal + 1) * 32);
-    }//chances are we won't have a on left on right collision at the same time
-        //so roll else if. Second collidedWith check for same reason as above.
-    else if (collidedWith(posToFrame + 1) || collidedWith(posToFrame + 100 + 1)) {
-        newRight = ((xVal) * 32);
+    
+    //check left collisions
+    returnCollisionValue = collidedWith(posToFrame - 1);
+    
+    if (returnCollisionValue > -1)
+    {
+        newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 33;
+       // std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
     }
+    else
+    {
+        returnCollisionValue = collidedWith(posToFrame + 100 - 1);
+        if (returnCollisionValue > -1)
+        {
+           newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 33;
+       //    std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
+        }
+    }
+    //check right collisions
+    returnCollisionValue = collidedWith(posToFrame + 1);
+    
+    if (returnCollisionValue > -1)
+    {
+        newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 33;
+     //   std::cout << "RIGHT (1st) BOUND CHANGED TO: " << newRight << std::endl;
+    }
+    else
+    {
+        returnCollisionValue = collidedWith(posToFrame + 100 + 1);
+        if (returnCollisionValue > -1)
+        {
+            newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 33;
+        //            std::cout << "RIGHT (2nd) BOUND CHANGED TO: " << newRight << std::endl;
+        }
+    }
+    
     //Check below
-    if (collidedWith(posToFrame + (2 * 100))) {
+    if (collidedWith(posToFrame + (2 * 100)) > -1) {
         newBottom = (yVal + 2) * 32;
-    } else {
-        newBottom = (yVal + 4) * 32;
+    }
+    else if(((int) obj->GetPosition().x) % 32 != 0 && 
+            collidedWith(posToFrame + (2 * 100) + 1) > -1 && 
+            collidedWith(posToFrame + (2 * 100) - 1) > -1)
+    {
+        newBottom = (yVal + 2) * 32;
     }
     //Check above
-    if (collidedWith(posToFrame - (2 * 100))) {
-        newTop = (yVal - 2) * 32;
+    if (collidedWith(posToFrame - (1 * 100)) > -1) {
+        newTop = (yVal) * 32;
+      //  std::cout << "Hit above" << std::endl;
+        
+    }
+    else if (collidedWith((posToFrame - (1 * 100)) + 1) > -1)
+    {
+    //    std::cout << "Hit above" << std::endl;
+        newTop = (yVal - 1) * 32;
+    }
+    else
+    {
+        newTop = 0;
+       // std::cout << "Not hitting!" << std::endl;
     }
     if (obj->type == 1) {
         static_cast<Bond*> (obj)->setBoundary(newLeft,
@@ -122,7 +168,9 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
 //Collision list.
 //Called by checkForCollision.
 
-bool GameObjectManager::collidedWith(int gridPos) {
+//Returns the position of the tile the object collided with in a frame count
+//Returns -1 if there was no collision
+int GameObjectManager::collidedWith(int gridPos) {
     //Run binary search
     int low = 0;
     int high = collisionsList.size();
@@ -132,7 +180,7 @@ bool GameObjectManager::collidedWith(int gridPos) {
         mid = ((low + high) / 2);
         if (collisionsList[mid] == gridPos) {
             //collided. 
-            return true;
+            return mid;
         } else if (collisionsList[mid] < gridPos) {
             low = mid + 1;
         } else {
@@ -142,11 +190,15 @@ bool GameObjectManager::collidedWith(int gridPos) {
     //check the entries directly before and after the last known mid val
     //to ensure that the collision code wasn't avoided by the division
     //(prevents the 'hopping' problem)
-    if (collisionsList[mid - 1] == gridPos ||
-            collisionsList[mid + 1] == gridPos) {
-        return true;
-    } //No collisions detected.
-    return false;
+    if (collisionsList[mid + 1] == gridPos) {
+        return mid + 1;
+    }
+    else if (collisionsList[mid - 1] == gridPos)
+    {
+        return mid - 1;
+    }
+    //No collisions detected.
+    return -1;
 }
 
 int GameObjectManager::getLevelCode() {
