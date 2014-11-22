@@ -115,7 +115,7 @@ void Bond::Update(float elapsedTime) {
        // SetPosition(GetPosition().x, upperleft.y);
         vy = 0;
     }
-    if (!lowCollide()) {
+    if (!lowCollide()&&state==BOND) {
         if (ay == 0) {
             ay = 2;
             jumping = true;
