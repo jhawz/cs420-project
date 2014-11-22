@@ -61,6 +61,9 @@ void Bond::jump() {
             animReq("jump_up", false);
             break;
         case RAMBO:
+            if (jumping) {
+                return;
+            }
             animReq("Rjump", false);
             vy = -9.99;
             ay = 0.5;
