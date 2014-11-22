@@ -19,17 +19,19 @@ private:
 
     static void ShowSplashScreen();
     static void ShowMenu();
+    static void ShowStoryScreen();
     static void LoadLevel();
 
     enum GameState {
         Uninitialized, ShowingSplash, Paused,
-        ShowingMenu, Playing, Exiting, Loading
+        ShowingMenu, Playing, Exiting, ShowingStory, Loading
     };
 
     static GameState gameState;
     static sf::RenderWindow mainWindow;
     static sf::View view;
     static sf::Vector2f cameraPosition;
+    static int storyNumber;
 
     static GameObjectManager gameObjectManager;
 };

@@ -59,6 +59,11 @@ void Game::GameLoop() {
             ShowSplashScreen();
             break;
         }
+        case Game::ShowingStory:
+        {
+            ShowStoryScreen();
+            break;
+        }
         case Game::Loading:
         {
             LoadLevel();
@@ -127,6 +132,10 @@ void Game::ShowMenu() {
             gameState = Loading;
             break;
     }
+}
+
+void Game::ShowStoryScreen(){
+    
 }
 
 void Game::LoadLevel() {
