@@ -129,11 +129,11 @@ void Bond::Update(float elapsedTime) {
             } else if (vy > 6) {
                 animReq("jump_fall", false);
             }
-            if (rightpressed && !rightCollide()) {
-                Actor::rightMove();
-            } else if (leftpressed && !leftCollide()) {
-                Actor::leftMove();
-            }
+        }
+        if (rightpressed && !rightCollide()) {
+            Actor::rightMove();
+        } else if (leftpressed && !leftCollide()) {
+            Actor::leftMove();
         }
     } else if (vy > 0) {
         jumping = false;
