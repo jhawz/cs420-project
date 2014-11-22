@@ -31,7 +31,6 @@ private:
     static sf::RenderWindow mainWindow;
     static sf::View view;
     static sf::Vector2f cameraPosition;
-    static int storyNumber;
 
     static GameObjectManager gameObjectManager;
 };

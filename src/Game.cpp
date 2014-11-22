@@ -7,6 +7,7 @@
 #include "VisibleGameObject.h"
 #include "MapLoader.h"
 #include "Tile.h"
+#include "StoryScreen.h"
 
 void Game::Start(void) {
     if (gameState != Uninitialized)
@@ -129,13 +130,15 @@ void Game::ShowMenu() {
             gameState = Exiting;
             break;
         case MainMenu::Play:
-            gameState = Loading;
+            gameState = ShowingStory;
             break;
     }
 }
 
 void Game::ShowStoryScreen(){
-    
+    StoryScreen storyScreen;
+    storyScreen.Show(mainWindow, 0);
+    LoadLevel();
 }
 
 void Game::LoadLevel() {
