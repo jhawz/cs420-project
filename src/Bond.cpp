@@ -118,20 +118,22 @@ void Bond::Update(float elapsedTime) {
        // SetPosition(GetPosition().x, upperleft.y);
         vy = 0;
     }
-    if (!lowCollide()&&state==BOND) {
-        if (ay == 0) {
-            ay = 2;
-            jumping = true;
-            animReq("jump_fall", false);
-        } else if (vy>-6 && vy < 6) {
-            animReq("jump_float", false);
-        } else if (vy > 6) {
-            animReq("jump_fall", false);
-        }
-        if (rightpressed && !rightCollide()) {
-            Actor::rightMove();
-        } else if (leftpressed && !leftCollide()) {
-            Actor::leftMove();
+    if (!lowCollide()) {
+        if(state==BOND){
+            if (ay == 0) {
+                ay = 2;
+                jumping = true;
+                animReq("jump_fall", false);
+            } else if (vy>-6 && vy < 6) {
+                animReq("jump_float", false);
+            } else if (vy > 6) {
+                animReq("jump_fall", false);
+            }
+            if (rightpressed && !rightCollide()) {
+                Actor::rightMove();
+            } else if (leftpressed && !leftCollide()) {
+                Actor::leftMove();
+            }
         }
     } else if (vy > 0) {
         jumping = false;
