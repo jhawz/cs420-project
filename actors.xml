@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <root>
     <Actor name="Bond" attack_lock="500">
-    <Animation_List>stand,run,straight_shoot,up_shoot,down_shoot,jump_shoot,jump_prepare,jump_up,jump_float,jump_fall,crouch_shoot,crouch,die,disappear,Rstand,transform</Animation_List>
+    <Animation_List>stand,run,straight_shoot,up_shoot,down_shoot,jump_shoot,jump_prepare,jump_up,jump_float,jump_fall,crouch_shoot,crouch,die,disappear,Rstand,Rrun,Rstraight_shoot,Rup_shoot,Rdown_shoot,Rjump,transform</Animation_List>
         <Animation name="stand" whole_line="True" line="6" repeatable="True" period="100" frame_number="1"></Animation>
         <Animation name="run" whole_line="True" line="0" repeatable="True" period="40" frame_number="8"></Animation>
         <Animation name="straight_shoot" whole_line="True" line="2" repeatable="False" period="100" frame_number="3"></Animation>
