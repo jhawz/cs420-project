@@ -46,4 +46,16 @@ void Powerup::Update(float elapsedTime){
     if (curAnim->play()) {
         GetSprite().setTextureRect(curAnim->getCurFrame());
     }
+    else if (curAnim==animations["explode"]){
+        animReq("disappear");
+    }
+}
+
+void Powerup::disappear(){
+    animReq("explode");
+    used=true;
+}
+
+bool Powerup::isDead(){
+    return used;
 }

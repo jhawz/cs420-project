@@ -99,3 +99,39 @@ bool VisibleGameObject::closeContact(VisibleGameObject &conter){
     }
     else return false;
 }
+
+void VisibleGameObject::setFiring(bool fire){
+    firing = fire;
+}
+
+bool VisibleGameObject::getFiring(){
+    return firing;
+}
+
+bool VisibleGameObject::isFacingRight(){
+    return rightDir;
+}
+
+void VisibleGameObject::setFacingRight(){
+    rightDir = true;
+}
+
+void VisibleGameObject::setFacingLeft(){
+    rightDir = false;
+}
+
+void VisibleGameObject::setRemove(){
+    removed = true;
+}
+
+bool VisibleGameObject::getRemove(){
+    return removed;
+}
+
+void VisibleGameObject::setName(std::string objName){
+    name = objName;
+}
+
+std::string VisibleGameObject::getName(){
+    return name;
+}

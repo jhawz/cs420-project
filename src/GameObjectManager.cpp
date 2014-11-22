@@ -1,11 +1,11 @@
 #include "stdafx.h"
-#include "GameObjectManager.h"
 #include "Game.h"
 #include <iostream>
 #include "Actor.h"
 #include "Bond.h"
 #include "Enemy.h"
 #include "Level.h"
+#include "Bullet.h"
 
 GameObjectManager::GameObjectManager() {
 }
@@ -26,8 +26,7 @@ void GameObjectManager::Remove(std::string name) {
     }
 }
 
-void GameObjectManager::RemoveAll()
-{
+void GameObjectManager::RemoveAll() {
     gameObjects.clear();
     delete curLevel;
 }
@@ -59,7 +58,12 @@ void GameObjectManager::UpdateAll() {
         if (itr->second->type > 0) {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
-          //  keepOnMap(itr->second);
+            checkIfActorFired(itr->second);
+
+            //  keepOnMap(itr->second);
+        }
+        if (itr->second->getRemove()){
+            Remove(itr->second->getName());
         }
         itr++;
     }
@@ -96,7 +100,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     if (returnCollisionValue > -1)
     {
         newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 33;
-        std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
+       // std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
     }
     else
     {
@@ -104,7 +108,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
         if (returnCollisionValue > -1)
         {
            newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 33;
-           std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
+       //    std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
         }
     }
     //check right collisions
@@ -113,7 +117,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     if (returnCollisionValue > -1)
     {
         newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 33;
-        std::cout << "RIGHT (1st) BOUND CHANGED TO: " << newRight << std::endl;
+     //   std::cout << "RIGHT (1st) BOUND CHANGED TO: " << newRight << std::endl;
     }
     else
     {
@@ -121,7 +125,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
         if (returnCollisionValue > -1)
         {
             newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 33;
-                    std::cout << "RIGHT (2nd) BOUND CHANGED TO: " << newRight << std::endl;
+        //            std::cout << "RIGHT (2nd) BOUND CHANGED TO: " << newRight << std::endl;
         }
     }
     
@@ -143,7 +147,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     }
     else if (collidedWith((posToFrame - (1 * 100)) + 1) > -1)
     {
-        std::cout << "Hit above" << std::endl;
+    //    std::cout << "Hit above" << std::endl;
         newTop = (yVal - 1) * 32;
     }
     else
@@ -203,4 +207,33 @@ int GameObjectManager::getLevelCode() {
 
 void GameObjectManager::setCurLevel(Level* l) {
     curLevel = l;
+}
+
+void GameObjectManager::checkIfActorFired(VisibleGameObject* obj) {
+    if (obj->getFiring() == true) {
+        Bullet *bullet;
+        if (obj->isFacingRight()) {
+            bullet = new Bullet("actors.xml", "textures/JB.png", 0);
+            bullet->SetPosition(obj->GetPosition().x -36, obj->GetPosition().y);
+            if (obj->GetPosition().x > 400)
+                bullet->setBoundary(obj->GetPosition().x - 450,
+                    obj->GetPosition().x + 450);
+            else
+                bullet->setBoundary(obj->GetPosition().x - 800,
+                    obj->GetPosition().x + 800);
+        } else {
+            bullet = new Bullet("actors.xml", "textures/JB.png", 1);
+            bullet->SetPosition(obj->GetPosition().x + 36, obj->GetPosition().y);
+            if (obj->GetPosition().x > 400)
+                bullet->setBoundary(obj->GetPosition().x - 450,
+                    obj->GetPosition().x + 450);
+            else
+                bullet->setBoundary(obj->GetPosition().x - 800,
+                    obj->GetPosition().x + 800);
+        }
+        std::string tmpName = "Bullet" + (std::to_string(clock.getElapsedTime().asSeconds()));
+        bullet->setName(tmpName);
+        this->Add(tmpName, bullet);
+        obj->setFiring(false);
+    }
 }

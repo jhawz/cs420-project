@@ -66,7 +66,8 @@ void Game::GameLoop() {
         }
 
         case Game::Playing:
-        {
+        {   
+            //std::cout << gameObjectManager.GetObjectCount() << std::endl;
             if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
                 gameObjectManager.Get("Bond")->SetPosition(200, 200);
             }

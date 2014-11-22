@@ -26,6 +26,7 @@ public:
     sf::IntRect getBoundary();
     void input();
     int jumpDelay = 10;
+    sf::Clock shotClock;
 private:
     bool lowCollide();
     bool leftCollide();

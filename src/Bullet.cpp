@@ -22,9 +22,11 @@ void Bullet::animReq(std::string animName){
 }
 
 Bullet::Bullet(std::string config,std::string texture,int direction){
+    type = 4;
     vx=0;vy=0;
     objectType="Bullet";
     pugi::xml_document doc;
+        GetSprite().setTextureRect(sf::IntRect(896, 0, 32, 64));
     doc.load_file(config.c_str());
     
     pugi::xml_node bulletnode = doc.child("root").find_child_by_attribute("Object", "name", "Bullet");
@@ -69,6 +71,7 @@ void Bullet::setBoundary(float left, float right){
 }
 
 void Bullet::Update(float elapsedTime){
+    std::cout << "bullet update" + std::to_string(elapsedTime) << std::endl;
     if (curAnim!=NULL) {
         if (curAnim->play()) {
             GetSprite().setTextureRect(curAnim->getCurFrame());
@@ -78,6 +81,7 @@ void Bullet::Update(float elapsedTime){
         if (pos.x+vx*elapsedTime<=leftBoundary||pos.x+vx*elapsedTime>=rightBoundary) {
             animReq("disappear");
             to_delete=true;
+            VisibleGameObject::setRemove();
         }
     }
 }

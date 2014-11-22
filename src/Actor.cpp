@@ -13,11 +13,11 @@ Actor::Actor(){
     vx=0;vy=0;
     ax=0;ay=0;
     alive=true;
-    rightdir=true;
     shootlocked=false;
     GetSprite().setTextureRect(sf::IntRect(0, 0, 32, 64));
     GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 
             0);
+    setFacingRight();
 }
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){
