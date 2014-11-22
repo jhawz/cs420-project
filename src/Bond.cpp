@@ -44,6 +44,11 @@ Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
     Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
     type = 1;
 }
+
+    prepareFrameInfo(bondnode);
+    Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
+    type = 1;
+}
 void Bond::jump() {
     if (jumping) {
         return;
