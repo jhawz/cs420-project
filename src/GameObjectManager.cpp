@@ -68,7 +68,8 @@ void GameObjectManager::UpdateAll() {
             {
                 if (itr2->second->type == 1 || itr2->second->type == 2)
                 {
-                    if (itr->second->closeContact(itr2->second))
+                    if (itr->second->closeContact(itr2->second) 
+                            && itr2->second->IsAlive())
                     {
                         
                         if (itr2->second->type == 1)
