@@ -11,7 +11,6 @@
 class Bond:public Actor{
 public:
     Bond(std::string config,std::string texture);
-    Bond(std::string config, sf::Texture& t);
     void Update(float elapsedTime);
     void jump();
     void leftRun();
@@ -22,19 +21,19 @@ public:
     void downshoot();
     void crouchStill();
     void crouchshoot();
+    void transform();
     void setBoundary(float left, float up, float right, float lower);
     sf::IntRect getBoundary();
-    void input();
-    int jumpDelay = 10;
-    sf::Clock shotClock;
 private:
+    int state;
+    enum{BOND,RAMBO};
     bool lowCollide();
     bool leftCollide();
     bool rightCollide();
-    bool topCollide();
     bool jumping;
-    int lives;
     sf::Vector2f upperleft,lowerright;
+    sf::Clock transformClock;
+    sf::Time transformDuration;
 };
 
 #endif
