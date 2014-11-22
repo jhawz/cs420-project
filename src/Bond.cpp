@@ -67,7 +67,7 @@ void Bond::jump() {
                 return;
             }
             animReq("Rjump", false);
-            vy = -9.99;
+            vy = -13.99;
             ay = 1.0;
             jumping = true;
             break;
@@ -120,7 +120,7 @@ void Bond::Update(float elapsedTime) {
         vy = 0;
     }
     if (!lowCollide()) {
-        if(state==BOND){
+        if (state == BOND) {
             if (ay == 0) {
                 ay = 2;
                 jumping = true;
@@ -179,12 +179,22 @@ void Bond::input() {
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                (!leftpressed) && (!rightpressed) && jumping != true) {
-            standStill();
-            straightShoot();
-            setFiring(true);
-            shotClock.restart();
+        if (state == BOND) {
+            if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                    (!leftpressed) && (!rightpressed) && jumping != true) {
+                standStill();
+                straightShoot();
+                setFiring(true);
+                shotClock.restart();
+            }
+        } else {
+            if (shotClock.getElapsedTime().asSeconds() >= .2 &&
+                    (!leftpressed) && (!rightpressed) && jumping != true) {
+                standStill();
+                straightShoot();
+                setFiring(true);
+                shotClock.restart();
+            }
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
