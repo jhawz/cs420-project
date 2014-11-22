@@ -87,8 +87,6 @@ bool Bond::topCollide() {
 }
 
 void Bond::Update(float elapsedTime) {
-    std::cout << elapsedTime << std::endl;
-
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         setLeftPress(true);
     } else {
@@ -108,6 +106,7 @@ void Bond::Update(float elapsedTime) {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
                 (!leftpressed) && (!rightpressed) && jumping != true){
+            standStill();
             straightShoot();
             setFiring(true);
             shotClock.restart();

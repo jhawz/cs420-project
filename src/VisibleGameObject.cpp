@@ -119,3 +119,19 @@ void VisibleGameObject::setFacingRight(){
 void VisibleGameObject::setFacingLeft(){
     rightDir = false;
 }
+
+void VisibleGameObject::setRemove(){
+    removed = true;
+}
+
+bool VisibleGameObject::getRemove(){
+    return removed;
+}
+
+void VisibleGameObject::setName(std::string objName){
+    name = objName;
+}
+
+std::string VisibleGameObject::getName(){
+    return name;
+}

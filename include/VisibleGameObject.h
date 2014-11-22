@@ -24,6 +24,10 @@ public:
     bool isFacingRight();
     void setFacingRight();
     void setFacingLeft();
+    void setRemove();
+    bool getRemove();
+    void setName(std::string objName);
+    std::string getName();
 
 protected:
     sf::Sprite& GetSprite();
@@ -34,7 +38,9 @@ private:
     sf::Texture image;
     std::string filename;
     bool isLoaded;
+    bool removed = false;
     bool alive;
     bool firing = false;
     bool rightDir;
+    std::string name;
 };

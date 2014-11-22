@@ -62,6 +62,9 @@ void GameObjectManager::UpdateAll() {
 
             //  keepOnMap(itr->second);
         }
+        if (itr->second->getRemove()){
+            Remove(itr->second->getName());
+        }
         itr++;
     }
 }
@@ -176,7 +179,9 @@ void GameObjectManager::checkIfActorFired(VisibleGameObject* obj) {
                 bullet->setBoundary(obj->GetPosition().x - 800,
                     obj->GetPosition().x + 800);
         }
-        this->Add("Bullet" + (std::to_string(clock.getElapsedTime().asSeconds())), bullet);
+        std::string tmpName = "Bullet" + (std::to_string(clock.getElapsedTime().asSeconds()));
+        bullet->setName(tmpName);
+        this->Add(tmpName, bullet);
         obj->setFiring(false);
     }
 }

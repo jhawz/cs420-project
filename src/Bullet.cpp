@@ -71,7 +71,7 @@ void Bullet::setBoundary(float left, float right){
 }
 
 void Bullet::Update(float elapsedTime){
-    std::cout << "bullet update" << std::endl;
+    std::cout << "bullet update" + std::to_string(elapsedTime) << std::endl;
     if (curAnim!=NULL) {
         if (curAnim->play()) {
             GetSprite().setTextureRect(curAnim->getCurFrame());
@@ -81,6 +81,7 @@ void Bullet::Update(float elapsedTime){
         if (pos.x+vx*elapsedTime<=leftBoundary||pos.x+vx*elapsedTime>=rightBoundary) {
             animReq("disappear");
             to_delete=true;
+            VisibleGameObject::setRemove();
         }
     }
 }
