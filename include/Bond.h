@@ -22,12 +22,15 @@ public:
     void downshoot();
     void crouchStill();
     void crouchshoot();
+    void transform();
     void setBoundary(float left, float up, float right, float lower);
     sf::IntRect getBoundary();
     void input();
     int jumpDelay = 10;
     sf::Clock shotClock;
 private:
+    int state;
+    enum{BOND,RAMBO};
     bool lowCollide();
     bool leftCollide();
     bool rightCollide();
@@ -35,6 +38,8 @@ private:
     bool jumping;
     int lives;
     sf::Vector2f upperleft,lowerright;
+    sf::Clock transformClock;
+    sf::Time transformDuration;
 };
 
 #endif
