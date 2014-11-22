@@ -12,6 +12,7 @@ class Bullet:public VisibleGameObject{
 public:
     Bullet(std::string config,std::string texture,int direction);
     void setBoundary(float left,float right);
+    sf::Vector2i getBoundary();
     void Update(float elapsedTime);
     bool isDead();
     void straightLeft();

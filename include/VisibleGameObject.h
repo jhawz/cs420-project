@@ -19,6 +19,7 @@ public:
     int type = 0;
     std::string getObjectType();
     bool closeContact(VisibleGameObject &conter);
+    bool closeContact(VisibleGameObject* conter);
     void setFiring(bool fire);
     bool getFiring();
     bool isFacingRight();

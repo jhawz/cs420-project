@@ -70,8 +70,12 @@ void Bullet::setBoundary(float left, float right){
     rightBoundary=right;
 }
 
+sf::Vector2i Bullet::getBoundary()
+{
+    return sf::Vector2i(leftBoundary, rightBoundary);
+}
+
 void Bullet::Update(float elapsedTime){
-    std::cout << "bullet update" + std::to_string(elapsedTime) << std::endl;
     if (curAnim!=NULL) {
         if (curAnim->play()) {
             GetSprite().setTextureRect(curAnim->getCurFrame());

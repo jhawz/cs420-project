@@ -52,6 +52,7 @@ void GameObjectManager::DrawAll(sf::RenderWindow& renderWindow) {
 
 void GameObjectManager::UpdateAll() {
     std::map<std::string, VisibleGameObject*>::const_iterator itr = gameObjects.begin();
+    std::map<std::string, VisibleGameObject*>::const_iterator itr2 = gameObjects.begin();
     float timeDelta = clock.restart().asSeconds() * 25;
 
     while (itr != gameObjects.end()) {
@@ -59,11 +60,34 @@ void GameObjectManager::UpdateAll() {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
             checkIfActorFired(itr->second);
+        }
+        if (itr->second->type == 4)
+        {
+            itr2 = gameObjects.begin();
+            while (itr2 != gameObjects.end())
+            {
+                if (itr2->second->type == 1 || itr2->second->type == 2)
+                {
+                    if (itr->second->closeContact(itr2->second))
+                    {
+                        
+                        if (itr2->second->type == 1)
+                        {
+                         //   static_cast<Bond*>(itr2->second)->die();
+                        }
+                        else
+                        {
+                            static_cast<Enemy*>(itr2->second)->die();    
+                            static_cast<Bullet*>(itr->second)->setRemove();
+                        }
 
-            //  keepOnMap(itr->second);
+                    }
+                }
+                itr2++;
+            }
         }
         if (itr->second->getRemove()){
-            Remove(itr->second->getName());
+           Remove(itr->second->getName());
         }
         itr++;
     }
@@ -161,6 +185,17 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     } else if (obj->type == 2) {
         static_cast<Enemy*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
+    } else if (obj->type == 4) {
+        sf::Vector2i curBoundary= static_cast<Bullet*>(obj)->getBoundary();
+        if (curBoundary.x > newLeft)
+        {
+            newLeft = curBoundary.x;
+        }
+        if (curBoundary.y < newRight)
+        {
+            newRight = curBoundary.y;
+        }
+        static_cast<Bullet*>(obj)->setBoundary(newLeft, newRight);
     }
     return;
 }

@@ -100,6 +100,19 @@ bool VisibleGameObject::closeContact(VisibleGameObject &conter){
     else return false;
 }
 
+bool VisibleGameObject::closeContact(VisibleGameObject* conter){
+    sf::Vector2f myPos,conterPos;
+    myPos=GetPosition();
+    conterPos=conter->GetPosition();
+    if ((myPos.x-conterPos.x<=32)
+        &&(myPos.x-conterPos.x>=-32)
+        &&(myPos.y-conterPos.y<=8)
+        &&(myPos.y-conterPos.y>=-8)) {
+        return true;
+    }
+    else return false;
+}
+
 void VisibleGameObject::setFiring(bool fire){
     firing = fire;
 }
