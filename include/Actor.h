@@ -13,12 +13,12 @@ public:
     Actor();
     void prepareFrameInfo(pugi::xml_node& node);
     void Update(float elapsedTime);
-    void rightRun();
+    void rightRun(std::string aname="run");
     void rightMove();
-    void leftRun();
+    void leftRun(std::string aname="run");
     void leftMove();
-    void standStill();
-    void attack();
+    void standStill(std::string aname="stand");
+    void attack(std::string aname="straight_shoot");
     void die();
     void animReq(std::string animName,bool withlock);
     void setOriginalImg(sf::Image &img);

@@ -48,13 +48,13 @@ void Actor::animReq(std::string animName, bool withlock){
     }
 }
 
-void Actor::rightRun(){
+void Actor::rightRun(std::string aname){
     if (!alive)return;
     if (!rightdir) {
         rightdir=true;
         GetSprite().setScale(1, 1);
     }
-    animReq("run", false);
+    animReq(aname, false);
     vx=8;vy=0;
     ax=0;ay=0;
 }
@@ -69,13 +69,13 @@ void Actor::leftMove()
     vx=-8;
 }
 
-void Actor::leftRun(){
+void Actor::leftRun(std::string aname){
     if (!alive)return;
     if (rightdir) {
         rightdir=false;
         GetSprite().setScale(-1,1);
     }
-    animReq("run", false);
+    animReq(aname, false);
     vx=-8;vy=0;
     ax=0;ay=0;
 }
@@ -108,11 +108,11 @@ float Actor::getLowBound(){
     return lowermost-curAnim->getCurFrame().top;
 }
 
-void Actor::attack(){
+void Actor::attack(std::string aname){
     if (!alive)return;
     if (shootlocked)return;
     
-    animReq("straight_shoot", shootlocked);
+    animReq(aname, shootlocked);
     shootlocked=true;
     clock.restart();
 }
@@ -124,12 +124,12 @@ void Actor::die(){
     alive=false;
 }
 
-void Actor::standStill(){
+void Actor::standStill(std::string aname){
     if (!alive) {
         return;
     }
     vx=0;vy=0;ax=0;ay=0;
-    animReq("stand", false);
+    animReq(aname, false);
 }
 
 void Actor::Update(float elapsedTime){
@@ -146,6 +146,9 @@ void Actor::Update(float elapsedTime){
         if (waited>shootWait) {
             shootlocked=false;
         }
+    }
+    if (isCurAnim("straight_shoot")&&curAnim->isEnded()) {
+        standStill();
     }
 
 }

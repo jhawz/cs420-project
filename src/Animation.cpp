@@ -15,7 +15,20 @@ void Animation::loadFromXml(pugi::xml_node& node){
     int p=node.attribute("period").as_int();
     setAnimationPeriod(p);
     bool totalline=node.attribute("whole_line").as_bool();
-    if (totalline) {
+    bool diffline=node.attribute("diff_line").as_bool();
+    if (diffline) {
+        int framenumber=node.attribute("frame_number").as_int();
+        std::istringstream ss(std::string(node.text().as_string()));
+        std::string token;
+        for (int i=0; i<framenumber; i++) {
+            std::getline(ss, token,',');
+            int l=std::stoi(token);
+            std::getline(ss, token,',');
+            int c=std::stoi(token);
+            addFrame(sf::IntRect(c*32,l*64,32,64));
+        }
+    }
+    else if (totalline) {
         int line=node.attribute("line").as_int();
         int framenumber=node.attribute("frame_number").as_int();
         for (int i=0; i<framenumber; i++) {
