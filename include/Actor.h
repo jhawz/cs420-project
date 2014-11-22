@@ -6,16 +6,19 @@
 #include "Animation.h"
 #include "pugixml.hpp"
 #include "VisibleGameObject.h"
+#include "Bullet.h"
 
 class Actor:public VisibleGameObject{
 public:
     Actor();
     void prepareFrameInfo(pugi::xml_node& node);
     void Update(float elapsedTime);
-    void rightRun(std::string aname="run");
-    void leftRun(std::string aname="run");
-    void standStill(std::string aname="stand");
-    void attack(std::string aname="straight_shoot");
+    void rightRun();
+    void rightMove();
+    void leftRun();
+    void leftMove();
+    void standStill();
+    void attack();
     void die();
     void animReq(std::string animName,bool withlock);
     void setOriginalImg(sf::Image &img);
@@ -27,7 +30,8 @@ public:
     void setDownPress(bool p);
     void setBoundary(float left,float up,float right,float lower);
     bool lowCollide();
-    
+    bool IsAlive();
+        
 protected:
     float getLowBound();
     sf::Clock clock;
@@ -35,11 +39,11 @@ protected:
     bool alive;
     bool rightdir;
     bool shootlocked;
-    float lowerBound;
+    int lowerBound;
     float vx,vy;
     float ax,ay;
     bool leftpressed,rightpressed,uppressed,downpressed;
-    
+
 private:
     std::map<std::string,Animation*> animations;
     Animation *curAnim;

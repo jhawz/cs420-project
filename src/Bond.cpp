@@ -3,20 +3,20 @@
 #include "Bond.h"
 
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
-    objectType="Bond";
+
+    int lives = 3;
+
     pugi::xml_document doc;
     doc.load_file(config.c_str());
-    
+
     pugi::xml_node bondnode = doc.child("root").find_child_by_attribute("Actor", "name", "Bond");
-    
+
     if (bondnode.empty()) {
         //if there is an error in node initialization
         std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-    //  std::cout << "start preparing frames" << std::endl;
     prepareFrameInfo(bondnode);
-    // std::cout << "Finish preparing frames" << std::endl;
     Load(texture);
     jumping = false;
     sf::Image *img = new sf::Image();
@@ -25,31 +25,37 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
     }
     setOriginalImg(*img);
     type = 1;
-    state=BOND;
-    transformDuration=sf::seconds(1);
 }
+Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
+    int lives = 3;
 
-void Bond::jump() {
-    switch (state) {
-        case BOND:
-            if (jumping) {
-                return;
-            }
-            animReq("jump_prepare", false);
-            vy = -9.99;
-            ay = 0.5;
-            jumping = true;
-            animReq("jump_up", false);
-            break;
-        case RAMBO:
-            animReq("Rjump", false);
-            break;
-        default:
-            break;
+    pugi::xml_document doc;
+    doc.load_file(config.c_str());
+
+    pugi::xml_node bondnode = doc.child("root").find_child_by_attribute("Actor", "name", "Bond");
+
+    if (bondnode.empty()) {
+        //if there is an error in node initialization
+        std::cout << "Can't find Bond actor node..." << std::endl;
+        return;
     }
+
+    prepareFrameInfo(bondnode);
+    Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
+    type = 1;
+}
+void Bond::jump() {
+    if (jumping) {
+        return;
+    }
+    animReq("jump_prepare", false);
+    vy = -9.99;
+    ay = 1.00;
+    jumping = true;
+    animReq("jump_up", false);
 }
 
-sf::IntRect Bond::getBoundary(){
+sf::IntRect Bond::getBoundary() {
     return sf::IntRect(upperleft.x, upperleft.y, lowerright.x, lowerright.y);
 }
 
@@ -63,15 +69,74 @@ bool Bond::lowCollide() {
 }
 
 bool Bond::rightCollide() {
-    return GetPosition().x + 32 >= lowerright.x;
+    return GetPosition().x + 16 >= lowerright.x;
 }
 
 bool Bond::leftCollide() {
-    return GetPosition().x - 32 <= upperleft.x;
+    //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
+    return GetPosition().x - 16 <= upperleft.x;
+}
+
+bool Bond::topCollide() {
+    return GetPosition().y <= upperleft.y;
 }
 
 void Bond::Update(float elapsedTime) {
+
+    //Input
+    input();
+    //Main update call
+    Actor::Update(elapsedTime);
     
+    //Animation related call
+    if (topCollide())
+    {
+       // SetPosition(GetPosition().x, upperleft.y);
+        vy = 0;
+    }
+    if (!lowCollide()) {
+        if (ay == 0) {
+            ay = 2;
+            jumping = true;
+            animReq("jump_fall", false);
+        } else if (vy>-6 && vy < 6) {
+            animReq("jump_float", false);
+        } else if (vy > 6) {
+            animReq("jump_fall", false);
+        }
+        if (rightpressed && !rightCollide()) {
+            Actor::rightMove();
+        } else if (leftpressed && !leftCollide()) {
+            Actor::leftMove();
+        }
+    } else if (vy > 0) {
+        jumping = false;
+        SetPosition(GetPosition().x, lowerright.y - 64);
+        if (rightpressed && !rightCollide()) {
+            rightRun();
+        } else if (leftpressed && !leftCollide()) {
+            leftRun();
+        } else {
+            standStill();
+        }
+    } else if (!jumping) {
+        jumpDelay--;
+        if (rightpressed && !rightCollide()) {
+            rightRun();
+        } else if (leftpressed && !leftCollide()) {
+            leftRun();
+        } else if (isCurAnim("run")) {
+            standStill();
+        }
+    }
+    if (rightCollide())
+    {
+        vx = 0;
+    }
+}
+
+void Bond::input()
+{
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         setLeftPress(true);
     } else {
@@ -83,57 +148,23 @@ void Bond::Update(float elapsedTime) {
         setRightPress(false);
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        jump();
+        if (jumpDelay <= 0) {
+            jump();
+            jumpDelay = 10;
+        }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        straightShoot();
-    }
-    
-    Actor::Update(elapsedTime);
-    
-    if (isCurAnim("transform")) {
-        if (transformClock.getElapsedTime()>=transformDuration) {
+        if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                (!leftpressed) && (!rightpressed) && jumping != true){
             standStill();
+            straightShoot();
+            setFiring(true);
+            shotClock.restart();
         }
-    }
-    
-    if (!lowCollide()&&state==BOND) {
-        if (ay == 0) {
-            ay = 2;
-            jumping = true;
-            animReq("jump_fall", false);
-            std::cout << "Falling" << std::endl;
-        } else if (vy>-6 && vy < 6) {
-            animReq("jump_float", false);
-        } else if (vy > 6) {
-            animReq("jump_fall", false);
-        }
-    } else if (vy > 0) {
-        jumping = false;
-        SetPosition(GetPosition().x, lowerright.y - 64);
-        if (rightpressed) {
-            rightRun();
-        } else if (leftpressed) {
-            leftRun();
-        } else {
-            standStill();
-        }
-    } else if (!jumping) {
-        if (rightpressed && !rightCollide()) {
-            rightRun();
-        } else if (leftpressed && !leftCollide()) {
-            leftRun();
-        } else if (isCurAnim("run")||isCurAnim("Rrun")) {
-            standStill();
-        }
-        //   std::cout << "LEFT BOUNDARY: " << upperleft.x << "RIGHT BOUNDARY: " << lowerright.x << std::endl;
     }
 }
 
 void Bond::crouchStill() {
-    if (state==RAMBO) {
-        return;
-    }
     if (!alive) {
         return;
     }
@@ -143,46 +174,25 @@ void Bond::crouchStill() {
 void Bond::upshoot() {
     if (!alive)return;
     if (shootlocked)return;
-    
-    switch (state) {
-        case BOND:
-            animReq("up_shoot", shootlocked);
-            shootlocked = true;
-            clock.restart();
-            break;
-        case RAMBO:
-            animReq("Rup_shoot", false);
-            break;
-        default:
-            break;
-    }
+
+    animReq("up_shoot", shootlocked);
+    shootlocked = true;
+    clock.restart();
 }
 
 void Bond::downshoot() {
     if (!alive)return;
     if (shootlocked)return;
-    
-    switch (state) {
-        case BOND:
-            animReq("down_shoot", shootlocked);
-            shootlocked = true;
-            clock.restart();
-            break;
-        case RAMBO:
-            animReq("Rdown_shoot", false);
-            break;
-        default:
-            break;
-    }
+
+    animReq("down_shoot", shootlocked);
+    shootlocked = true;
+    clock.restart();
 }
 
 void Bond::crouchshoot() {
     if (!alive)return;
     if (shootlocked)return;
-    if (state==RAMBO) {
-        return;
-    }
-    
+
     animReq("crouch_shoot", shootlocked);
     shootlocked = true;
     clock.restart();
@@ -190,75 +200,26 @@ void Bond::crouchshoot() {
 
 void Bond::leftRun() {
     if (lowCollide()) {
-        switch (state) {
-            case BOND:
-                Actor::leftRun();
-                break;
-            case RAMBO:
-                Actor::leftRun("Rrun");
-                break;
-            default:
-                break;
-        }
+        Actor::leftRun();
+        setFacingLeft();
     }
 }
 
 void Bond::rightRun() {
     if (lowCollide()) {
-        switch (state) {
-            case BOND:
-                Actor::rightRun();
-                break;
-            case RAMBO:
-                Actor::rightRun("Rrun");
-                break;
-            default:
-                break;
-        }
+        Actor::rightRun();
+        setFacingRight();
     }
 }
 
 void Bond::standStill() {
     if (lowCollide()) {
-        switch (state) {
-            case BOND:
-                Actor::standStill();
-                break;
-            case RAMBO:
-                Actor::standStill("Rstand");
-                break;
-            default:
-                break;
-        }
+        Actor::standStill();
     }
 }
 
 void Bond::straightShoot() {
     if (lowCollide()) {
-        switch (state) {
-            case BOND:
-                Actor::attack();
-                break;
-            case RAMBO:
-                Actor::attack("Rstraight_shoot");
-                break;
-            default:
-                break;
-        }
+        Actor::attack();
     }
-}
-
-void Bond::transform(){
-    switch (state) {
-        case BOND:
-            state=RAMBO;
-            break;
-        case RAMBO:
-            state=BOND;
-            break;
-        default:
-            break;
-    }
-    animReq("transform", false);
-    transformClock.restart();
 }
