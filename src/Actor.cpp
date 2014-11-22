@@ -13,11 +13,8 @@ Actor::Actor(){
     vx=0;vy=0;
     ax=0;ay=0;
     alive=true;
+    rightdir=true;
     shootlocked=false;
-    GetSprite().setTextureRect(sf::IntRect(0, 0, 32, 64));
-    GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 
-            0);
-    setFacingRight();
 }
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){
@@ -48,34 +45,24 @@ void Actor::animReq(std::string animName, bool withlock){
     }
 }
 
-void Actor::rightRun(){
+void Actor::rightRun(std::string aname){
     if (!alive)return;
     if (!rightdir) {
         rightdir=true;
         GetSprite().setScale(1, 1);
     }
-    animReq("run", false);
+    animReq(aname, false);
     vx=8;vy=0;
     ax=0;ay=0;
 }
 
-void Actor::rightMove()
-{
-    vx=8;
-}
-
-void Actor::leftMove()
-{
-    vx=-8;
-}
-
-void Actor::leftRun(){
+void Actor::leftRun(std::string aname){
     if (!alive)return;
     if (rightdir) {
         rightdir=false;
         GetSprite().setScale(-1,1);
     }
-    animReq("run", false);
+    animReq(aname, false);
     vx=-8;vy=0;
     ax=0;ay=0;
 }
@@ -108,11 +95,11 @@ float Actor::getLowBound(){
     return lowermost-curAnim->getCurFrame().top;
 }
 
-void Actor::attack(){
+void Actor::attack(std::string aname){
     if (!alive)return;
     if (shootlocked)return;
     
-    animReq("straight_shoot", shootlocked);
+    animReq(aname, shootlocked);
     shootlocked=true;
     clock.restart();
 }
@@ -124,12 +111,12 @@ void Actor::die(){
     alive=false;
 }
 
-void Actor::standStill(){
+void Actor::standStill(std::string aname){
     if (!alive) {
         return;
     }
     vx=0;vy=0;ax=0;ay=0;
-    animReq("stand", false);
+    animReq(aname, false);
 }
 
 void Actor::Update(float elapsedTime){
@@ -139,7 +126,7 @@ void Actor::Update(float elapsedTime){
     SetPosition(pos.x+vx*elapsedTime, pos.y+vy*elapsedTime);
     if (curAnim->play()) {
         GetSprite().setTextureRect(curAnim->getCurFrame());
-     //   lowerBound = getLowBound();
+        lowerBound=getLowBound();
     }
     if (shootlocked) {
         sf::Time waited=clock.getElapsedTime();
@@ -147,7 +134,7 @@ void Actor::Update(float elapsedTime){
             shootlocked=false;
         }
     }
-
+    
 }
 
 void Actor::setOriginalImg(sf::Image &img){
@@ -184,10 +171,5 @@ void Actor::setBoundary(float left, float up, float right, float lower) {
 }
 
 bool Actor::lowCollide() {
-   // return GetPosition().y + lowerBound >= lowerright.y;
-    return GetPosition().y >= lowerright.y;
-}
-
-bool Actor::IsAlive(){
-    return alive;
+    return GetPosition().y + lowerBound >= lowerright.y;
 }
