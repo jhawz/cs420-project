@@ -90,7 +90,7 @@ void Game::GameLoop() {
 
             mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
-
+            
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
@@ -149,7 +149,7 @@ void Game::LoadLevel() {
     }
     
     Bond* b = l->getBond();
-    
+    gameObjectManager.b = b;
     gameObjectManager.Add("Bond", b);
 
     gameObjectManager.Add("Background", l->getBackground());

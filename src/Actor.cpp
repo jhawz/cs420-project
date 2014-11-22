@@ -16,6 +16,8 @@ Actor::Actor(){
     rightdir=true;
     shootlocked=false;
     GetSprite().setTextureRect(sf::IntRect(0, 0, 32, 64));
+    GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 
+            0);
 }
 
 void Actor::prepareFrameInfo(pugi::xml_node& node){

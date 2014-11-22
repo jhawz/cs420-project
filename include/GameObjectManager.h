@@ -1,6 +1,7 @@
 #pragma once
 #include "VisibleGameObject.h"
 #include "Level.h"
+#include "Bond.h"
 
 
 class GameObjectManager
@@ -20,11 +21,14 @@ public:
         void checkForCollision(VisibleGameObject* obj);
         int getLevelCode();
         void setCurLevel(Level* l);
+        Bond* b;
+        int const tileWidth = 32;
+        int const tileHeight = 32;
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
 	sf::Clock clock;
-        int currentLevel = 1;
+        int currentLevel = 3;
         Level * curLevel;
 	struct GameObjectDeallocator
 	{
@@ -33,5 +37,5 @@ private:
 			delete p.second;
 		}
 	};
-        bool collidedWith(int gridPos);
+        int collidedWith(int gridPos);
 };

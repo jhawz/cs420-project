@@ -16,9 +16,7 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
         std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-    //  std::cout << "start preparing frames" << std::endl;
     prepareFrameInfo(bondnode);
-    // std::cout << "Finish preparing frames" << std::endl;
     Load(texture);
     jumping = false;
     sf::Image *img = new sf::Image();
@@ -28,7 +26,6 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
     setOriginalImg(*img);
     type = 1;
 }
-
 Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
     int lives = 3;
     
@@ -47,7 +44,6 @@ Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
        Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
        type = 1;
 }
-
 void Bond::jump() {
     if (jumping) {
         return;
@@ -73,21 +69,74 @@ bool Bond::lowCollide() {
 }
 
 bool Bond::rightCollide() {
-    //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
-    return GetPosition().x + 32 >= lowerright.x;
+    return GetPosition().x + 16 >= lowerright.x;
 }
 
 bool Bond::leftCollide() {
     //  std::cout << "Bond's Position: " << GetPosition().x << std::endl;
-    return GetPosition().x <= upperleft.x;
+    return GetPosition().x - 16 <= upperleft.x;
 }
 
 bool Bond::topCollide() {
-    return GetPosition().y <= upperleft.y + 32;
+    return GetPosition().y <= upperleft.y;
 }
 
 void Bond::Update(float elapsedTime) {
 
+    //Input
+    input();
+    //Main update call
+    Actor::Update(elapsedTime);
+    
+    //Animation related call
+    if (topCollide())
+    {
+       // SetPosition(GetPosition().x, upperleft.y);
+        vy = 0;
+    }
+    if (!lowCollide()) {
+        if (ay == 0) {
+            ay = 2;
+            jumping = true;
+            animReq("jump_fall", false);
+        } else if (vy>-6 && vy < 6) {
+            animReq("jump_float", false);
+        } else if (vy > 6) {
+            animReq("jump_fall", false);
+        }
+        if (rightpressed && !rightCollide()) {
+            Actor::rightMove();
+        } else if (leftpressed && !leftCollide()) {
+            Actor::leftMove();
+        }
+    } else if (vy > 0) {
+        jumping = false;
+        SetPosition(GetPosition().x, lowerright.y - 64);
+        if (rightpressed && !rightCollide()) {
+            rightRun();
+        } else if (leftpressed && !leftCollide()) {
+            leftRun();
+        } else {
+            standStill();
+        }
+    } else if (!jumping) {
+        jumpDelay--;
+        if (rightpressed && !rightCollide()) {
+            rightRun();
+        } else if (leftpressed && !leftCollide()) {
+            leftRun();
+        } else if (isCurAnim("run")) {
+            standStill();
+        }
+    }
+    if (rightCollide())
+    {
+        vx = 0;
+    }
+}
+
+void Bond::input()
+{
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         setLeftPress(true);
     } else {
@@ -107,51 +156,6 @@ void Bond::Update(float elapsedTime) {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         straightShoot();
-    }
-
-    Actor::Update(elapsedTime);
-    if (!lowCollide()) {
-        if (ay == 0) {
-            ay = 2;
-            jumping = true;
-            animReq("jump_fall", false);
-        } else if (vy>-6 && vy < 6) {
-            animReq("jump_float", false);
-        } else if (vy > 6) {
-            animReq("jump_fall", false);
-        }
-        if (rightpressed) {
-            rightRun();
-            Actor::rightMove();
-        } else if (leftpressed) {
-            leftRun();
-            Actor::leftMove();
-        }
-    }
-    else if (topCollide()) { //not functioning!
-        //if (jumping)
-        ay = 0;
-        SetPosition(GetPosition().x, upperleft.y);
-    } else if (vy > 0) {
-        jumping = false;
-        SetPosition(GetPosition().x, lowerright.y - 64);
-        if (rightpressed) {
-            rightRun();
-        } else if (leftpressed) {
-            leftRun();
-        } else {
-            standStill();
-        }
-    } else if (!jumping) {
-        jumpDelay--;
-        if (rightpressed && !rightCollide()) {
-            rightRun();
-        } else if (leftpressed && !leftCollide()) {
-            leftRun();
-        } else if (isCurAnim("run")) {
-            standStill();
-        }
-        //   std::cout << "LEFT BOUNDARY: " << upperleft.x << "RIGHT BOUNDARY: " << lowerright.x << std::endl;
     }
 }
 
@@ -198,7 +202,6 @@ void Bond::leftRun() {
 void Bond::rightRun() {
     if (lowCollide()) {
         Actor::rightRun();
-        Actor::rightMove();
     }
 }
 
