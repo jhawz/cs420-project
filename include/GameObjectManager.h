@@ -26,6 +26,8 @@ public:
         int const tileHeight = 32;
         void checkIfActorFired(VisibleGameObject* obj);
         void updateBondLocForEnemies(VisibleGameObject* obj);
+        bool isReadyForNextLevel();
+        void increLevel();
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
@@ -40,4 +42,5 @@ private:
 		}
 	};
         int collidedWith(int gridPos);
+        bool nextLevel = false;
 };

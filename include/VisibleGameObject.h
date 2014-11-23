@@ -31,6 +31,13 @@ public:
     std::string getName();
     bool isExit();
     void setAsExit();
+    
+    static const int TILE = 0;
+    static const int BOND = 1;
+    static const int ENEMY = 2;
+    static const int JAWS = 3;
+    static const int BULLET = 4;
+    static const int MARTINI = 5;
 
 protected:
     sf::Sprite& GetSprite();

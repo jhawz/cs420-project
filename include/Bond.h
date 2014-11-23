@@ -23,9 +23,10 @@ public:
     void crouchStill();
     void crouchshoot();
     void transform();
+    void jumpShoot();
     int getState();
     int getBondState();
-    int getRamboState();
+   // int getRamboState();
     void setBoundary(float left, float up, float right, float lower);
     void die();
     sf::IntRect getBoundary();
@@ -33,6 +34,7 @@ public:
     int jumpDelay = 10;
     bool godMode = false;
     sf::Clock shotClock;
+    int getRamboState();
 private:
     int state;
     enum{BOND,RAMBO};

@@ -22,7 +22,7 @@ void Bullet::animReq(std::string animName){
 }
 
 Bullet::Bullet(std::string config,std::string texture,int direction){
-    type = 4;
+    type = VisibleGameObject::BULLET;
     vx=0;vy=0;
     objectType="Bullet";
     pugi::xml_document doc;

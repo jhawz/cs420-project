@@ -19,7 +19,7 @@ Enemy::Enemy(std::string config, std::string texture, std::string name) : Actor:
     }
     setOriginalImg(*img);
     alive = true;
-    type = 2;
+    type = VisibleGameObject::ENEMY;
     GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 0);
     attackRate = 2.0;
 }
@@ -38,7 +38,7 @@ Enemy::Enemy(std::string config, sf::Texture& t, std::string name, float fireRat
     Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
     sf::Image *img = new sf::Image();
     alive = true;
-    type = 2;
+    type = VisibleGameObject::ENEMY;
     rightpressed = true;
     GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 0);
     attackRate = fireRate;
@@ -149,7 +149,10 @@ void Enemy::patrol(){
 bool Enemy::attackCheck()
 {
     //Ensure that bond is in range...
-    if (bondLoc.x - GetPosition().x < 200 && bondLoc.x - GetPosition().x > -200)
+    if (bondLoc.x - GetPosition().x < 200 
+            && bondLoc.x - GetPosition().x > -200
+            && bondLoc.y - GetPosition().y < 64
+            && bondLoc.y - GetPosition().y > -64)
     {
         //Dumb down difficulty a bit. Enemies only shoot if they see Bond!
         if (GetSprite().getScale().x == 1 && GetPosition().x > bondLoc.x)
@@ -166,9 +169,8 @@ bool Enemy::attackCheck()
 }
 void Enemy::straightShoot()
 {
-        if ((shotClock.getElapsedTime().asSeconds() >= attackRate) && isAlive()){// &&
-      //          (!leftpressed) && (!rightpressed) && isAlive()){
-        //    standStill();
+        if ((shotClock.getElapsedTime().asSeconds() >= attackRate) 
+                && isAlive()){
             setFiring(true);
             Actor::attack();
             shotClock.restart();

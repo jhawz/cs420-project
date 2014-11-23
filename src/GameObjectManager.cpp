@@ -306,3 +306,13 @@ void GameObjectManager::updateBondLocForEnemies(VisibleGameObject* obj)
 {
     static_cast<Enemy*>(obj)->setBondLocation(Get("Bond")->GetPosition());
 }
+
+bool GameObjectManager::isReadyForNextLevel()
+{
+    return nextLevel;
+}
+
+void GameObjectManager::increLevel()
+{
+    currentLevel++;
+}

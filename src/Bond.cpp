@@ -196,6 +196,14 @@ void Bond::input() {
                 ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
                 shotClock.restart();
             }
+            else if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                    (!leftpressed) && (!rightpressed) && jumping == true)
+            {
+                jumpShoot();
+                setFiring(true);
+                ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
+                shotClock.restart();
+            }
         } else {
             if (shotClock.getElapsedTime().asSeconds() >= .2 &&
                     (!leftpressed) && (!rightpressed) && jumping != true) {
@@ -227,6 +235,20 @@ void Bond::crouchStill() {
         return;
     }
     animReq("crouch", false);
+}
+
+void Bond::jumpShoot()
+{
+    if (!alive || shootlocked) return;
+    switch (state) {
+        case BOND:
+            animReq("jump_shoot", shootlocked);
+            shootlocked = true;
+            clock.restart();
+            break;
+        case RAMBO:
+            break;
+    }
 }
 
 void Bond::upshoot() {

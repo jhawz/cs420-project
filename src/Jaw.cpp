@@ -21,11 +21,11 @@ Jaw::Jaw(std::string config, std::string texture):Actor::Actor(){
         return;
     }
     setOriginalImg(*img);
-    type = 3;
+    type = VisibleGameObject::JAWS;
 }
 
 void Jaw::attack(Actor& actor){
-    if (actor.type==1&&closeContact(actor)) {
+    if (actor.type==VisibleGameObject::BOND &&closeContact(actor)) {
         Actor::attack();
     }
 }
