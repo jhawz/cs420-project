@@ -6,6 +6,7 @@
 //  Copyright (c) 2014 gyp. All rights reserved.
 //
 
+#include "ServiceLocator.h"
 #include "Actor.h"
 #include <cstddef>
 
@@ -122,6 +123,7 @@ void Actor::die(){
     vx=0;vy=0;ax=0;ay=0;
     animReq("die", false);
     alive=false;
+    ServiceLocator::GetAudio()->PlaySound("sounds/WilhelmScream.ogg");
 }
 
 void Actor::standStill(std::string aname){

@@ -1,6 +1,7 @@
 #include <SFML/Window/Keyboard.hpp>
 
 #include "Bond.h"
+#include "ServiceLocator.h"
 
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 
@@ -185,6 +186,7 @@ void Bond::input() {
                 standStill();
                 straightShoot();
                 setFiring(true);
+                ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
                 shotClock.restart();
             }
         } else {
@@ -193,6 +195,7 @@ void Bond::input() {
                 standStill();
                 straightShoot();
                 setFiring(true);
+                ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
                 shotClock.restart();
             }
         }

@@ -6,13 +6,13 @@
 class ServiceLocator
 {
 public:
-  static IAudioProvider* GetAudio()  { return _audioProvider; } const
+  static IAudioProvider* GetAudio()  { return audioProvider; } const
 
   static void RegisterServiceLocator(IAudioProvider *provider)
   {
-    _audioProvider = provider;
+    audioProvider = provider;
   }
 
 private:
-  static IAudioProvider * _audioProvider;
+  static IAudioProvider * audioProvider;
 };

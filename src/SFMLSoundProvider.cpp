@@ -3,7 +3,7 @@
 #include "SoundFileCache.h"
 
 SFMLSoundProvider::SFMLSoundProvider() :
-_currentSongName("")
+currentSongName("")
 {
 }
 
@@ -12,7 +12,7 @@ void SFMLSoundProvider::PlaySound(std::string filename)
 	int availChannel = -1;
 	for(int i = 0; i < MAX_SOUND_CHANNELS;i++)
 	{
-		if(_currentSounds[i].getStatus() != sf::Sound::Playing)
+		if(currentSounds[i].getStatus() != sf::Sound::Playing)
 		{
 			availChannel = i;
 			break;
@@ -24,8 +24,8 @@ void SFMLSoundProvider::PlaySound(std::string filename)
 	{
 		try
 		{
-			_currentSounds[availChannel] = _soundFileCache.GetSound(filename);
-			_currentSounds[availChannel].play();
+			currentSounds[availChannel] = soundFileCache.GetSound(filename);
+			currentSounds[availChannel].play();
 		}
 		catch(SoundNotFoundExeception& snfe)
 		{
@@ -42,7 +42,7 @@ void SFMLSoundProvider::PlaySong(std::string filename, bool looping)
 	sf::Music * currentSong;
 	try
 	{
-		currentSong = _soundFileCache.GetSong(filename);
+		currentSong = soundFileCache.GetSong(filename);
 	}
 	catch(SoundNotFoundExeception&)
 	{
@@ -51,11 +51,11 @@ void SFMLSoundProvider::PlaySong(std::string filename, bool looping)
 		return;
 	}
 	// See if prior song is playing still, if so, stop it
-	if(_currentSongName != "")
+	if(currentSongName != "")
 	{
 		try
 		{
-			sf::Music* priorSong = _soundFileCache.GetSong(_currentSongName);
+			sf::Music* priorSong = soundFileCache.GetSong(currentSongName);
 			if(priorSong->getStatus() != sf::Sound::Stopped)
 			{
 				priorSong->stop();
@@ -68,7 +68,7 @@ void SFMLSoundProvider::PlaySong(std::string filename, bool looping)
 		}
 		
 	}
-	_currentSongName = filename;
+	currentSongName = filename;
 	currentSong->setLoop(looping);
 	currentSong->play();
 }
@@ -77,12 +77,12 @@ void SFMLSoundProvider::StopAllSounds()
 {
 	for(int i = 0; i < MAX_SOUND_CHANNELS; i++)
 	{
-		_currentSounds[i].stop();
+		currentSounds[i].stop();
 	}
 	
-	if(_currentSongName != "")
+	if(currentSongName != "")
 	{
-		sf::Music * currentSong = _soundFileCache.GetSong(_currentSongName);
+		sf::Music * currentSong = soundFileCache.GetSong(currentSongName);
 		if(currentSong->getStatus() == sf::Sound::Playing)
 		{
 			currentSong->stop(); 
@@ -94,7 +94,7 @@ bool SFMLSoundProvider::IsSoundPlaying()
 {
 	for(int i = 0; i < MAX_SOUND_CHANNELS; i++)
 	{
-		if(_currentSounds[i].getStatus() == sf::Sound::Playing)
+		if(currentSounds[i].getStatus() == sf::Sound::Playing)
 			return true;
 	}
 	return false;
@@ -103,9 +103,9 @@ bool SFMLSoundProvider::IsSoundPlaying()
 
 bool SFMLSoundProvider::IsSongPlaying()
 {
-	if(_currentSongName != "")
+	if(currentSongName != "")
 	{
-		return _soundFileCache.GetSong(_currentSongName)->getStatus() == sf::Music::Playing;	
+		return soundFileCache.GetSong(currentSongName)->getStatus() == sf::Music::Playing;	
 	}
 	return false;
 }

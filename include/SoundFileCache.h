@@ -12,8 +12,8 @@ public:
   sf::Music* GetSong(std::string) const;
 
 private:
-  static std::map<std::string, sf::SoundBuffer*> _sounds;
-  static std::map<std::string, sf::Music*> _music;
+  static std::map<std::string, sf::SoundBuffer*> sounds;
+  static std::map<std::string, sf::Music*> music;
 
   /*struct SoundFileDeallocator
     {

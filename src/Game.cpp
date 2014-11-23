@@ -8,6 +8,8 @@
 #include "MapLoader.h"
 #include "Tile.h"
 #include "StoryScreen.h"
+#include "ServiceLocator.h"
+#include "SFMLSoundProvider.h"
 
 void Game::Start(void) {
     if (gameState != Uninitialized)
@@ -20,6 +22,11 @@ void Game::Start(void) {
     view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
 
     gameState = Game::ShowingSplash;
+
+    SFMLSoundProvider soundProvider;
+    ServiceLocator::RegisterServiceLocator(&soundProvider);
+
+    ServiceLocator::GetAudio()->PlaySong("music/bond_theme.ogg", true);
 
     while (!IsExiting()) {
         GameLoop();
@@ -72,7 +79,7 @@ void Game::GameLoop() {
         }
 
         case Game::Playing:
-        {   
+        {
             //std::cout << gameObjectManager.GetObjectCount() << std::endl;
             if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
                 gameObjectManager.Get("Bond")->SetPosition(200, 200);
@@ -90,14 +97,14 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
-         //   std::cout << "X: " << cameraPosition.x << std::endl;
-         //   std::cout << "Y: " << cameraPosition.y << std::endl;
+            //   std::cout << "X: " << cameraPosition.x << std::endl;
+            //   std::cout << "Y: " << cameraPosition.y << std::endl;
 
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
             mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
-            
+
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
@@ -135,7 +142,7 @@ void Game::ShowMenu() {
     }
 }
 
-void Game::ShowStoryScreen(){
+void Game::ShowStoryScreen() {
     StoryScreen storyScreen;
     storyScreen.Show(mainWindow, 0);
     LoadLevel();
@@ -147,20 +154,20 @@ void Game::LoadLevel() {
     l->loadLevel(gameObjectManager.getLevelCode());
 
     gameObjectManager.setCollisionList(l->getTileColList());
-    
+
     std::vector<Tile*> tiles = l->getTileList();
 
     for (int x = 0; x < tiles.size(); x++) {
         gameObjectManager.Add("Tile" + (std::to_string(x)), tiles[x]);
     }
-    
+
     std::vector<Enemy*> enemies = l->getEnemyList();
-    
-    for (int x = 0; x < enemies.size(); x++){
+
+    for (int x = 0; x < enemies.size(); x++) {
         std::cout << "Loaded Enemy" << std::endl;
         gameObjectManager.Add("Enemy" + (std::to_string(x)), enemies[x]);
     }
-    
+
     Bond* b = l->getBond();
     gameObjectManager.b = b;
     gameObjectManager.Add("Bond", b);
