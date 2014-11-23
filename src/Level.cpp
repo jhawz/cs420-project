@@ -104,7 +104,30 @@ Tile* Level::buildATile(sf::Texture& sheet, int positionInFrames,
 Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,
         int mapPositionInFrames)
 {
-    Enemy* e = new Enemy("actors.xml", sheet, "Pistol");
+    std::string enemyType;
+    float fireRate;
+    
+    switch (positionInFrames)
+    {
+        case 0:
+            enemyType = "Pistol";
+            fireRate = 2.0;
+            break;
+        case 10:
+            enemyType = "Smg";
+            fireRate = 0.5;
+            break;
+        case 20:
+            enemyType = "Machinegun";
+            fireRate = 0.5;
+            break;
+        default:
+            enemyType = "Jaw";
+            fireRate = 4.0;
+            break;
+    }
+    
+    Enemy* e = new Enemy("actors.xml", sheet, enemyType, fireRate);
     
     e->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
             ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);

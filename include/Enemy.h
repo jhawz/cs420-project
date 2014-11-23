@@ -16,7 +16,7 @@
 class Enemy : public Actor {
 public:
     Enemy(std::string config,std::string texture,std::string name);
-    Enemy(std::string config,sf::Texture& t, std::string name);
+    Enemy(std::string config,sf::Texture& t, std::string name, float fireRate);
     void leftwalk();
     void rightwalk();
     void patrol();
@@ -37,6 +37,7 @@ public:
     bool attackingRight;
     sf::Vector2f getBondLocation();
     sf::Clock shotClock;
+    float attackRate;
     private:
             sf::Vector2f upperleft,lowerright;
             sf::Vector2f origPos;

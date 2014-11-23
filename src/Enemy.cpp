@@ -21,8 +21,9 @@ Enemy::Enemy(std::string config, std::string texture, std::string name) : Actor:
     alive = true;
     type = 2;
     GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 0);
+    attackRate = 2.0;
 }
-Enemy::Enemy(std::string config, sf::Texture& t, std::string name) : Actor::Actor() {
+Enemy::Enemy(std::string config, sf::Texture& t, std::string name, float fireRate) : Actor::Actor() {
     pugi::xml_document doc;
     doc.load_file(config.c_str());
     
@@ -39,6 +40,8 @@ Enemy::Enemy(std::string config, sf::Texture& t, std::string name) : Actor::Acto
     alive = true;
     type = 2;
     rightpressed = true;
+    GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 0);
+    attackRate = fireRate;
 }
 void Enemy::leftwalk() {
     if (!alive)return;
@@ -163,7 +166,7 @@ bool Enemy::attackCheck()
 }
 void Enemy::straightShoot()
 {
-        if ((shotClock.getElapsedTime().asSeconds() >= 2.0) && isAlive()){// &&
+        if ((shotClock.getElapsedTime().asSeconds() >= attackRate) && isAlive()){// &&
       //          (!leftpressed) && (!rightpressed) && isAlive()){
         //    standStill();
             setFiring(true);
