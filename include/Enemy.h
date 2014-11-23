@@ -32,6 +32,7 @@ public:
     bool isAlive();
     void setBondLocation(sf::Vector2f bL);
     bool attackCheck();
+    void runCheck();
     bool attackingLeft;
     bool attackingRight;
     sf::Vector2f getBondLocation();

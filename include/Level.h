@@ -17,6 +17,7 @@
 #include "Tile.h"
 #include "Enemy.h"
 #include "Bond.h"
+#include "Powerup.h"
 
 class Level {
 public:
@@ -38,6 +39,12 @@ public:
         }
         enemyList.clear();
         
+        for (int i = 0; i < powerupList.size(); i++)
+        {
+            delete powerupList[i];
+        }
+        powerupList.clear();
+        
         delete bond;
     }
     void setBackGround(VisibleGameObject* backGround);
@@ -50,14 +57,17 @@ public:
     std::vector<int> getTileColList();
     std::vector<Tile*>& getTileList();
     std::vector<Enemy*>& getEnemyList();
+    std::vector<Powerup*>& getPowerupList();
     Bond* getBond();
     Tile* buildATile(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
     Enemy* buildAnEnemy(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
     Bond* buildABond(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
+    Powerup* buildAPowerup(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
     bool isRealObjectOnMap(int objectCode);
     bool isTile(int objectCode, std::vector<int>& mapIDs);
     bool isEnemy(int objectCode, std::vector<int>& mapIDs);
     bool isBond(int objectCode, std::vector<int>& mapIDs);
+    bool isPowerup(int objectCode, std::vector<int>& mapIDs);
     int const tilesPerRow = 100;
     int const tileHeight = 32;
     int const tileWidth = 32;
@@ -70,6 +80,7 @@ private:
     std::vector<int> tileColList;
     std::vector<Tile*> tileList;
     std::vector<Enemy*> enemyList;
+    std::vector<Powerup*> powerupList;
     Bond* bond;
     sf::Time period;
     sf::Clock clock;

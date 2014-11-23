@@ -7,11 +7,13 @@
 #include <sstream>
 #include "VisibleGameObject.h"
 #include "Animation.h"
+#include <SFML/Graphics.hpp>
 
 
 class Powerup:public VisibleGameObject{
 public:
     Powerup(std::string config,std::string texture);
+    Powerup(std::string config, sf::Texture& t, int sheetPositionInFrames);
     void Update(float elapsedTime);
     void disappear();
     bool isDead();

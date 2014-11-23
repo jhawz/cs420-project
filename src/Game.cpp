@@ -173,6 +173,13 @@ void Game::LoadLevel() {
         std::cout << "Loaded Enemy" << std::endl;
         gameObjectManager.Add("Enemy" + (std::to_string(x)), enemies[x]);
     }
+    
+    std::vector<Powerup*> powerups = l->getPowerupList();
+    
+    for (int x = 0; x < powerups.size(); x++) {
+        std::cout << "Loaded Powerup" << std::endl;
+        gameObjectManager.Add("Powerup" + (std::to_string(x)), powerups[x]);
+    }
 
     Bond* b = l->getBond();
     gameObjectManager.b = b;

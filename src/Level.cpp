@@ -44,10 +44,16 @@ void Level::loadSpecifiedLevel(std::string fileName) {
                         x);
                 bond = b;
             }
+            else if (isPowerup(tileCode, firstIDs))
+            {
+                Powerup* p = buildAPowerup(bondSheet, 
+                        tileCode - firstIDs[2],
+                        x);
+                powerupList.push_back(p);
+            }
         }
     }
     delete m;
-
 }
 
 bool Level::isRealObjectOnMap(int objectCode)
@@ -67,7 +73,12 @@ bool Level::isTile(int objectCode, std::vector<int>& mapIDs)
 
 bool Level::isBond(int objectCode, std::vector<int>& mapIDs)
 {
-    return (objectCode >= mapIDs[2]);
+    return (objectCode >= mapIDs[2] && objectCode < mapIDs[3]);
+}
+
+bool Level::isPowerup(int objectCode, std::vector<int>& mapIDs)
+{
+    return (objectCode >= mapIDs[3]);
 }
 
 Tile* Level::buildATile(sf::Texture& sheet, int positionInFrames, 
@@ -113,6 +124,16 @@ Bond* Level::buildABond(sf::Texture& sheet, int positionInFrames,
     return b;
 }
 
+Powerup* Level::buildAPowerup(sf::Texture& sheet, int positionInFrames,
+        int mapPositionInFrames)
+{
+    Powerup* p = new Powerup("actors.xml", sheet, positionInFrames);
+    p->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
+            ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
+    
+    return p;
+}
+
 VisibleGameObject* Level::getBackground() {
     return backGround;
 }
@@ -135,6 +156,10 @@ std::vector<Tile*>& Level::getTileList() {
 
 std::vector<Enemy*>& Level::getEnemyList() {
     return enemyList;
+}
+
+std::vector<Powerup*>& Level::getPowerupList() {
+    return powerupList;
 }
 
 Bond* Level::getBond()

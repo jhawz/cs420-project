@@ -23,10 +23,15 @@ public:
     void crouchStill();
     void crouchshoot();
     void transform();
+    int getState();
+    int getBondState();
+    int getRamboState();
     void setBoundary(float left, float up, float right, float lower);
+    void die();
     sf::IntRect getBoundary();
     void input();
     int jumpDelay = 10;
+    bool godMode = false;
     sf::Clock shotClock;
 private:
     int state;

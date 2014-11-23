@@ -64,7 +64,28 @@ void GameObjectManager::UpdateAll() {
             {
                 updateBondLocForEnemies(itr->second);
             }
+            //check for martini collision for transformation
+            if (itr->second->type == 5)
+            {
+                itr2 = gameObjects.begin();
+                while (itr2 != gameObjects.end())
+                {
+                    if (itr2->second->type == 1)
+                    {
+                        if (itr2->second->closeContact(itr->second) 
+                                &&
+                                static_cast<Bond*>(itr2->second)->getState() 
+                                != static_cast<Bond*>(itr2->second)->getRamboState())
+                        {
+                            static_cast<Powerup*>(itr->second)->disappear();
+                            static_cast<Bond*>(itr2->second)->transform();
+                        }
+                    }
+                    itr2++;
+                }
+            }
         }
+        //Bullet collision
         if (itr->second->type == 4)
         {
                 itr2 = gameObjects.begin();
@@ -80,7 +101,11 @@ void GameObjectManager::UpdateAll() {
                                     static_cast<Bullet*>(itr->second)->getOwner() != 1)
                             {
                                 static_cast<Bullet*>(itr->second)->setRemove();
-                                static_cast<Bond*>(itr2->second)->die();
+                                if (static_cast<Bond*>(itr2->second)->godMode == false)
+                                {
+                                    static_cast<Bond*>(itr2->second)->die();
+                                }
+
                             }
                             else if (itr2->second->type == 2 &&
                                     static_cast<Bullet*>(itr->second)->getOwner() != 2)
@@ -102,6 +127,7 @@ void GameObjectManager::UpdateAll() {
 void GameObjectManager::setCollisionList(std::vector<int> v) {
     collisionsList = v;
 }
+
 //Causes character to react to tiles on map based upon what is contained
 //within the collisionsList
 

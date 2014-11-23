@@ -6,16 +6,34 @@ Powerup::Powerup(std::string config,std::string texture){
     doc.load_file(config.c_str());
     
     pugi::xml_node bulletnode = doc.child("root").find_child_by_attribute("Object", "name", "Powerup");
-    
     if (bulletnode.empty()) {
-        //if there is an error in node initialization
         std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-    //  std::cout << "start preparing frames" << std::endl;
     prepareFrameInfo(bulletnode);
-    // std::cout << "Finish preparing frames" << std::endl;
     Load(texture);
+    used=false;
+}
+Powerup::Powerup(std::string config, sf::Texture& t, int sheetPositionInFrames)
+{
+    objectType="Powerup";
+    type = 5;
+    pugi::xml_document doc;
+    doc.load_file(config.c_str());
+    
+    pugi::xml_node bulletnode = 
+            doc.child("root").find_child_by_attribute("Object", "name", 
+            "Powerup");
+    if (bulletnode.empty()) {
+        std::cout << "Can't find Bond actor node..." << std::endl;
+        return;
+    }
+    
+    prepareFrameInfo(bulletnode);
+    
+    sf::Vector2i sheetPos(sheetPositionInFrames % 10, (sheetPositionInFrames / 10));
+    
+    Load(t, sheetPos, sf::Vector2i(32, 64));
     used=false;
 }
 

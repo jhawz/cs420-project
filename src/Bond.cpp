@@ -121,17 +121,22 @@ void Bond::Update(float elapsedTime) {
         vy = 0;
     }
     if (!lowCollide()) {
-        if (state == BOND) {
-            if (ay == 0) {
-                ay = 2;
-                jumping = true;
+        if (ay == 0) {
+            ay = 2;
+            jumping = true;
+        }
+            if (state == BOND) {
                 animReq("jump_fall", false);
-            } else if (vy>-6 && vy < 6) {
+              if (vy>-6 && vy < 6) {
                 animReq("jump_float", false);
             } else if (vy > 6) {
                 animReq("jump_fall", false);
             }
-        }
+            }
+        else if (state == RAMBO)
+            {
+                animReq("Rjump", false);
+            }
         if (rightpressed && !rightCollide()) {
             Actor::rightMove();
         } else if (leftpressed && !leftCollide()) {
@@ -204,6 +209,12 @@ void Bond::input() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
         transform();
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+        godMode = true;
+    }
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+        godMode = false;
     }
 }
 }
@@ -341,4 +352,27 @@ void Bond::transform() {
     }
     animReq("transform", false);
     transformClock.restart();
+}
+
+void Bond::die() {
+    switch (state) {
+        case BOND:
+            Actor::die();
+            break;
+        case RAMBO:
+            transform();
+            break;
+        default:
+            break;
+    }
+}
+
+int Bond::getState()
+{
+    return state;
+}
+
+int Bond::getRamboState()
+{
+    return RAMBO;
 }
