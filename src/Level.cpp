@@ -97,8 +97,21 @@ Tile* Level::buildATile(sf::Texture& sheet, int positionInFrames,
     newTile->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth, 
             (mapPositionInFrames / tilesPerRow) * tileHeight);
     
+    checkIfExitTile(newTile, mapPositionInFrames);
+    
     return newTile;
     
+}
+
+void Level::checkIfExitTile(Tile* t, int mapPositionInFrames)
+{
+    if (mapPositionInFrames == 175 ||
+            mapPositionInFrames == 176 ||
+            mapPositionInFrames == 190 ||
+            mapPositionInFrames == 191)
+    {
+        t->setAsExit();
+    }
 }
 
 Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,

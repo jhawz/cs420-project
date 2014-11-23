@@ -18,7 +18,7 @@ public:
 	void DrawAll(sf::RenderWindow& renderWindow);
 	void UpdateAll();
         void setCollisionList(std::vector<int> v);
-        void checkForCollision(VisibleGameObject* obj);
+        void checkForTileCollision(VisibleGameObject* obj);
         int getLevelCode();
         void setCurLevel(Level* l);
         Bond* b;

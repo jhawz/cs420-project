@@ -148,3 +148,13 @@ void VisibleGameObject::setName(std::string objName){
 std::string VisibleGameObject::getName(){
     return name;
 }
+
+bool VisibleGameObject::isExit()
+{
+    return exitObj;
+}
+
+void VisibleGameObject::setAsExit()
+{
+    exitObj = true;
+}

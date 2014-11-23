@@ -29,6 +29,8 @@ public:
     bool getRemove();
     void setName(std::string objName);
     std::string getName();
+    bool isExit();
+    void setAsExit();
 
 protected:
     sf::Sprite& GetSprite();
@@ -44,4 +46,5 @@ private:
     bool firing = false;
     bool rightDir;
     std::string name;
+    bool exitObj = false;
 };

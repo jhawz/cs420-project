@@ -68,6 +68,7 @@ public:
     bool isEnemy(int objectCode, std::vector<int>& mapIDs);
     bool isBond(int objectCode, std::vector<int>& mapIDs);
     bool isPowerup(int objectCode, std::vector<int>& mapIDs);
+    void checkIfExitTile(Tile* t, int mapPositionInTiles);
     int const tilesPerRow = 100;
     int const tileHeight = 32;
     int const tileWidth = 32;

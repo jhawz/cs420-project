@@ -58,7 +58,7 @@ void GameObjectManager::UpdateAll() {
     while (itr != gameObjects.end()) {
         if (itr->second->type > 0) {
             itr->second->Update(timeDelta);
-            checkForCollision(itr->second);
+            checkForTileCollision(itr->second);
             checkIfActorFired(itr->second);
             if (itr->second->type == 2)
             {
@@ -131,7 +131,7 @@ void GameObjectManager::setCollisionList(std::vector<int> v) {
 //Causes character to react to tiles on map based upon what is contained
 //within the collisionsList
 
-void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
+void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     //if both mod values are 0, then the object is perfectly centered in the
     //grid position. Can't be colliding (unless it's completely inside a 
     //tile, which this loop should prevent...)  
