@@ -129,3 +129,13 @@ void Bullet::downRight(){
     animReq("down");
     GetSprite().setScale(1, 1);
 }
+
+int Bullet::getOwner()
+{
+    return ownerType;
+}
+
+void Bullet::setOwner(int o)
+{
+    ownerType = o;
+}

@@ -98,6 +98,7 @@ Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,
     e->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
             ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
     e->setBoundary(0, 0, 700, 3200);
+    e->setOrigPos(sf::Vector2f(e->GetPosition().x, e->GetPosition().y));
     return e;
 }
 

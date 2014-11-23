@@ -60,39 +60,41 @@ void GameObjectManager::UpdateAll() {
             itr->second->Update(timeDelta);
             checkForCollision(itr->second);
             checkIfActorFired(itr->second);
+            if (itr->second->type == 2)
+            {
+                updateBondLocForEnemies(itr->second);
+            }
         }
         if (itr->second->type == 4)
         {
-            itr2 = gameObjects.begin();
-            while (itr2 != gameObjects.end())
-            {
-                if (itr2->second->type == 1 || itr2->second->type == 2)
+                itr2 = gameObjects.begin();
+                while (itr2 != gameObjects.end())
                 {
-                    if (itr->second->closeContact(itr2->second) 
-                            && itr2->second->IsAlive())
+                    if (itr2->second->type == 1 || itr2->second->type == 2)
                     {
-                        
-                        if (itr2->second->type == 1)
+                        if (itr->second->closeContact(itr2->second) 
+                                && itr2->second->IsAlive())
                         {
-                         //   static_cast<Bond*>(itr2->second)->die();
-                        }
-                        else
-                        {
-                            static_cast<Enemy*>(itr2->second)->die();    
-                            static_cast<Bullet*>(itr->second)->setRemove();
-                        }
 
-                    }
-                }
-                itr2++;
-            }
-        }
+                            if (itr2->second->type == 1 &&
+                                    static_cast<Bullet*>(itr->second)->getOwner() != 1)
+                            {
+                                static_cast<Bullet*>(itr->second)->setRemove();
+                                static_cast<Bond*>(itr2->second)->die();
+                            }
+                            else if (itr2->second->type == 2 &&
+                                    static_cast<Bullet*>(itr->second)->getOwner() != 2)
+                            {
+                                static_cast<Enemy*>(itr2->second)->die();    
+                                static_cast<Bullet*>(itr->second)->setRemove();
+                            }}}
+                    itr2++;
+                }}
         if (itr->second->getRemove()){
            Remove(itr->second->getName());
         }
         itr++;
-    }
-}
+    }}
 //Sets up the internally stored list of integer values which are the
 //x,y positions of tiles that objects can collide with converted into
 //a single dimensional number. This conversion = xVal + (yVal * rowLength)
@@ -108,7 +110,7 @@ void GameObjectManager::checkForCollision(VisibleGameObject* obj) {
     //grid position. Can't be colliding (unless it's completely inside a 
     //tile, which this loop should prevent...)  
     int newTop = 0;
-    int newLeft = 32;
+    int newLeft = 0;
     int newRight = 3200;
     int newBottom = 700;
 
@@ -270,6 +272,11 @@ void GameObjectManager::checkIfActorFired(VisibleGameObject* obj) {
         std::string tmpName = "Bullet" + (std::to_string(clock.getElapsedTime().asSeconds()));
         bullet->setName(tmpName);
         this->Add(tmpName, bullet);
+        bullet->setOwner(obj->type);
         obj->setFiring(false);
     }
+}
+void GameObjectManager::updateBondLocForEnemies(VisibleGameObject* obj)
+{
+    static_cast<Enemy*>(obj)->setBondLocation(Get("Bond")->GetPosition());
 }

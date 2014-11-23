@@ -163,6 +163,8 @@ void Bond::Update(float elapsedTime) {
 }
 
 void Bond::input() {
+    if (alive)
+    {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
         setLeftPress(true);
     } else {
@@ -203,6 +205,7 @@ void Bond::input() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
         transform();
     }
+}
 }
 
 void Bond::crouchStill() {

@@ -19,11 +19,27 @@ public:
     Enemy(std::string config,sf::Texture& t, std::string name);
     void leftwalk();
     void rightwalk();
+    void patrol();
+    void straightShoot();
     void Update(float elapsedTime);
     void setBoundary(float left, float up, float right, float lower);
     bool lowCollide();
+    bool leftCollide();
+    bool rightCollide();
+    void rightRun();
+    void leftRun();
+    void setOrigPos(sf::Vector2f o);
+    bool isAlive();
+    void setBondLocation(sf::Vector2f bL);
+    bool attackCheck();
+    bool attackingLeft;
+    bool attackingRight;
+    sf::Vector2f getBondLocation();
+    sf::Clock shotClock;
     private:
             sf::Vector2f upperleft,lowerright;
+            sf::Vector2f origPos;
+            bool isAttacking = false;
+            sf::Vector2f bondLoc;
 };
-
 #endif	/* ENEMY_H */

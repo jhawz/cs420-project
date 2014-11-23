@@ -21,6 +21,8 @@ public:
     void upRight();
     void downLeft();
     void downRight();
+    void setOwner(int ownerType);
+    int getOwner();
 private:
     enum{right,left,upright,upleft,downright,downleft};
     void prepareFrameInfo(pugi::xml_node& node);
@@ -30,6 +32,7 @@ private:
     bool to_delete;
     std::map<std::string,Animation*> animations;
     Animation *curAnim;
+    int ownerType;
 };
 
 #endif

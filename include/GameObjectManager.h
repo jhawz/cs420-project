@@ -25,6 +25,7 @@ public:
         int const tileWidth = 32;
         int const tileHeight = 32;
         void checkIfActorFired(VisibleGameObject* obj);
+        void updateBondLocForEnemies(VisibleGameObject* obj);
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
