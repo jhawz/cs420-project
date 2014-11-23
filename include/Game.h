@@ -2,6 +2,7 @@
 #include "SFML/Window.hpp"
 #include "SFML/Graphics.hpp"
 #include "GameObjectManager.h"
+#include "Hud.h"
 
 class Game {
 public:
@@ -30,6 +31,7 @@ private:
     static GameState gameState;
     static sf::RenderWindow mainWindow;
     static sf::View view;
+    static Hud hud;
     static sf::Vector2f cameraPosition;
 
     static GameObjectManager gameObjectManager;

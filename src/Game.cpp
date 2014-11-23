@@ -21,6 +21,9 @@ void Game::Start(void) {
     view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
     view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
 
+    hud.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
+    hud.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
+
     gameState = Game::ShowingSplash;
 
     SFMLSoundProvider soundProvider;
@@ -101,12 +104,15 @@ void Game::GameLoop() {
             //   std::cout << "Y: " << cameraPosition.y << std::endl;
 
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
+            hud.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
             mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
 
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
+
+            mainWindow.setView(hud);
 
             mainWindow.display();
             if (currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
@@ -180,5 +186,6 @@ void Game::LoadLevel() {
 Game::GameState Game::gameState = Uninitialized;
 sf::RenderWindow Game::mainWindow;
 sf::View Game::view;
+Hud Game::hud;
 sf::Vector2f Game::cameraPosition;
 GameObjectManager Game::gameObjectManager;
