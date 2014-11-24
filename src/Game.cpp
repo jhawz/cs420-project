@@ -16,7 +16,7 @@ void Game::Start(void) {
         return;
 
     mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32)
-            , "James Rambo: Revenge of WillFinger!");
+            , "James Rambo: Revenge of Jaws!");
 
     view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
     view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));

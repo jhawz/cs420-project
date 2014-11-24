@@ -1,36 +1,40 @@
 #include "Bullet.h"
-void Bullet::prepareFrameInfo(pugi::xml_node& node){
+
+void Bullet::prepareFrameInfo(pugi::xml_node& node) {
     std::istringstream ss(std::string(node.child("Animation_List").text().as_string()));
     std::string token;
-    while (std::getline(ss, token,',')) {
-        pugi::xml_node curnode=node.find_child_by_attribute("Animation", "name", token.c_str());
-        Animation* a=new Animation();
+    while (std::getline(ss, token, ',')) {
+        pugi::xml_node curnode = node.find_child_by_attribute("Animation", "name", token.c_str());
+        Animation* a = new Animation();
         a->loadFromXml(curnode);
-        animations.insert(std::pair<std::string,Animation*>(token,a));
+        animations.insert(std::pair<std::string, Animation*>(token, a));
     }
-    curAnim=NULL;
+    curAnim = NULL;
 }
 
-void Bullet::animReq(std::string animName){
-    if (curAnim!=animations[animName]) {
-        if(curAnim!=NULL){curAnim->end();}
-        curAnim=animations[animName];
+void Bullet::animReq(std::string animName) {
+    if (curAnim != animations[animName]) {
+        if (curAnim != NULL) {
+            curAnim->end();
+        }
+        curAnim = animations[animName];
     }
     if (curAnim->isEnded()) {
         curAnim->restart();
     }
 }
 
-Bullet::Bullet(std::string config,std::string texture,int direction){
+Bullet::Bullet(std::string config, std::string texture, int direction) {
     type = 4;
-    vx=0;vy=0;
-    objectType="Bullet";
+    vx = 0;
+    vy = 0;
+    objectType = "Bullet";
     pugi::xml_document doc;
-        GetSprite().setTextureRect(sf::IntRect(896, 0, 32, 64));
+    GetSprite().setTextureRect(sf::IntRect(896, 0, 32, 64));
     doc.load_file(config.c_str());
-    
+
     pugi::xml_node bulletnode = doc.child("root").find_child_by_attribute("Object", "name", "Bullet");
-    
+
     if (bulletnode.empty()) {
         //if there is an error in node initialization
         std::cout << "Can't find Bond actor node..." << std::endl;
@@ -62,80 +66,83 @@ Bullet::Bullet(std::string config,std::string texture,int direction){
         default:
             break;
     }
-    to_delete=false;
+    to_delete = false;
 }
 
-void Bullet::setBoundary(float left, float right){
-    leftBoundary=left;
-    rightBoundary=right;
+void Bullet::setBoundary(float left, float right) {
+    leftBoundary = left;
+    rightBoundary = right;
 }
 
-sf::Vector2i Bullet::getBoundary()
-{
+sf::Vector2i Bullet::getBoundary() {
     return sf::Vector2i(leftBoundary, rightBoundary);
 }
 
-void Bullet::Update(float elapsedTime){
-    if (curAnim!=NULL) {
+void Bullet::Update(float elapsedTime) {
+    if (curAnim != NULL) {
         if (curAnim->play()) {
             GetSprite().setTextureRect(curAnim->getCurFrame());
         }
-        sf::Vector2f pos=GetPosition();
-        SetPosition(pos.x+vx*elapsedTime, pos.y+vy*elapsedTime);
-        if (pos.x+vx*elapsedTime<=leftBoundary||pos.x+vx*elapsedTime>=rightBoundary) {
+        sf::Vector2f pos = GetPosition();
+        SetPosition(pos.x + vx*elapsedTime, pos.y + vy * elapsedTime);
+        if (pos.x + vx * elapsedTime <= leftBoundary || pos.x + vx * elapsedTime >= rightBoundary) {
             animReq("disappear");
-            to_delete=true;
+            to_delete = true;
             VisibleGameObject::setRemove();
         }
     }
 }
 
-bool Bullet::isDead(){
+bool Bullet::isDead() {
     return to_delete;
 }
 
-void Bullet::straightLeft(){
-    vx=-16;vy=0;
+void Bullet::straightLeft() {
+    vx = -16;
+    vy = 0;
     animReq("straight");
     GetSprite().setScale(-1, 1);
 }
 
-void Bullet::straightRight(){
-    vx=16;vy=0;
+void Bullet::straightRight() {
+    vx = 16;
+    vy = 0;
     animReq("straight");
     GetSprite().setScale(1, 1);
 }
 
-void Bullet::upLeft(){
-    vx=-12;vy=-12;
+void Bullet::upLeft() {
+    vx = -12;
+    vy = -12;
     animReq("up");
     GetSprite().setScale(-1, 1);
 }
 
-void Bullet::upRight(){
-    vx=12;vy=-12;
+void Bullet::upRight() {
+    vx = 12;
+    vy = -12;
     animReq("up");
     GetSprite().setScale(1, 1);
 }
 
-void Bullet::downLeft(){
-    vx=-12;vy=12;
+void Bullet::downLeft() {
+    vx = -12;
+    vy = 12;
     animReq("down");
     GetSprite().setScale(-1, 1);
 }
 
-void Bullet::downRight(){
-    vx=12;vy=12;
+void Bullet::downRight() {
+    vx = 12;
+    vy = 12;
     animReq("down");
     GetSprite().setScale(1, 1);
 }
 
-int Bullet::getOwner()
-{
+int Bullet::getOwner() {
     return ownerType;
 }
 
-void Bullet::setOwner(int o)
-{
+void Bullet::setOwner(int o) {
     ownerType = o;
 }

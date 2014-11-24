@@ -341,9 +341,11 @@ void Bond::transform() {
     switch (state) {
         case BOND:
             state = RAMBO;
+            ServiceLocator::GetAudio()->PlaySong("music/Rambo_Theme.ogg", true);
             break;
         case RAMBO:
             state = BOND;
+            ServiceLocator::GetAudio()->PlaySong("music/bond_theme.ogg", true);
             break;
         default:
             break;
