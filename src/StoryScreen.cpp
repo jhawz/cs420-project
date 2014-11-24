@@ -52,7 +52,7 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
     \nYou just give a head nod in acknowledgment....The end", font, 30);
 
     enum stories {
-        story_1, story_2, story_3, story_4
+        story_1, story_2, story_3, story_4, _death, _victory
     }; // Our story states not to be confused with our actual stories themselves.
 
     while (renderWindow.isOpen()) {
@@ -68,6 +68,12 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
                 break;
             case story_4:
                 renderWindow.draw(story4);
+                break;
+            case _death:
+                renderWindow.draw(_death);
+                break;
+            case _victory:
+                renderWindow.draw(_victory);
                 break;
         }
 

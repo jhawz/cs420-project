@@ -174,7 +174,21 @@ void Game::ShowMenu() {
 
 void Game::ShowStoryScreen() {
     StoryScreen storyScreen;
-    storyScreen.Show(mainWindow, 0);
+    int cLevel=gameObjectManager.getLevelCode();
+    switch(cLevel){
+        case 1:
+            storyScreen.Show(mainWindow,StoryScreen::story_1);
+            break;
+        case 6:
+            storyScreen.Show(mainWindow,StoryScreen::story_2);
+            break;
+        case 11:
+            storyScreen.Show(mainWindow,StoryScreen::story_3);
+            break;
+        case 16:
+            storyScreen.Show(mainWindow,StoryScreen::story_4);
+            break;
+    }
     LoadLevel();
 }
 
