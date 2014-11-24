@@ -144,8 +144,6 @@ void Enemy::patrol(){
         isAttacking = false;
     }
 }
-
-
 bool Enemy::attackCheck()
 {
     //Ensure that bond is in range...

@@ -10,6 +10,7 @@ VisibleGameObject::VisibleGameObject()
 
 VisibleGameObject::~VisibleGameObject()
 {
+    
 }
 
 void VisibleGameObject::Load(std::string filename)
@@ -66,7 +67,6 @@ sf::Vector2f VisibleGameObject::GetPosition() const
   return sf::Vector2f();
 }
 
-
 sf::Sprite& VisibleGameObject::GetSprite()
 {
   return sprite;
@@ -105,8 +105,8 @@ bool VisibleGameObject::closeContact(sf::Vector2f obj2)
     myPos = GetPosition();
     if ((myPos.x -obj2.x <= 32)
             &&(myPos.x - obj2.x >= -32)
-            &&(myPos.y - obj2.y <= 8)
-            &&(myPos.y - obj2.y >= -8))
+            &&(myPos.y - obj2.y <= 30)
+            &&(myPos.y - obj2.y >= -30))
     {
         return true;
     }
@@ -118,8 +118,8 @@ bool VisibleGameObject::closeContact(VisibleGameObject* conter){
     conterPos=conter->GetPosition();
     if ((myPos.x-conterPos.x<=32)
         &&(myPos.x-conterPos.x>=-32)
-        &&(myPos.y-conterPos.y<=8)
-        &&(myPos.y-conterPos.y>=-8)) {
+       &&(myPos.y-conterPos.y<=30)
+        &&(myPos.y-conterPos.y>=-30)) {
         return true;
     }
     else return false;

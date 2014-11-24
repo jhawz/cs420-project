@@ -29,7 +29,7 @@ void Level::loadSpecifiedLevel(std::string fileName) {
                 tileExitList.push_back(x % tilesPerRow + ((x / tilesPerRow) *
                         tilesPerRow));
             }
-            }
+            } 
             else if (isEnemy(tileCode, firstIDs))
             {
                   Enemy* e = buildAnEnemy(enemySheet, 
@@ -130,7 +130,6 @@ Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,
             enemyType = "Jaw";
             fireRate = 4.0;
             break;
-
         default:
             enemyType = "MachineGun";
             fireRate = 0.35;

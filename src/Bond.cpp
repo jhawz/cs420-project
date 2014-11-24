@@ -116,7 +116,7 @@ void Bond::Update(float elapsedTime) {
         // SetPosition(GetPosition().x, upperleft.y);
         vy = 0;
     }
-    if (!lowCollide()) {
+    if (!lowCollide() && alive) {
         if (ay == 0) {
             ay = 2;
             jumping = true;
@@ -138,7 +138,13 @@ void Bond::Update(float elapsedTime) {
         } else if (leftpressed && !leftCollide()) {
             Actor::leftMove();
         }
-    } else if (vy > 0) {
+
+    }
+    else if (!lowCollide() && !alive) {
+        if (ay == 0)
+            ay = 2;
+        }
+            else if (vy > 0) {
         jumping = false;
         SetPosition(GetPosition().x, lowerright.y - 64);
         if (rightpressed && !rightCollide()) {
@@ -392,6 +398,9 @@ void Bond::die() {
         default:
             break;
     }
+    jumping = false;
+    rightpressed = false;
+    leftpressed = false;
 }
 
 int Bond::getState()
