@@ -37,7 +37,7 @@ private:
         std::vector<int> collisionsList;
         std::vector<int> exitList;
 	sf::Clock clock;
-        int currentLevel = 3;
+        int currentLevel;
         Level * curLevel;
 	struct GameObjectDeallocator
 	{

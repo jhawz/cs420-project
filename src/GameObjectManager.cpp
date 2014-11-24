@@ -8,6 +8,7 @@
 #include "Bullet.h"
 
 GameObjectManager::GameObjectManager() {
+    currentLevel=1;
 }
 
 GameObjectManager::~GameObjectManager() {
