@@ -188,6 +188,9 @@ void Game::ShowStoryScreen() {
         case 16:
             storyScreen.Show(mainWindow,StoryScreen::story_4);
             break;
+        case 21:
+            storyScreen.Show(mainWindow,StoryScreen::_victory);
+            break;
     }
     LoadLevel();
 }
