@@ -28,9 +28,12 @@ public:
     void setRemove();
     bool getRemove();
     void setName(std::string objName);
+    int getLives();
+    void setLives(int life_count);
     std::string getName();
     bool isExit();
     void setAsExit();
+    int lives = 0;
 
 protected:
     sf::Sprite& GetSprite();

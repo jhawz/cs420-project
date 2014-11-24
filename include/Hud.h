@@ -13,7 +13,13 @@
 class Hud : public sf::View {
 public:
     Hud();
+    sf::Texture texture;
+    sf::Sprite head_1;
+    sf::Sprite head_2;
+    sf::Sprite head_3;
+
 private:
+
 
 };
 

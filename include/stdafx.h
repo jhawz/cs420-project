@@ -10,6 +10,7 @@
 #include <SFML/Graphics.hpp>
 #include <SFML/Window.hpp>
 #include <SFML/Audio.hpp>
+#include <SFML/Audio/Music.hpp>
 
 #include <map>
 #include <iostream>

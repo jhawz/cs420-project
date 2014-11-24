@@ -158,3 +158,12 @@ void VisibleGameObject::setAsExit()
 {
     exitObj = true;
 }
+
+int VisibleGameObject::getLives(){
+    return lives;
+}
+
+void VisibleGameObject::setLives(int life_count){
+    lives = life_count;
+}
+

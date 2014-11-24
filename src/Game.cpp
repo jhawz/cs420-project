@@ -83,7 +83,6 @@ void Game::GameLoop() {
 
         case Game::Playing:
         {
-            //std::cout << gameObjectManager.GetObjectCount() << std::endl;
             if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
                 gameObjectManager.Get("Bond")->SetPosition(200, 200);
             }
@@ -100,11 +99,7 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
-            //   std::cout << "X: " << cameraPosition.x << std::endl;
-            //   std::cout << "Y: " << cameraPosition.y << std::endl;
-
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
-            hud.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
             mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
@@ -112,6 +107,20 @@ void Game::GameLoop() {
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
+            switch (gameObjectManager.Get("Bond")->getLives()) 
+            {
+                case 1:
+                    mainWindow.draw(hud.head_1);
+                case 2:
+                    mainWindow.draw(hud.head_1);
+                    mainWindow.draw(hud.head_2);
+                case 3:
+                    mainWindow.draw(hud.head_1);
+                    mainWindow.draw(hud.head_2);
+                    mainWindow.draw(hud.head_3);
+            }
+
+            //hud.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
             mainWindow.setView(hud);
 
             mainWindow.display();
@@ -173,9 +182,9 @@ void Game::LoadLevel() {
         std::cout << "Loaded Enemy" << std::endl;
         gameObjectManager.Add("Enemy" + (std::to_string(x)), enemies[x]);
     }
-    
+
     std::vector<Powerup*> powerups = l->getPowerupList();
-    
+
     for (int x = 0; x < powerups.size(); x++) {
         std::cout << "Loaded Powerup" << std::endl;
         gameObjectManager.Add("Powerup" + (std::to_string(x)), powerups[x]);
