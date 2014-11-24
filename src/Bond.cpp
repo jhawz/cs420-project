@@ -103,6 +103,7 @@ bool Bond::leftCollide() {
 bool Bond::topCollide() {
     return GetPosition().y <= upperleft.y;
 }
+
 void Bond::Update(float elapsedTime) {
 
     //Input
@@ -141,12 +142,10 @@ void Bond::Update(float elapsedTime) {
             Actor::leftMove();
         }
 
-    }
-    else if (!lowCollide() && !alive) {
+    } else if (!lowCollide() && !alive) {
         if (ay == 0)
             ay = 2;
-        }
-            else if (vy > 0) {
+    } else if (vy > 0) {
         jumping = false;
         SetPosition(GetPosition().x, lowerright.y - 64);
         if (rightpressed && !rightCollide()) {
@@ -172,53 +171,10 @@ void Bond::Update(float elapsedTime) {
 }
 
 void Bond::input() {
-    if (alive)
-    {
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
-        setLeftPress(true);
-    } else {
-        setLeftPress(false);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
-        setRightPress(true);
-    } else {
-        setRightPress(false);
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
-        if (jumpDelay <= 0) {
-            jump();
-            jumpDelay = 10;
-        }
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
-        if (state == BOND) {
-            if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                    jumping != true) {
-                standStill();
-                straightShoot();
-                setFiring(true);
-                ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
-                shotClock.restart();
-            }
-            else if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                    jumping == true)
-            {
-                jumpShoot();
-                setFiring(true);
-                ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
-                shotClock.restart();
-            }
     if (alive) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             setLeftPress(true);
         } else {
-            if (shotClock.getElapsedTime().asSeconds() >= .2 &&
-                   jumping != true) {
-                standStill();
-                straightShoot();
-                setFiring(true);
-                ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
-                shotClock.restart();
             setLeftPress(false);
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
@@ -231,45 +187,51 @@ void Bond::input() {
                 jump();
                 jumpDelay = 10;
             }
-            else if (shotClock.getElapsedTime().asSeconds() >= .2 &&
-                   jumping == true)
-            {
-                jumpShoot();
-                setFiring(true);
-                ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
-                shotClock.restart();
-            }}}
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
-        transform();
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
-        godMode = true;
-    }
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
-        godMode = false;
-    }}}
         }
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
             if (state == BOND) {
                 if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                        (!leftpressed) && (!rightpressed) && jumping != true) {
+                        jumping != true) {
                     standStill();
                     straightShoot();
                     setFiring(true);
                     ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
                     shotClock.restart();
+                } else if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                        jumping == true) {
+                    jumpShoot();
+                    setFiring(true);
+                    ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
+                    shotClock.restart();
                 }
-            } else {
-                if (shotClock.getElapsedTime().asSeconds() >= .2 &&
-                        (!leftpressed) && (!rightpressed) && jumping != true) {
+            }
+            else if (state == RAMBO) {
+                                if (shotClock.getElapsedTime().asSeconds() >= .2 &&
+                        jumping != true) {
                     standStill();
                     straightShoot();
+                    setFiring(true);
+                    ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
+                    shotClock.restart();
+                } else if (shotClock.getElapsedTime().asSeconds() >= .2 &&
+                        jumping == true) {
+                    jumpShoot();
                     setFiring(true);
                     ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
                     shotClock.restart();
                 }
             }
         }
+        
+        
+        
+        
+        
+        
+        
+        
+        
+        
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
             transform();
         }
@@ -292,8 +254,7 @@ void Bond::crouchStill() {
     animReq("crouch", false);
 }
 
-void Bond::jumpShoot()
-{
+void Bond::jumpShoot() {
     if (!alive || shootlocked) return;
     switch (state) {
         case BOND:
