@@ -195,7 +195,7 @@ void Game::LoadLevel() {
     
     for (int x = 0; x < powerups.size(); x++) {
         std::cout << "Loaded Powerup" << std::endl;
-        gameObjectManager.Add("Powerup" + (std::to_string(x)), powerups[x]);
+        gameObjectManager.Add("Powerup", powerups[x]);
     }
     
     std::vector<int> exitPos = l->getExitCodes();

@@ -50,6 +50,7 @@ void Level::loadSpecifiedLevel(std::string fileName) {
                         tileCode - firstIDs[2], //fix tilecode bias from TMX
                         x);
                 powerupList.push_back(p);
+                p->setName("Powerup");
             }
         }
     }

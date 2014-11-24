@@ -3,7 +3,7 @@
 
 Animation::Animation(){
     curFrame=0;
-    period=sf::milliseconds(100);
+    period=sf::milliseconds(1000);
     frameCount=0;
     clock.restart();
 }
@@ -74,12 +74,13 @@ bool Animation::play(){
     if ((!repeatable)&&(curFrame>=frameCount-1)) {
         end();
     }
-    if(!ended){
+    if(!ended && clock.getElapsedTime().asMilliseconds() >= 80){
         switch (elapsedPeriods) {
             case 0:
                 return false;
             default:
-                curFrame+=elapsedPeriods;
+                //curFrame+=elapsedPeriods;
+                curFrame+= 1;
                 curFrame=curFrame%frameCount;
                 clock.restart();
                 return true;
@@ -107,5 +108,3 @@ void Animation::end(){
 bool Animation::isEnded(){
     return ended;
 }
-
-

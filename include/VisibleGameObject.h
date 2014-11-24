@@ -32,6 +32,8 @@ public:
     std::string getName();
     bool isExit();
     void setAsExit();
+    void setAlive();
+    void setNotAlive();
     
     static const int TILE = 0;
     static const int BOND = 1;

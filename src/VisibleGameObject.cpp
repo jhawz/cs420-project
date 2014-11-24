@@ -82,6 +82,16 @@ bool VisibleGameObject::IsAlive()
     return alive;
 }
 
+void VisibleGameObject::setAlive()
+{
+    alive = true;
+}
+
+void VisibleGameObject::setNotAlive()
+{
+    alive = false;
+}
+
 std::string VisibleGameObject::getObjectType(){
     return objectType;
 }

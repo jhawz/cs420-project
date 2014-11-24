@@ -13,11 +13,12 @@ Powerup::Powerup(std::string config,std::string texture){
     prepareFrameInfo(bulletnode);
     Load(texture);
     used=false;
+    VisibleGameObject::setAlive();
 }
 Powerup::Powerup(std::string config, sf::Texture& t, int sheetPositionInFrames)
 {
     objectType="Powerup";
-    type = 5;
+    type = VisibleGameObject::MARTINI;
     pugi::xml_document doc;
     doc.load_file(config.c_str());
     
@@ -35,6 +36,7 @@ Powerup::Powerup(std::string config, sf::Texture& t, int sheetPositionInFrames)
     
     Load(t, sheetPos, sf::Vector2i(32, 64));
     used=false;
+    VisibleGameObject::setAlive();
 }
 
 void Powerup::prepareFrameInfo(pugi::xml_node& node){
@@ -60,11 +62,17 @@ void Powerup::animReq(std::string animName){
     }
 }
 
+void Powerup::setName(std::string name)
+{
+    VisibleGameObject::setName(name);
+}
+
 void Powerup::Update(float elapsedTime){
     if (curAnim->play()) {
         GetSprite().setTextureRect(curAnim->getCurFrame());
+        //std::cout << "In powerup update loop. CurAnim is playing...?" << std::endl;
     }
-    else if (curAnim==animations["explode"]){
+    else if (curAnim==animations["explode"] && !curAnim->isEnded()){
         animReq("disappear");
     }
 }
@@ -72,8 +80,8 @@ void Powerup::Update(float elapsedTime){
 void Powerup::disappear(){
     animReq("explode");
     used=true;
+    //VisibleGameObject::setNotAlive();}
 }
-
 bool Powerup::isDead(){
     return used;
 }

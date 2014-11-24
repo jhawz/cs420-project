@@ -45,6 +45,15 @@ int GameObjectManager::GetObjectCount() const {
 void GameObjectManager::DrawAll(sf::RenderWindow& renderWindow) {
     std::map<std::string, VisibleGameObject*>::const_iterator itr = gameObjects.begin();
     while (itr != gameObjects.end()) {
+        if (itr->second->type == VisibleGameObject::MARTINI 
+                && !itr->second->IsAlive())
+        {
+            
+        }
+        else
+        {
+            
+        }
         itr->second->Draw(renderWindow);
         itr++;
     }
@@ -69,12 +78,12 @@ void GameObjectManager::UpdateAll() {
                 updateBondLocForEnemies(itr->second);
             }
             //check for martini collision for transformation
-            if (itr->second->type == 5)
+            if (itr->second->type == VisibleGameObject::MARTINI && itr->second->IsAlive())
             {
                 itr2 = gameObjects.begin();
                 while (itr2 != gameObjects.end())
                 {
-                    if (itr2->second->type == 1)
+                    if (itr2->second->type == VisibleGameObject::BOND)
                     {
                         if (itr2->second->closeContact(itr->second) 
                                 &&
@@ -82,15 +91,14 @@ void GameObjectManager::UpdateAll() {
                                 != static_cast<Bond*>(itr2->second)->getRamboState())
                         {
                             static_cast<Powerup*>(itr->second)->disappear();
+                            itr->second->setNotAlive();
                             static_cast<Bond*>(itr2->second)->transform();
                         }
                     }
                     itr2++;
-                }
-            }
-        }
+                }}}
         //Bullet collision
-        if (itr->second->type == 4)
+        if (itr->second->type == VisibleGameObject::BULLET)
         {
                 itr2 = gameObjects.begin();
                 while (itr2 != gameObjects.end())

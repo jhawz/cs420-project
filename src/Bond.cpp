@@ -222,10 +222,7 @@ void Bond::input() {
                 setFiring(true);
                 ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
                 shotClock.restart();
-            }
-            
-        }
-    }
+            }}}
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
         transform();
     }
@@ -234,9 +231,7 @@ void Bond::input() {
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
         godMode = false;
-    }
-}
-}
+    }}}
 
 void Bond::crouchStill() {
     if (state == RAMBO) {

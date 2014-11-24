@@ -17,6 +17,7 @@ public:
     void Update(float elapsedTime);
     void disappear();
     bool isDead();
+    void setName(std::string name);
 private:
     bool used;
     void prepareFrameInfo(pugi::xml_node& node);
