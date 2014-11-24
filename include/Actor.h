@@ -31,6 +31,8 @@ public:
     void setBoundary(float left,float up,float right,float lower);
     bool lowCollide();
     bool IsAlive();
+    void setAlive();
+    Animation* getAnim();
         
 protected:
     float getLowBound();

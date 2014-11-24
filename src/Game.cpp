@@ -89,13 +89,10 @@ void Game::GameLoop() {
         case Game::Playing:
         {
             //std::cout << gameObjectManager.GetObjectCount() << std::endl;
-            if (gameObjectManager.Get("Bond")->GetPosition().y > 600) {
-                gameObjectManager.Get("Bond")->SetPosition(200, 200);
-            }
 
             cameraPosition.x = gameObjectManager.Get("Bond")->GetPosition().x + 32 - (SCREEN_WIDTH / 2);
-            cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y - (SCREEN_HEIGHT);
-
+            //cameraPosition.y = gameObjectManager.Get("Bond")->GetPosition().y - (SCREEN_HEIGHT);
+            cameraPosition.y = 0;
             if (cameraPosition.x < 0)
                 cameraPosition.x = 0;
             if (cameraPosition.y < 0)

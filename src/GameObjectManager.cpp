@@ -78,6 +78,18 @@ void GameObjectManager::UpdateAll() {
                 updateBondLocForEnemies(itr->second);
             }
             //check for martini collision for transformation
+            if (itr->second->type == VisibleGameObject::BOND)
+            {
+                if (!(itr->second->IsAlive())
+                        && static_cast<Bond*>(itr->second)->getAnim()->isEnded())
+                {
+                    std::cout << "Bond is: " << static_cast<Bond*>(itr->second)->IsAlive() << std::endl;
+                    static_cast<Actor*>(itr->second)->setAlive();
+                    static_cast<Bond*>(itr->second)->setBoundary(0, 0, 700, 3200);
+                    itr->second->SetPosition(32, 300);
+                    static_cast<Bond*>(itr->second)->standStill();
+                }
+            }
             if (itr->second->type == VisibleGameObject::MARTINI && itr->second->IsAlive())
             {
                 itr2 = gameObjects.begin();
@@ -218,9 +230,18 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     if (obj->type == 1) {
         static_cast<Bond*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
+        if (obj->GetPosition().y >= 600)
+        {
+            
+            static_cast<Bond*>(obj)->die();
+        }
     } else if (obj->type == 2) {
         static_cast<Enemy*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
+        if (obj->GetPosition().y >=  600)
+        {
+            static_cast<Enemy*>(obj)->die();
+        }
     } else if (obj->type == 4) {
         sf::Vector2i curBoundary= static_cast<Bullet*>(obj)->getBoundary();
         if (curBoundary.x > newLeft)

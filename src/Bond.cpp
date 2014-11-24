@@ -98,7 +98,6 @@ bool Bond::leftCollide() {
 bool Bond::topCollide() {
     return GetPosition().y <= upperleft.y;
 }
-
 void Bond::Update(float elapsedTime) {
 
     //Input

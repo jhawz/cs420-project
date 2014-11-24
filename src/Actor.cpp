@@ -126,6 +126,11 @@ void Actor::die(){
     ServiceLocator::GetAudio()->PlaySound("sounds/WilhelmScream.ogg");
 }
 
+void Actor::setAlive() {
+    alive = true;
+}
+
+
 void Actor::standStill(std::string aname){
     if (!alive) {
         return;
@@ -153,6 +158,11 @@ void Actor::Update(float elapsedTime){
         standStill();
     }
 
+}
+
+Animation* Actor::getAnim()
+{
+    return curAnim;
 }
 
 void Actor::setOriginalImg(sf::Image &img){

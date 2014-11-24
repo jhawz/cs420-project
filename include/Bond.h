@@ -26,7 +26,6 @@ public:
     void jumpShoot();
     int getState();
     int getBondState();
-   // int getRamboState();
     void setBoundary(float left, float up, float right, float lower);
     void die();
     sf::IntRect getBoundary();
@@ -48,5 +47,4 @@ private:
     sf::Clock transformClock;
     sf::Time transformDuration;
 };
-
 #endif
