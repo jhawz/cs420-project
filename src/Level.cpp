@@ -1,9 +1,7 @@
 #include "Level.h"
-
 void Level::loadLevel(int levelVal) {
     loadSpecifiedLevel("data/Level" + std::to_string(levelVal) + ".txt");
 }
-
 void Level::loadSpecifiedLevel(std::string fileName) {
     MapLoader* m = new MapLoader();
     m->loadMap(fileName);
@@ -13,41 +11,43 @@ void Level::loadSpecifiedLevel(std::string fileName) {
     bondSheet.loadFromFile("textures/JB.png");
     tileCodeList = m->getTileCodes(); 
     std::vector<int> firstIDs = m->getFirstIDs();
-    std::cout << "ID Codes as follows: " << firstIDs[0] << " " << firstIDs[1] << " " << firstIDs[2] << std::endl;
     for (int x = 0; x < tileCodeList.size(); x++) {       
         if (isRealObjectOnMap(std::stoi(tileCodeList[x]))) {
             int tileCode = std::stoi(tileCodeList[x]);
-            
             if (isTile(tileCode, firstIDs))
             {
             Tile* newTile = buildATile(
                     levelTiles, 
                     tileCode - firstIDs[0], //fix tilecode bias from TMX
                     x);
-
             tileList.push_back(newTile);
             tileColList.push_back(x % tilesPerRow + ((x / tilesPerRow) *
             tilesPerRow));
+            
+            if (isExitTile(std::stoi(tileCodeList[x])))
+            {
+                tileExitList.push_back(x % tilesPerRow + ((x / tilesPerRow) *
+                        tilesPerRow));
+            }
             }
             else if (isEnemy(tileCode, firstIDs))
             {
                   Enemy* e = buildAnEnemy(enemySheet, 
-                          tileCode - firstIDs[1], 
+                          tileCode - firstIDs[1], //fix tilecode bias from TMX
                           x);
                   enemyList.push_back(e);
-                  
             }
             else if (isBond(tileCode, firstIDs))
             {
                 Bond* b = buildABond(bondSheet,
-                        tileCode - firstIDs[2],
+                        tileCode - firstIDs[2], //fix tilecode bias from TMX
                         x);
                 bond = b;
             }
             else if (isPowerup(tileCode, firstIDs))
             {
                 Powerup* p = buildAPowerup(bondSheet, 
-                        tileCode - firstIDs[2],
+                        tileCode - firstIDs[2], //fix tilecode bias from TMX
                         x);
                 powerupList.push_back(p);
             }
@@ -55,7 +55,6 @@ void Level::loadSpecifiedLevel(std::string fileName) {
     }
     delete m;
 }
-
 bool Level::isRealObjectOnMap(int objectCode)
 {
     return (objectCode > 0);
@@ -71,16 +70,12 @@ bool Level::isTile(int objectCode, std::vector<int>& mapIDs)
     return (objectCode < mapIDs[1]);
 }
 
-bool Level::isBond(int objectCode, std::vector<int>& mapIDs)
-{
+bool Level::isBond(int objectCode, std::vector<int>& mapIDs) {
     return (objectCode >= mapIDs[2] && objectCode < mapIDs[3]);
 }
-
-bool Level::isPowerup(int objectCode, std::vector<int>& mapIDs)
-{
+bool Level::isPowerup(int objectCode, std::vector<int>& mapIDs) {
     return (objectCode >= mapIDs[3]);
 }
-
 Tile* Level::buildATile(sf::Texture& sheet, int positionInFrames, 
         int mapPositionInFrames){
     Tile* newTile = new Tile();
@@ -97,26 +92,11 @@ Tile* Level::buildATile(sf::Texture& sheet, int positionInFrames,
     newTile->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth, 
             (mapPositionInFrames / tilesPerRow) * tileHeight);
     
-    checkIfExitTile(newTile, mapPositionInFrames);
-    
     return newTile;
     
 }
-
-void Level::checkIfExitTile(Tile* t, int mapPositionInFrames)
-{
-    if (mapPositionInFrames == 175 ||
-            mapPositionInFrames == 176 ||
-            mapPositionInFrames == 190 ||
-            mapPositionInFrames == 191)
-    {
-        t->setAsExit();
-    }
-}
-
 Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,
-        int mapPositionInFrames)
-{
+        int mapPositionInFrames) {
     std::string enemyType;
     float fireRate;
     
@@ -131,13 +111,29 @@ Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,
             fireRate = 0.5;
             break;
         case 20:
-            enemyType = "Machinegun";
+            enemyType = "MachineGun";
+            fireRate = 0.35;
+            break;
+        case 30:
+            enemyType = "Pistol";
+            fireRate = 2.0;
+            break;
+        case 40:
+            enemyType  = "Smg";
             fireRate = 0.5;
             break;
-        default:
+        case 50:
+            enemyType = "MachineGun";
+            fireRate = 0.35;
+            break;
+        case 60:
             enemyType = "Jaw";
             fireRate = 4.0;
             break;
+
+        default:
+            enemyType = "MachineGun";
+            fireRate = 0.35;
     }
     
     Enemy* e = new Enemy("actors.xml", sheet, enemyType, fireRate);
@@ -150,8 +146,7 @@ Enemy* Level::buildAnEnemy(sf::Texture& sheet, int positionInFrames,
 }
 
 Bond* Level::buildABond(sf::Texture& sheet, int positionInFrames, 
-        int mapPositionInFrames)
-{
+        int mapPositionInFrames) {
     Bond* b = new Bond("actors.xml", sheet);
     b->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
             ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
@@ -161,8 +156,7 @@ Bond* Level::buildABond(sf::Texture& sheet, int positionInFrames,
 }
 
 Powerup* Level::buildAPowerup(sf::Texture& sheet, int positionInFrames,
-        int mapPositionInFrames)
-{
+        int mapPositionInFrames) {
     Powerup* p = new Powerup("actors.xml", sheet, positionInFrames);
     p->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
             ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
@@ -198,7 +192,23 @@ std::vector<Powerup*>& Level::getPowerupList() {
     return powerupList;
 }
 
-Bond* Level::getBond()
-{
+Bond* Level::getBond() {
     return bond;
+}
+
+std::vector<int> Level::getExitCodes()
+{
+    return tileExitList;
+}
+
+bool Level::isExitTile(int mapPositionInFrames)
+{
+        if (mapPositionInFrames == 175 ||
+            mapPositionInFrames == 176 ||
+            mapPositionInFrames == 190 ||
+            mapPositionInFrames == 191)
+        {
+            return true;
+        }
+        return false;
 }

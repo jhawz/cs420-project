@@ -56,11 +56,15 @@ void GameObjectManager::UpdateAll() {
     float timeDelta = clock.restart().asSeconds() * 25;
 
     while (itr != gameObjects.end()) {
-        if (itr->second->type > 0) {
+        if (itr->second->type != VisibleGameObject::TILE) {
             itr->second->Update(timeDelta);
             checkForTileCollision(itr->second);
             checkIfActorFired(itr->second);
-            if (itr->second->type == 2)
+            if (itr->second->type == VisibleGameObject::BOND)
+            {
+                checkForExitCollision(itr->second);
+            }
+            if (itr->second->type == VisibleGameObject::ENEMY)
             {
                 updateBondLocForEnemies(itr->second);
             }
@@ -130,7 +134,6 @@ void GameObjectManager::setCollisionList(std::vector<int> v) {
 
 //Causes character to react to tiles on map based upon what is contained
 //within the collisionsList
-
 void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     //if both mod values are 0, then the object is perfectly centered in the
     //grid position. Can't be colliding (unless it's completely inside a 
@@ -194,19 +197,15 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     }
     //Check above
     if (collidedWith(posToFrame - (1 * 100)) > -1) {
-        newTop = (yVal) * 32;
-      //  std::cout << "Hit above" << std::endl;
-        
+        newTop = (yVal) * 32;        
     }
     else if (collidedWith((posToFrame - (1 * 100)) + 1) > -1)
     {
-    //    std::cout << "Hit above" << std::endl;
         newTop = (yVal - 1) * 32;
     }
     else
     {
         newTop = 0;
-       // std::cout << "Not hitting!" << std::endl;
     }
     if (obj->type == 1) {
         static_cast<Bond*> (obj)->setBoundary(newLeft,
@@ -231,6 +230,23 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
 //Checks for a collision between a specific character and the items in the
 //Collision list.
 //Called by checkForCollision.
+void GameObjectManager::checkForExitCollision(VisibleGameObject* obj)
+{
+    for (int i = 0; i < exitList.size(); i++)
+    {
+        sf::Vector2f obj2((exitList[i] % tilesPerRow) * tileWidth
+        , (exitList[i] / tilesPerRow) * tileHeight);
+        if (obj->closeContact(obj2))
+        {
+            nextLevel = true;
+        }
+    }
+}
+
+void GameObjectManager::unsetReadyForNextLevel()
+{
+    nextLevel = false;
+}
 
 //Returns the position of the tile the object collided with in a frame count
 //Returns -1 if there was no collision
@@ -264,15 +280,12 @@ int GameObjectManager::collidedWith(int gridPos) {
     //No collisions detected.
     return -1;
 }
-
 int GameObjectManager::getLevelCode() {
     return currentLevel;
 }
-
 void GameObjectManager::setCurLevel(Level* l) {
     curLevel = l;
 }
-
 void GameObjectManager::checkIfActorFired(VisibleGameObject* obj) {
     if (obj->getFiring() == true) {
         Bullet *bullet;
@@ -306,13 +319,15 @@ void GameObjectManager::updateBondLocForEnemies(VisibleGameObject* obj)
 {
     static_cast<Enemy*>(obj)->setBondLocation(Get("Bond")->GetPosition());
 }
-
 bool GameObjectManager::isReadyForNextLevel()
 {
     return nextLevel;
 }
-
 void GameObjectManager::increLevel()
 {
     currentLevel++;
+}
+void GameObjectManager::setExitList(std::vector<int> v)
+{
+    exitList = v;
 }

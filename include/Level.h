@@ -58,17 +58,22 @@ public:
     std::vector<Tile*>& getTileList();
     std::vector<Enemy*>& getEnemyList();
     std::vector<Powerup*>& getPowerupList();
+    std::vector<int> getExitCodes();
     Bond* getBond();
-    Tile* buildATile(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
-    Enemy* buildAnEnemy(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
-    Bond* buildABond(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
-    Powerup* buildAPowerup(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
+    Tile* buildATile(sf::Texture& sheet, int positionInFrames, 
+    int mapPositionInFrames);
+    Enemy* buildAnEnemy(sf::Texture& sheet, int positionInFrames, 
+    int mapPositionInFrames);
+    Bond* buildABond(sf::Texture& sheet, int positionInFrames, 
+    int mapPositionInFrames);
+    Powerup* buildAPowerup(sf::Texture& sheet, int positionInFrames, 
+    int mapPositionInFrames);
     bool isRealObjectOnMap(int objectCode);
     bool isTile(int objectCode, std::vector<int>& mapIDs);
     bool isEnemy(int objectCode, std::vector<int>& mapIDs);
     bool isBond(int objectCode, std::vector<int>& mapIDs);
     bool isPowerup(int objectCode, std::vector<int>& mapIDs);
-    void checkIfExitTile(Tile* t, int mapPositionInTiles);
+    bool isExitTile(int mapPositionInFrames);
     int const tilesPerRow = 100;
     int const tileHeight = 32;
     int const tileWidth = 32;
@@ -78,6 +83,7 @@ private:
     sf::Texture enemySheet;
     sf::Texture bondSheet;
     std::vector<std::string> tileCodeList;
+    std::vector<int> tileExitList;
     std::vector<int> tileColList;
     std::vector<Tile*> tileList;
     std::vector<Enemy*> enemyList;

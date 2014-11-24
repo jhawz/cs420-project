@@ -20,6 +20,7 @@ public:
     std::string getObjectType();
     bool closeContact(VisibleGameObject &conter);
     bool closeContact(VisibleGameObject* conter);
+    bool closeContact(sf::Vector2f obj2);
     void setFiring(bool fire);
     bool getFiring();
     bool isFacingRight();

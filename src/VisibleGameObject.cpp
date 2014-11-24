@@ -8,7 +8,6 @@ VisibleGameObject::VisibleGameObject()
 	//isLoaded = false; Slightly faster to use the above constructor initialization.
 }
 
-
 VisibleGameObject::~VisibleGameObject()
 {
 }
@@ -93,13 +92,26 @@ bool VisibleGameObject::closeContact(VisibleGameObject &conter){
     conterPos=conter.GetPosition();
     if ((myPos.x-conterPos.x<=32)
         &&(myPos.x-conterPos.x>=-32)
-        &&(myPos.y-conterPos.y<=8)
-        &&(myPos.y-conterPos.y>=-8)) {
+        &&(myPos.y-conterPos.y<=64)
+        &&(myPos.y-conterPos.y>=-64)) {
         return true;
     }
     else return false;
 }
 
+bool VisibleGameObject::closeContact(sf::Vector2f obj2)
+{
+    sf::Vector2f myPos;
+    myPos = GetPosition();
+    if ((myPos.x -obj2.x <= 32)
+            &&(myPos.x - obj2.x >= -32)
+            &&(myPos.y - obj2.y <= 8)
+            &&(myPos.y - obj2.y >= -8))
+    {
+        return true;
+    }
+    return false;
+}
 bool VisibleGameObject::closeContact(VisibleGameObject* conter){
     sf::Vector2f myPos,conterPos;
     myPos=GetPosition();

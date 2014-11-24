@@ -22,10 +22,11 @@ private:
     static void ShowMenu();
     static void ShowStoryScreen();
     static void LoadLevel();
+    static void unLoadLevel();
 
     enum GameState {
         Uninitialized, ShowingSplash, Paused,
-        ShowingMenu, Playing, Exiting, ShowingStory, Loading
+        ShowingMenu, Playing, Exiting, ShowingStory, Loading, Unloading
     };
 
     static GameState gameState;

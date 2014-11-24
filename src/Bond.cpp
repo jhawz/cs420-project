@@ -4,9 +4,7 @@
 #include "ServiceLocator.h"
 
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
-
-    int lives = 3;
-
+    
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 
@@ -25,14 +23,12 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
         return;
     }
     setOriginalImg(*img);
-    type = 1;
+    type = VisibleGameObject::BOND;
     state = BOND;
     transformDuration = sf::seconds(1);
 }
 
 Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
-    int lives = 3;
-
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 
@@ -46,7 +42,7 @@ Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
 
     prepareFrameInfo(bondnode);
     Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
-    type = 1;
+    type = VisibleGameObject::BOND;
     state = BOND;
     transformDuration = sf::seconds(1);
 }
@@ -213,6 +209,15 @@ void Bond::input() {
                 ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
                 shotClock.restart();
             }
+            else if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                    (!leftpressed) && (!rightpressed) && jumping == true)
+            {
+                jumpShoot();
+                setFiring(true);
+                ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
+                shotClock.restart();
+            }
+            
         }
     }
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {

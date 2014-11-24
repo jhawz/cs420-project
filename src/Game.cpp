@@ -80,6 +80,11 @@ void Game::GameLoop() {
             LoadLevel();
             break;
         }
+        case Game::Unloading:
+        {
+            unLoadLevel();
+            break;
+        }
 
         case Game::Playing:
         {
@@ -123,10 +128,22 @@ void Game::GameLoop() {
                     ShowMenu();
                 }
             }
+            if (gameObjectManager.isReadyForNextLevel())
+            {
+                gameObjectManager.increLevel();
+                gameObjectManager.unsetReadyForNextLevel();
+                gameState = Game::Unloading;
+            }
 
             break;
         }
     }
+}
+
+void Game::unLoadLevel()
+{
+    gameObjectManager.RemoveAll();
+    gameState = Game::Loading;
 }
 
 void Game::ShowSplashScreen() {
@@ -180,6 +197,10 @@ void Game::LoadLevel() {
         std::cout << "Loaded Powerup" << std::endl;
         gameObjectManager.Add("Powerup" + (std::to_string(x)), powerups[x]);
     }
+    
+    std::vector<int> exitPos = l->getExitCodes();
+    
+    gameObjectManager.setExitList(exitPos);
 
     Bond* b = l->getBond();
     gameObjectManager.b = b;
