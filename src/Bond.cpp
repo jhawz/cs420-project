@@ -190,7 +190,7 @@ void Bond::input() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
         if (state == BOND) {
             if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                    (!leftpressed) && (!rightpressed) && jumping != true) {
+                    jumping != true) {
                 standStill();
                 straightShoot();
                 setFiring(true);
@@ -198,7 +198,7 @@ void Bond::input() {
                 shotClock.restart();
             }
             else if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                    (!leftpressed) && (!rightpressed) && jumping == true)
+                    jumping == true)
             {
                 jumpShoot();
                 setFiring(true);
@@ -207,15 +207,15 @@ void Bond::input() {
             }
         } else {
             if (shotClock.getElapsedTime().asSeconds() >= .2 &&
-                    (!leftpressed) && (!rightpressed) && jumping != true) {
+                   jumping != true) {
                 standStill();
                 straightShoot();
                 setFiring(true);
                 ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
                 shotClock.restart();
             }
-            else if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
-                    (!leftpressed) && (!rightpressed) && jumping == true)
+            else if (shotClock.getElapsedTime().asSeconds() >= .2 &&
+                   jumping == true)
             {
                 jumpShoot();
                 setFiring(true);
