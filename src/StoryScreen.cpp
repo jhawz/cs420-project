@@ -70,10 +70,10 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
                 renderWindow.draw(story4);
                 break;
             case _death:
-                renderWindow.draw(_death);
+                renderWindow.draw(death);
                 break;
             case _victory:
-                renderWindow.draw(_victory);
+                renderWindow.draw(victory);
                 break;
         }
 
