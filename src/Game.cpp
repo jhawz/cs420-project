@@ -21,9 +21,6 @@ void Game::Start(void) {
     view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
     view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
 
-    hud.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-    hud.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
-
     gameState = Game::ShowingSplash;
 
     SFMLSoundProvider soundProvider;
@@ -107,21 +104,24 @@ void Game::GameLoop() {
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
-            switch (gameObjectManager.Get("Bond")->getLives()) 
-            {
+            switch (gameObjectManager.Get("Bond")->getLives()) {
+                
                 case 1:
+                    hud.head_1.move(-cameraPosition.x, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                 case 2:
+                    hud.head_1.move(-cameraPosition.x, cameraPosition.y);
+                    hud.head_2.move(-cameraPosition.x, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     mainWindow.draw(hud.head_2);
                 case 3:
+                    hud.head_1.setOrigin(-cameraPosition.x, cameraPosition.y);
+                    hud.head_2.setOrigin(-cameraPosition.x, cameraPosition.y);
+                    hud.head_3.setOrigin(-cameraPosition.x, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     mainWindow.draw(hud.head_2);
                     mainWindow.draw(hud.head_3);
             }
-
-            //hud.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
-            mainWindow.setView(hud);
 
             mainWindow.display();
             if (currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
