@@ -1,4 +1,5 @@
 #include "Enemy.h"
+#include "ServiceLocator.h"
 
 Enemy::Enemy(std::string config, std::string texture, std::string name) : Actor::Actor() {
     pugi::xml_document doc;
@@ -171,6 +172,7 @@ void Enemy::straightShoot()
                 && isAlive()){
             setFiring(true);
             Actor::attack();
+            ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
             shotClock.restart();
         }
 }

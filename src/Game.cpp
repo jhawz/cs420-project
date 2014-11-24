@@ -16,13 +16,10 @@ void Game::Start(void) {
         return;
 
     mainWindow.create(sf::VideoMode(SCREEN_WIDTH, SCREEN_HEIGHT, 32)
-            , "James Rambo: Revenge of WillFinger!");
+            , "James Rambo: Revenge of Jaws!");
 
     view.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
     view.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
-
-    hud.reset(sf::FloatRect(0, 0, SCREEN_WIDTH, SCREEN_HEIGHT));
-    hud.setViewport(sf::FloatRect(0, 0, 1.0f, 1.0f));
 
     gameState = Game::ShowingSplash;
 
@@ -102,11 +99,7 @@ void Game::GameLoop() {
             if (cameraPosition.y > LEVEL_HEIGHT)
                 cameraPosition.y = LEVEL_HEIGHT;
 
-            //   std::cout << "X: " << cameraPosition.x << std::endl;
-            //   std::cout << "Y: " << cameraPosition.y << std::endl;
-
             view.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
-            hud.reset(sf::FloatRect(cameraPosition.x, cameraPosition.y, SCREEN_WIDTH, SCREEN_HEIGHT));
 
             mainWindow.clear(sf::Color::Black);
             mainWindow.setView(view);
@@ -114,7 +107,24 @@ void Game::GameLoop() {
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
-            mainWindow.setView(hud);
+            switch (gameObjectManager.Get("Bond")->getLives()) {
+                
+                case 1:
+                    hud.head_1.move(-cameraPosition.x, cameraPosition.y);
+                    mainWindow.draw(hud.head_1);
+                case 2:
+                    hud.head_1.move(-cameraPosition.x, cameraPosition.y);
+                    hud.head_2.move(-cameraPosition.x, cameraPosition.y);
+                    mainWindow.draw(hud.head_1);
+                    mainWindow.draw(hud.head_2);
+                case 3:
+                    hud.head_1.setOrigin(-cameraPosition.x, cameraPosition.y);
+                    hud.head_2.setOrigin(-cameraPosition.x, cameraPosition.y);
+                    hud.head_3.setOrigin(-cameraPosition.x, cameraPosition.y);
+                    mainWindow.draw(hud.head_1);
+                    mainWindow.draw(hud.head_2);
+                    mainWindow.draw(hud.head_3);
+            }
 
             mainWindow.display();
             if (currentEvent.type == sf::Event::Closed) gameState = Game::Exiting;
@@ -187,9 +197,9 @@ void Game::LoadLevel() {
         std::cout << "Loaded Enemy" << std::endl;
         gameObjectManager.Add("Enemy" + (std::to_string(x)), enemies[x]);
     }
-    
+
     std::vector<Powerup*> powerups = l->getPowerupList();
-    
+
     for (int x = 0; x < powerups.size(); x++) {
         std::cout << "Loaded Powerup" << std::endl;
         gameObjectManager.Add("Powerup", powerups[x]);

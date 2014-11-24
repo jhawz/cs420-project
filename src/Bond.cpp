@@ -4,7 +4,9 @@
 #include "ServiceLocator.h"
 
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
-    
+
+    setLives(3);
+
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 
@@ -29,6 +31,9 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 }
 
 Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
+
+    setLives(3);
+
     pugi::xml_document doc;
     doc.load_file(config.c_str());
 
@@ -120,18 +125,16 @@ void Bond::Update(float elapsedTime) {
             ay = 2;
             jumping = true;
         }
-            if (state == BOND) {
-                animReq("jump_fall", false);
-              if (vy>-6 && vy < 6) {
+        if (state == BOND) {
+            animReq("jump_fall", false);
+            if (vy>-6 && vy < 6) {
                 animReq("jump_float", false);
             } else if (vy > 6) {
                 animReq("jump_fall", false);
             }
-            }
-        else if (state == RAMBO)
-            {
-                animReq("Rjump", false);
-            }
+        } else if (state == RAMBO) {
+            animReq("Rjump", false);
+        }
         if (rightpressed && !rightCollide()) {
             Actor::rightMove();
         } else if (leftpressed && !leftCollide()) {
@@ -205,6 +208,9 @@ void Bond::input() {
                 ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
                 shotClock.restart();
             }
+    if (alive) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
+            setLeftPress(true);
         } else {
             if (shotClock.getElapsedTime().asSeconds() >= .2 &&
                    jumping != true) {
@@ -213,6 +219,17 @@ void Bond::input() {
                 setFiring(true);
                 ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
                 shotClock.restart();
+            setLeftPress(false);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Right)) {
+            setRightPress(true);
+        } else {
+            setRightPress(false);
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Space)) {
+            if (jumpDelay <= 0) {
+                jump();
+                jumpDelay = 10;
             }
             else if (shotClock.getElapsedTime().asSeconds() >= .2 &&
                    jumping == true)
@@ -231,6 +248,39 @@ void Bond::input() {
     if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
         godMode = false;
     }}}
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::S)) {
+            if (state == BOND) {
+                if (shotClock.getElapsedTime().asSeconds() >= 1.0 &&
+                        (!leftpressed) && (!rightpressed) && jumping != true) {
+                    standStill();
+                    straightShoot();
+                    setFiring(true);
+                    ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
+                    shotClock.restart();
+                }
+            } else {
+                if (shotClock.getElapsedTime().asSeconds() >= .2 &&
+                        (!leftpressed) && (!rightpressed) && jumping != true) {
+                    standStill();
+                    straightShoot();
+                    setFiring(true);
+                    ServiceLocator::GetAudio()->PlaySound("sounds/gun.wav");
+                    shotClock.restart();
+                }
+            }
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
+            transform();
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::G)) {
+            godMode = true;
+        }
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::N)) {
+            godMode = false;
+        }
+    }
+}
 
 void Bond::crouchStill() {
     if (state == RAMBO) {
@@ -370,9 +420,11 @@ void Bond::transform() {
     switch (state) {
         case BOND:
             state = RAMBO;
+            ServiceLocator::GetAudio()->PlaySong("music/Rambo_Theme.ogg", true);
             break;
         case RAMBO:
             state = BOND;
+            ServiceLocator::GetAudio()->PlaySong("music/bond_theme.ogg", true);
             break;
         default:
             break;
@@ -397,12 +449,10 @@ void Bond::die() {
     leftpressed = false;
 }
 
-int Bond::getState()
-{
+int Bond::getState() {
     return state;
 }
 
-int Bond::getRamboState()
-{
+int Bond::getRamboState() {
     return RAMBO;
 }

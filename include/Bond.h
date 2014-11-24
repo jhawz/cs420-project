@@ -42,7 +42,6 @@ private:
     bool rightCollide();
     bool topCollide();
     bool jumping;
-    int lives = 3;
     sf::Vector2f upperleft,lowerright;
     sf::Clock transformClock;
     sf::Time transformDuration;
