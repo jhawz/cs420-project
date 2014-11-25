@@ -107,25 +107,25 @@ void Game::GameLoop() {
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
-                       switch (gameObjectManager.Get("Bond")->getLives()) {
-                
+            switch (gameObjectManager.Get("Bond")->getLives()) {
+
                 case 1:
                     hud.head_1.setPosition(cameraPosition.x, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     break;
                 case 2:
                     hud.head_1.setPosition(cameraPosition.x, cameraPosition.y);
-                    hud.head_2.setPosition(cameraPosition.x + 
-                    hud.head_1.getTextureRect().width, cameraPosition.y);
+                    hud.head_2.setPosition(cameraPosition.x +
+                            hud.head_1.getTextureRect().width, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     mainWindow.draw(hud.head_2);
                     break;
                 case 3:
                     hud.head_1.setPosition(cameraPosition.x, cameraPosition.y);
                     hud.head_2.setPosition(cameraPosition.x +
-                    hud.head_1.getTextureRect().width, cameraPosition.y);
+                            hud.head_1.getTextureRect().width, cameraPosition.y);
                     hud.head_3.setPosition(cameraPosition.x +
-                    hud.head_1.getTextureRect().width * 2, cameraPosition.y);
+                            hud.head_1.getTextureRect().width * 2, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     mainWindow.draw(hud.head_2);
                     mainWindow.draw(hud.head_3);
@@ -141,8 +141,7 @@ void Game::GameLoop() {
                     ShowMenu();
                 }
             }
-            if (gameObjectManager.isReadyForNextLevel())
-            {
+            if (gameObjectManager.isReadyForNextLevel()) {
                 gameObjectManager.increLevel();
                 gameObjectManager.unsetReadyForNextLevel();
                 gameState = Game::Unloading;
@@ -154,10 +153,9 @@ void Game::GameLoop() {
     }
 }
 
-void Game::unLoadLevel()
-{
+void Game::unLoadLevel() {
     gameObjectManager.RemoveAll();
-    gameState = Game::Loading;
+    gameState = Game::ShowingStory;
     std::cout << "Starting load; unload finished" << std::endl;
 }
 
@@ -185,22 +183,25 @@ void Game::ShowMenu() {
 
 void Game::ShowStoryScreen() {
     StoryScreen storyScreen;
-    int cLevel=gameObjectManager.getLevelCode();
-    switch(cLevel){
+    int cLevel = gameObjectManager.getLevelCode();
+    switch (cLevel) {
         case 1:
-            storyScreen.Show(mainWindow,0);
+            storyScreen.Show(mainWindow, 0);
             break;
         case 6:
-            storyScreen.Show(mainWindow,1);
+            storyScreen.Show(mainWindow, 1);
             break;
         case 11:
-            storyScreen.Show(mainWindow,2);
+            storyScreen.Show(mainWindow, 2);
             break;
         case 16:
-            storyScreen.Show(mainWindow,3);
+            storyScreen.Show(mainWindow, 3);
             break;
         case 21:
-            storyScreen.Show(mainWindow,5);
+            storyScreen.Show(mainWindow, 5);
+            break;
+        case 1000:
+            storyScreen.Show(mainWindow, 5);
             break;
     }
     LoadLevel();
@@ -232,23 +233,22 @@ void Game::LoadLevel() {
         std::cout << "Loaded Powerup" << std::endl;
         gameObjectManager.Add("Powerup", powerups[x]);
     }
-    
+
     std::vector<int> exitPos = l->getExitCodes();
-    
+
     gameObjectManager.setExitList(exitPos);
 
-    if (gameObjectManager.getLevelCode() == 20)
-    {
+    if (gameObjectManager.getLevelCode() == 20) {
         Jaw* j = l->getJaws();
         gameObjectManager.j = j;
         gameObjectManager.Add("Jaws", j);
-        
+
         Co* c = l->getCo();
         gameObjectManager.c = c;
         gameObjectManager.Add("Co", c);
-        
+
     }
-    
+
     Bond* b = l->getBond();
     gameObjectManager.b = b;
     gameObjectManager.Add("Bond", b);

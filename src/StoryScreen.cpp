@@ -9,11 +9,6 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
         return 100; // Everything fails if you don't have the font file.
     }
 
-    //window.display(background);
-
-    sf::Text text;
-    text.setFont(font);
-
     // Stories 
     sf::Text story1("You are James Rambo, back from your tour of duty. \
     \nAfter defeating the gang known as the Ladies of Saigon. \
@@ -32,6 +27,7 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
     \nI intend to take her as my bride, just try to stop me James Rambo!\
     \nThe intercom chimes out as you proceed deeper into Jaw's lair.\
     \n\nPress enter to continue...", font, 30);
+    story2.setPosition(2400, 0);
 
     sf::Text story3("After defeating more of Jaws's henchman you advance\
     \nthrough this floor only being taunted by Jaws throughout.\
@@ -39,40 +35,46 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
     \nAll henchmen attack! you hear over the intercom.\
     \nAs you go through the door and descend deeper into the factory.\
     \n\nPress enter to continue...", font, 30);
+    story3.setPosition(2400, 0);
 
     sf::Text story4("You proceed through the last door, as you walk down the corridor\
     \nyou collect your thoughts and prepare yourself mentally for the battle ahead. \
     \nAll of Jaw's men are after you now,Jaws's end is imminent.\
     \n", font, 30);
+    story4.setPosition(2400, 0);
 
     sf::Text death("\n\n                      GAME OVER", font, 80);
 
     sf::Text victory("You rush over to Co, James...James...Rambo she screams in delight\
     \nYou saved me from Jaws, you don't say a word because badasses don't.\
     \nYou just give a head nod in acknowledgment....The end", font, 30);
+    victory.setPosition(2400, 0);
 
     enum stories {
         story_1, story_2, story_3, story_4, _death, _victory
     }; // Our story states not to be confused with our actual stories themselves.
 
+    renderWindow.clear();
+
     while (renderWindow.isOpen()) {
         switch (story_state) {
-            case story_1:
+
+            case 0:
                 renderWindow.draw(story1);
                 break;
-            case story_2:
+            case 1:
                 renderWindow.draw(story2);
                 break;
-            case story_3:
+            case 2:
                 renderWindow.draw(story3);
                 break;
-            case story_4:
+            case 3:
                 renderWindow.draw(story4);
                 break;
-            case _death:
+            case 4:
                 renderWindow.draw(death);
                 break;
-            case _victory:
+            case 5:
                 renderWindow.draw(victory);
                 break;
         }
@@ -85,7 +87,7 @@ int StoryScreen::Show(sf::RenderWindow & renderWindow, int story_state) {
                     ((event.type == sf::Event::KeyPressed) && (event.key.code == sf::Keyboard::Escape)))// Looks for a key pressed & key must be esc key
                 renderWindow.close();
 
-            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return) && (story_state == story_1)) { // Looks for key pressed & it being in state
+            else if (sf::Keyboard::isKeyPressed(sf::Keyboard::Return)) { // Looks for key pressed & it being in state
                 return story_state;
             }
             renderWindow.clear(); // Clears the window, if we don't have it then it F's up the display 

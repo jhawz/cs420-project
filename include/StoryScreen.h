@@ -18,6 +18,12 @@ public:
         
 private:
     int story_state;
+    sf::Text story1;
+    sf::Text story2;
+    sf::Text story3;
+    sf::Text story4;
+    sf::Text death;
+    sf::Text victory;
 };
 
 #endif	/* STORYSCREEN_H */
