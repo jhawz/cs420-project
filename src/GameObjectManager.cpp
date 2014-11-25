@@ -114,12 +114,12 @@ void GameObjectManager::UpdateAll() {
 }
 
 void GameObjectManager::bondCollisions(VisibleGameObject* obj1) {
-    if (obj1->IsAlive()) {
+    if (obj1->IsAlive() && !nextLevel) {
         checkForExitCollision(obj1);
     } else if (!obj1->IsAlive() && static_cast<Bond*> (obj1)->getAnim()->isEnded()) {
         static_cast<Actor*> (obj1)->setAlive();
         static_cast<Bond*> (obj1)->setBoundary(0, 0, 700, 3200);
-        obj1->SetPosition(curLevel->bondStartLoc.x, curLevel->bondStartLoc.y);
+        obj1->SetPosition(curLevel->bondStartLoc.x, curLevel->bondStartLoc.y - 32);
         static_cast<Bond*> (obj1)->standStill();
     }
 
@@ -201,12 +201,12 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     returnCollisionValue = collidedWith(posToFrame - 1);
 
     if (returnCollisionValue > -1) {
-        newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 33;
+        newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 32;
         // std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
     } else {
         returnCollisionValue = collidedWith(posToFrame + 100 - 1);
         if (returnCollisionValue > -1) {
-            newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 33;
+            newLeft = ((collisionsList[returnCollisionValue] % 100) * 32) + 32;
             //    std::cout << "LEFT BOUND CHANGED TO: " << newLeft << std::endl;
         }
     }
@@ -214,12 +214,12 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     returnCollisionValue = collidedWith(posToFrame + 1);
 
     if (returnCollisionValue > -1) {
-        newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 33;
+        newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 32;
         //   std::cout << "RIGHT (1st) BOUND CHANGED TO: " << newRight << std::endl;
     } else {
         returnCollisionValue = collidedWith(posToFrame + 100 + 1);
         if (returnCollisionValue > -1) {
-            newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 33;
+            newRight = ((collisionsList[returnCollisionValue] % 100) * 32) - 32;
             //            std::cout << "RIGHT (2nd) BOUND CHANGED TO: " << newRight << std::endl;
         }
     }
@@ -385,5 +385,5 @@ void GameObjectManager::setExitList(std::vector<int> v) {
 
 void GameObjectManager::resetLevelToOne()
 {
-    currentLevel = 20;
+    currentLevel = 1;
 }

@@ -35,6 +35,7 @@ public:
     sf::Clock shotClock;
     int getRamboState();
     void grabbedByJaws();
+    void setBondState();
 private:
     int state;
     enum{BOND,RAMBO};

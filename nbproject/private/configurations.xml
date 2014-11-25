@@ -14,6 +14,16 @@
             <in>CMakeCXXCompilerId.cpp</in>
           </df>
         </df>
+        <df name="CMakeTmp">
+        </df>
+        <df name="james_rambo.dir">
+          <df name="bin">
+          </df>
+          <df name="src">
+          </df>
+        </df>
+        <df name="Progress">
+        </df>
       </df>
       <df name="data">
       </df>
@@ -24,9 +34,11 @@
         <in>Animation.h</in>
         <in>Bond.h</in>
         <in>Bullet.h</in>
+        <in>Co.h</in>
         <in>Enemy.h</in>
         <in>Game.h</in>
         <in>GameObjectManager.h</in>
+        <in>Hud.h</in>
         <in>IAudioProvider.h</in>
         <in>Jaw.h</in>
         <in>Level.h</in>
@@ -34,7 +46,6 @@
         <in>MapLoader.h</in>
         <in>Powerup.h</in>
         <in>Projectile.h</in>
-        <in>Rambo.h</in>
         <in>SFMLSoundProvider.h</in>
         <in>ServiceLocator.h</in>
         <in>SoundFileCache.h</in>
@@ -55,9 +66,11 @@
         <in>Animation.cpp</in>
         <in>Bond.cpp</in>
         <in>Bullet.cpp</in>
+        <in>Co.cpp</in>
         <in>Enemy.cpp</in>
         <in>Game.cpp</in>
         <in>GameObjectManager.cpp</in>
+        <in>Hud.cpp</in>
         <in>Jaw.cpp</in>
         <in>Level.cpp</in>
         <in>MainMenu.cpp</in>
@@ -104,6 +117,8 @@
         <gdb_interceptlist>
           <gdbinterceptoptions gdb_all="false" gdb_unhandled="true" gdb_unexpected="true"/>
         </gdb_interceptlist>
+        <gdb_signals>
+        </gdb_signals>
         <gdb_options>
           <DebugOptions>
           </DebugOptions>

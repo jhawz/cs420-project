@@ -5,11 +5,15 @@
       <df name="bin">
         <in>james_rambo.cpp</in>
       </df>
+      <df name="include">
+        <in>Co.h</in>
+      </df>
       <df name="src">
         <in>Actor.cpp</in>
         <in>Animation.cpp</in>
         <in>Bond.cpp</in>
         <in>Bullet.cpp</in>
+        <in>Co.cpp</in>
         <in>Enemy.cpp</in>
         <in>Game.cpp</in>
         <in>GameObjectManager.cpp</in>
@@ -58,10 +62,12 @@
           <buildCommandWorkingDir>.</buildCommandWorkingDir>
           <buildCommand>${MAKE} -f Makefile</buildCommand>
           <cleanCommand>${MAKE} -f Makefile clean</cleanCommand>
-          <executablePath></executablePath>
+          <executablePath>james_rambo</executablePath>
         </makeTool>
       </makefileType>
       <item path="bin/james_rambo.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="include/Co.h" ex="false" tool="3" flavor2="0">
       </item>
       <item path="src/Actor.cpp" ex="false" tool="1" flavor2="4">
       </item>
@@ -70,6 +76,8 @@
       <item path="src/Bond.cpp" ex="false" tool="1" flavor2="4">
       </item>
       <item path="src/Bullet.cpp" ex="false" tool="1" flavor2="4">
+      </item>
+      <item path="src/Co.cpp" ex="false" tool="1" flavor2="0">
       </item>
       <item path="src/Enemy.cpp" ex="false" tool="1" flavor2="4">
       </item>

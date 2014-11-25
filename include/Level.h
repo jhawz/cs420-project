@@ -19,6 +19,7 @@
 #include "Bond.h"
 #include "Powerup.h"
 #include "Jaw.h"
+#include "Co.h"
 class Level {
 public:
 
@@ -32,12 +33,14 @@ public:
             delete tileList[i];
         }
         tileList.clear();
+        std::cout << "deleting tiles" << std::endl;
         
         for (int i = 0; i < enemyList.size(); i++)
         {
             delete enemyList[i];
         }
         enemyList.clear();
+        std::cout << "Deleting Enemies" << std::endl;
         
         for (int i = 0; i < powerupList.size(); i++)
         {
@@ -45,11 +48,16 @@ public:
         }
         powerupList.clear();
         
-        delete bond;
+        std::cout <<"deleting powerups" << std::endl;
         
-        if (jaw)
+        delete bond;
+        std::cout << "deleting bond" << std::endl;
+        
+        if (curLevel == 20)
         {
+            std::cout << "SHOULD NOT BE DELETING JAW" << std::endl;
             delete jaw;
+            delete co;
         }
     }
     void setBackGround(VisibleGameObject* backGround);
@@ -73,8 +81,8 @@ public:
     int mapPositionInFrames);
     Powerup* buildAPowerup(sf::Texture& sheet, int positionInFrames, 
     int mapPositionInFrames);
-    Jaw* buildAJaw(sf::Texture& sheet, int positionInFrames,
-    int mapPositionInFrames);
+    Jaw* buildAJaw(sf::Texture& sheet, int positionInFrames, int mapPositionInFrames);
+    Co* buildACo(sf::Texture& sheet, int mapPositionInFrames);
     bool isRealObjectOnMap(int objectCode);
     bool isTile(int objectCode, std::vector<int>& mapIDs);
     bool isEnemy(int objectCode, std::vector<int>& mapIDs);
@@ -82,6 +90,7 @@ public:
     bool isPowerup(int objectCode, std::vector<int>& mapIDs);
     bool isExitTile(int mapPositionInFrames);
     Jaw* getJaws();
+    Co* getCo();
     int const tilesPerRow = 100;
     int const tileHeight = 32;
     int const tileWidth = 32;
@@ -99,7 +108,9 @@ private:
     std::vector<Powerup*> powerupList;
     Bond* bond;
     Jaw* jaw;
+    Co* co;
     sf::Time period;
     sf::Clock clock;
+    int curLevel;
 };
 #endif	/* LEVEL_H */

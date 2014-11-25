@@ -115,8 +115,8 @@ bool VisibleGameObject::closeContact(sf::Vector2f obj2)
     myPos = GetPosition();
     if ((myPos.x -obj2.x <= 32)
             &&(myPos.x - obj2.x >= -32)
-            &&(myPos.y - obj2.y <= 30)
-            &&(myPos.y - obj2.y >= -30))
+            &&(myPos.y - obj2.y <= 64)
+            &&(myPos.y - obj2.y >= -64))
     {
         return true;
     }
@@ -128,7 +128,8 @@ bool VisibleGameObject::closeContact(VisibleGameObject* conter){
     conterPos=conter->GetPosition();
     if ((myPos.x-conterPos.x<=32)
         &&(myPos.x-conterPos.x>=-32)
-       &&(myPos.y-conterPos.y<=30)
+       &&(myPos.
+            y-conterPos.y<=30)
         &&(myPos.y-conterPos.y>=-30)) {
         return true;
     }

@@ -146,6 +146,7 @@ void Game::GameLoop() {
                 gameObjectManager.increLevel();
                 gameObjectManager.unsetReadyForNextLevel();
                 gameState = Game::Unloading;
+                std::cout << "Starting unload" << std::endl;
             }
 
             break;
@@ -157,6 +158,7 @@ void Game::unLoadLevel()
 {
     gameObjectManager.RemoveAll();
     gameState = Game::Loading;
+    std::cout << "Starting load; unload finished" << std::endl;
 }
 
 void Game::ShowSplashScreen() {
@@ -240,6 +242,11 @@ void Game::LoadLevel() {
         Jaw* j = l->getJaws();
         gameObjectManager.j = j;
         gameObjectManager.Add("Jaws", j);
+        
+        Co* c = l->getCo();
+        gameObjectManager.c = c;
+        gameObjectManager.Add("Co", c);
+        
     }
     
     Bond* b = l->getBond();

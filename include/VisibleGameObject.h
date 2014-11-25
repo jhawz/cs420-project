@@ -44,6 +44,7 @@ public:
     static const int JAWS = 3;
     static const int BULLET = 4;
     static const int MARTINI = 5;
+    static const int CO = 6;
 
 protected:
     sf::Sprite& GetSprite();

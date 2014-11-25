@@ -428,3 +428,8 @@ int Bond::getState() {
 int Bond::getRamboState() {
     return RAMBO;
 }
+
+void Bond::setBondState()
+{
+    state = BOND;
+}

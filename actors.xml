@@ -15,7 +15,7 @@
         <Animation name="crouch_shoot" whole_line="False" line="5" repeatable="False" period="100" frame_number="5">2,3,4,5,6</Animation>
         <Animation name="crouch" whole_line="False" line="5" repeatable="False" period="100" frame_number="3">0,1,7</Animation>
         <Animation name="die" whole_line="False" line="7" repeatable="False" period="100" frame_number="16">0,0,0,0,0,0,0,1,1,1,1,1,1,1,2,3</Animation>
-        <Animation name="disappear" whole_line="False" line="2" repeatable="False" period="100" frame_number="1">5</Animation>
+        <Animation name="disappear" whole_line="False" line="2" repeatable="False" period="100" frame_number="10">5,5,5,5,5,5,5,5,5,5</Animation>
         <Animation name="Rstand" whole_line="False" line="8" repeatable="True" period="100" frame_number="1">0</Animation>
         <Animation name="Rrun" whole_line="False" line="11" repeatable="True" period="40" frame_number="3">1,2,3</Animation>
         <Animation name="Rstraight_shoot" whole_line="False" line="8" repeatable="True" period="100" frame_number="1">0</Animation>
@@ -49,11 +49,12 @@
         <Animation name="die" whole_line="False" line="5" repeatable="False" period="100" frame_number="2">3,4</Animation>
     </Actor>
     <Actor name="Jaw" attack_lock="500">
-        <Animation_List>stand,run,straight_shoot,die</Animation_List>
+        <Animation_List>stand,run,straight_shoot,die,hurt</Animation_List>
         <Animation name="stand" whole_line="False" line="8" repeatable="True" period="100" frame_number="1">3</Animation>
-        <Animation name="run" whole_line="True" line="6" repeatable="True" period="40" frame_number="8"></Animation>
+        <Animation name="run" whole_line="False" line="6" repeatable="True" period="100" frame_number="8">0,0,0,1,2,3,4,5,6,7</Animation>
         <Animation name="straight_shoot" whole_line="False" line="7" repeatable="False" period="100" frame_number="10">0,0,0,0,0,1,1,1,1,1</Animation>
-        <Animation name="die" whole_line="False" line="8" repeatable="False" period="100" frame_number="1">4</Animation>
+        <Animation name="die" whole_line="False" line="8" repeatable="False" period="100" frame_number="3">4,4,4</Animation>
+        <Animation name="hurt" whole_line="False" line="8" repeatable="False" period="100" frame_number="2">0,4</Animation>
     </Actor>
     <Object name="Bullet">
         <Animation_List>straight,up,down,disappear</Animation_List>
@@ -68,6 +69,10 @@
         <Animation name="explode" whole_line="True" line="14" repeatable="False" period="200" frame_number="9"></Animation>
         <Animation name="disappear" whole_line="False" line="14" repeatable="False" period="100" frame_number="1">8</Animation>
     </Object>
+    <Actor name = "Co">
+        <Animation_List>stand</Animation_List>
+        <Animation name = "stand" whole_line="False" line="16" repeatable="True" period="100" frame_number="1">0</Animation>
+    </Actor>
     
 
 </root>

@@ -2,7 +2,7 @@
 #include "VisibleGameObject.h"
 #include "Level.h"
 #include "Bond.h"
-#include "Jaw.h"
+#include "Co.h"
 
 
 class GameObjectManager
@@ -26,6 +26,7 @@ public:
         void setCurLevel(Level* l);
         Bond* b;
         Jaw* j;
+        Co* c;
         int const tileWidth = 32;
         int const tileHeight = 32;
         int const tilesPerRow = 100;
