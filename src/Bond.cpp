@@ -204,9 +204,8 @@ void Bond::input() {
                     ServiceLocator::GetAudio()->PlaySound("sounds/pistol.ogg");
                     shotClock.restart();
                 }
-            }
-            else if (state == RAMBO) {
-                                if (shotClock.getElapsedTime().asSeconds() >= .2 &&
+            } else if (state == RAMBO) {
+                if (shotClock.getElapsedTime().asSeconds() >= .2 &&
                         jumping != true) {
                     standStill();
                     straightShoot();
@@ -222,16 +221,7 @@ void Bond::input() {
                 }
             }
         }
-        
-        
-        
-        
-        
-        
-        
-        
-        
-        
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::T)) {
             transform();
         }
@@ -398,6 +388,7 @@ void Bond::die() {
     switch (state) {
         case BOND:
             Actor::die();
+            lives--;
             break;
         case RAMBO:
             transform();

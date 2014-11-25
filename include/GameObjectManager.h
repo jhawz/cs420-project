@@ -28,10 +28,14 @@ public:
         int const tileHeight = 32;
         int const tilesPerRow = 100;
         void checkIfActorFired(VisibleGameObject* obj);
-        void updateBondLocForEnemies(VisibleGameObject* obj);
+        void updateBondLocForEnemies(VisibleGameObject* obj, bool isJaws);
         bool isReadyForNextLevel();
         void unsetReadyForNextLevel();
         void increLevel();
+        void enemyCollisions(VisibleGameObject* obj);
+        void martiniCollisions(VisibleGameObject* obj1, VisibleGameObject* obj2);
+        void bondCollisions(VisibleGameObject* obj);
+        void bulletCollisions(VisibleGameObject* obj1, VisibleGameObject* obj2);
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;

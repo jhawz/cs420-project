@@ -22,10 +22,31 @@ Jaw::Jaw(std::string config, std::string texture):Actor::Actor(){
     }
     setOriginalImg(*img);
     type = VisibleGameObject::JAWS;
+    
+    lives=12;
+    
 }
 
 void Jaw::attack(Actor& actor){
     if (actor.type==VisibleGameObject::BOND &&closeContact(actor)) {
         Actor::attack();
     }
+}
+
+void Jaw::die()
+{
+    lives--;
+    if (lives <= 0)
+    {
+        Actor::die();
+    }
+    else
+    {
+        animReq("Hurt", false);
+    }
+}
+
+void Jaw::setBondLocation(sf::Vector2f)
+{
+    
 }

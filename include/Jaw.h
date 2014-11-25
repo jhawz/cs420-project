@@ -10,6 +10,8 @@ class Jaw:public Actor{
 public:
     Jaw(std::string config, std::string texture);
     void attack(Actor& actor);
+    void die();
+    void setBondLocation(sf::Vector2f bondLoc);
 };
 
 #endif

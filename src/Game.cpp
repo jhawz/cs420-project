@@ -107,23 +107,29 @@ void Game::GameLoop() {
             gameObjectManager.UpdateAll();
             gameObjectManager.DrawAll(mainWindow);
 
-            switch (gameObjectManager.Get("Bond")->getLives()) {
+                       switch (gameObjectManager.Get("Bond")->getLives()) {
                 
                 case 1:
-                    hud.head_1.move(-cameraPosition.x, cameraPosition.y);
+                    hud.head_1.setPosition(cameraPosition.x, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
+                    break;
                 case 2:
-                    hud.head_1.move(-cameraPosition.x, cameraPosition.y);
-                    hud.head_2.move(-cameraPosition.x, cameraPosition.y);
+                    hud.head_1.setPosition(cameraPosition.x, cameraPosition.y);
+                    hud.head_2.setPosition(cameraPosition.x + 
+                    hud.head_1.getTextureRect().width, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     mainWindow.draw(hud.head_2);
+                    break;
                 case 3:
-                    hud.head_1.setOrigin(-cameraPosition.x, cameraPosition.y);
-                    hud.head_2.setOrigin(-cameraPosition.x, cameraPosition.y);
-                    hud.head_3.setOrigin(-cameraPosition.x, cameraPosition.y);
+                    hud.head_1.setPosition(cameraPosition.x, cameraPosition.y);
+                    hud.head_2.setPosition(cameraPosition.x +
+                    hud.head_1.getTextureRect().width, cameraPosition.y);
+                    hud.head_3.setPosition(cameraPosition.x +
+                    hud.head_1.getTextureRect().width * 2, cameraPosition.y);
                     mainWindow.draw(hud.head_1);
                     mainWindow.draw(hud.head_2);
                     mainWindow.draw(hud.head_3);
+                    break;
             }
 
             mainWindow.display();
