@@ -385,6 +385,8 @@ void Bond::transform() {
 }
 
 void Bond::die() {
+    if (alive)
+    {
     switch (state) {
         case BOND:
             Actor::die();
@@ -399,6 +401,7 @@ void Bond::die() {
     jumping = false;
     rightpressed = false;
     leftpressed = false;
+}
 }
 
 int Bond::getState() {

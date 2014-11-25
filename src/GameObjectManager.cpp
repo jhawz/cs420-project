@@ -112,7 +112,7 @@ void GameObjectManager::bondCollisions(VisibleGameObject* obj1) {
     } else if (!obj1->IsAlive() && static_cast<Bond*> (obj1)->getAnim()->isEnded()) {
         static_cast<Actor*> (obj1)->setAlive();
         static_cast<Bond*> (obj1)->setBoundary(0, 0, 700, 3200);
-        obj1->SetPosition(32, 300);
+        obj1->SetPosition(curLevel->bondStartLoc.x, curLevel->bondStartLoc.y);
         static_cast<Bond*> (obj1)->standStill();
     }
 

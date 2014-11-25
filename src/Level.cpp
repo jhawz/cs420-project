@@ -151,6 +151,7 @@ Bond* Level::buildABond(sf::Texture& sheet, int positionInFrames,
     b->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
             ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
     b->setBoundary(0, 0, 700, 3200);
+    bondStartLoc = sf::Vector2f(b->GetPosition().x, b->GetPosition().y);
     
     return b;
 }

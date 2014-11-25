@@ -77,6 +77,7 @@ public:
     int const tilesPerRow = 100;
     int const tileHeight = 32;
     int const tileWidth = 32;
+    sf::Vector2f bondStartLoc;
 private:
     VisibleGameObject* backGround;
     sf::Texture levelTiles;
