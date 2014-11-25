@@ -34,6 +34,7 @@ public:
     bool godMode = false;
     sf::Clock shotClock;
     int getRamboState();
+    void grabbedByJaws();
 private:
     int state;
     enum{BOND,RAMBO};
@@ -45,5 +46,7 @@ private:
     sf::Vector2f upperleft,lowerright;
     sf::Clock transformClock;
     sf::Time transformDuration;
+    bool grabbed = false;
+    int grabbedTime;
 };
 #endif

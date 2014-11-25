@@ -104,6 +104,17 @@ bool Bond::topCollide() {
     return GetPosition().y <= upperleft.y;
 }
 
+void Bond::grabbedByJaws()
+{
+    animReq("disappear", false);
+    grabbed = true;
+    rightpressed = false;
+    leftpressed = false;
+    vy = 0;
+    vx = 0;
+    grabbedTime = transformClock.getElapsedTime().asMilliseconds();
+}
+
 void Bond::Update(float elapsedTime) {
 
     //Input
@@ -116,6 +127,12 @@ void Bond::Update(float elapsedTime) {
         }
     }
 
+    if (grabbed && transformClock.getElapsedTime().asMilliseconds() >= grabbedTime + 800)
+    {
+        die();
+        grabbed = false;
+    }
+    
     //Animation related call
     if (topCollide()) {
         // SetPosition(GetPosition().x, upperleft.y);
@@ -171,7 +188,7 @@ void Bond::Update(float elapsedTime) {
 }
 
 void Bond::input() {
-    if (alive) {
+    if (alive && !grabbed) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Left)) {
             setLeftPress(true);
         } else {

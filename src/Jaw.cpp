@@ -73,9 +73,6 @@ void Jaw::rightwalk() {
 void Jaw::Update(float elapsedTime) {
     Actor::Update(elapsedTime);
 
-   // std::cout << "Jaws' boundaries = (from Update()) " << upperleft.x<< "," <<
-   //         upperleft.y<< "," << lowerright.x << "," << lowerright.y << std::endl;
- //   SetPosition(GetPosition().x, 480);
     if (!lowCollide()) {
         if (ay == 0)
             ay = 2;
@@ -107,8 +104,9 @@ void Jaw::patrol(){
             if (!attackingLeft)
             {
                 GetSprite().setScale(1, 1);
-                standStill();
                 setFacingLeft();
+                straightShoot();
+                std::cout << "Attacking!" << std::endl;
                 attackingLeft = true;
                 attackingRight = false;
                 rightpressed = false;
@@ -120,8 +118,9 @@ void Jaw::patrol(){
             if (!attackingRight)
             {
                 GetSprite().setScale(-1, 1);
-                standStill();
                 setFacingRight();
+                straightShoot();
+                std::cout << "Attacking!" << std::endl;
                 attackingRight = true;
                 attackingLeft = false;
                 rightpressed = false;
@@ -150,11 +149,20 @@ void Jaw::patrol(){
         isAttacking = false;
     }
 }
+
+bool Jaw::bondInRange()
+{
+    
+    return (GetPosition().x - bondLoc.x >= -50) && 
+                (GetPosition().x - bondLoc.x <= 50);
+    
+}
+
 bool Jaw::attackCheck()
 {
     //Ensure that bond is in range...
-    if (bondLoc.x - GetPosition().x < 200 
-            && bondLoc.x - GetPosition().x > -200
+    if (bondLoc.x - GetPosition().x < 350 
+            && bondLoc.x - GetPosition().x > -350
             && bondLoc.y - GetPosition().y < 64
             && bondLoc.y - GetPosition().y > -64)
     {
@@ -174,11 +182,12 @@ bool Jaw::attackCheck()
 void Jaw::straightShoot()
 {
         if ((shotClock.getElapsedTime().asSeconds() >= attackRate) 
-                && isAlive()){
-            setFiring(true);
+                && isAlive() && bondInRange()){
             Actor::attack();
             shotClock.restart();
+            grabbedBond = true;
         }
+
 }
 void Jaw::rightRun()
 {
@@ -197,6 +206,9 @@ void Jaw::die()
     if (lives <= 0)
     {
         Actor::die();
+        vy = 0;
+        vx = 0;
+        animReq("die", false);
     }
 }
 

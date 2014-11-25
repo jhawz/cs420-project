@@ -39,6 +39,8 @@ public:
     sf::Clock shotClock;
     float attackRate;
     void die();
+    bool bondInRange();
+    bool grabbedBond;
     private:
             sf::Vector2f upperleft,lowerright;
             sf::Vector2f origPos;

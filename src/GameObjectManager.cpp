@@ -93,7 +93,7 @@ void GameObjectManager::UpdateAll() {
             }
         }
         //Bullet collision
-        if (itr->second->type == VisibleGameObject::BULLET) {
+        else if (itr->second->type == VisibleGameObject::BULLET) {
             itr2 = gameObjects.begin();
             while (itr2 != gameObjects.end()) {
                 bulletCollisions(itr->second, itr2->second);
@@ -101,6 +101,13 @@ void GameObjectManager::UpdateAll() {
             }
             if (itr->second->getRemove())
                 Remove(itr->second->getName());
+        }
+        if (itr->second->type == VisibleGameObject::JAWS) {
+            if (j->grabbedBond)
+            {
+                b->grabbedByJaws();
+                j->grabbedBond = false;
+            }
         }
         itr++;
     }
@@ -251,8 +258,6 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
         {
             static_cast<Jaw*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
-            
-            std::cout << newLeft << "," << newTop << "," << newRight << "," << newBottom << std::endl;
     }  else if (obj->type == VisibleGameObject::BULLET) {
         sf::Vector2i curBoundary = static_cast<Bullet*> (obj)->getBoundary();
         if (curBoundary.x > newLeft) {
