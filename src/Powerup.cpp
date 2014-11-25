@@ -72,7 +72,7 @@ void Powerup::Update(float elapsedTime){
         GetSprite().setTextureRect(curAnim->getCurFrame());
         //std::cout << "In powerup update loop. CurAnim is playing...?" << std::endl;
     }
-    else if (curAnim==animations["explode"] && !curAnim->isEnded()){
+    else if (curAnim==animations["explode"] && curAnim->isEnded()){
         animReq("disappear");
     }
 }
