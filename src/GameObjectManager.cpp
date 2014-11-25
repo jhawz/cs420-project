@@ -385,5 +385,5 @@ void GameObjectManager::setExitList(std::vector<int> v) {
 
 void GameObjectManager::resetLevelToOne()
 {
-    currentLevel = 1;
+    currentLevel = 5;
 }

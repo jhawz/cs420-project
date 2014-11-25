@@ -6,6 +6,8 @@
 Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 
     setLives(3);
+    
+    ServiceLocator::GetAudio()->PlaySong("music/bond_theme.ogg", true);
 
     pugi::xml_document doc;
     doc.load_file(config.c_str());
@@ -33,6 +35,8 @@ Bond::Bond(std::string config, std::string texture) : Actor::Actor() {
 Bond::Bond(std::string config, sf::Texture& t) : Actor::Actor() {
 
     setLives(3);
+    
+    ServiceLocator::GetAudio()->PlaySong("music/bond_theme.ogg", true);
 
     pugi::xml_document doc;
     doc.load_file(config.c_str());

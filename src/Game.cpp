@@ -26,7 +26,7 @@ void Game::Start(void) {
     SFMLSoundProvider soundProvider;
     ServiceLocator::RegisterServiceLocator(&soundProvider);
 
-    ServiceLocator::GetAudio()->PlaySong("music/bond_theme.ogg", true);
+    ServiceLocator::GetAudio()->PlaySong("music/Rambo_Theme.ogg", true);
 
     while (!IsExiting()) {
         GameLoop();

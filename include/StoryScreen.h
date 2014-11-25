@@ -10,9 +10,7 @@
 
 #pragma once
 #include "stdafx.h"
-#include "SplashScreen.h"
 
-#pragma once
 class StoryScreen
 {
 public:
