@@ -50,8 +50,10 @@ void Level::loadSpecifiedLevel(std::string fileName, int backgroundVal) {
                 std::cout << "Got a co" << std::endl;
                 co = c;
                 std::cout << "Saved a co" << std::endl;
-                tileExitList.push_back(x % tilesPerRow + ((x / tilesPerRow) * tilesPerRow));
-                tileExitList.push_back(x % tilesPerRow + ((x / tilesPerRow) * tilesPerRow) + 100);
+                int exitTilePos = ((((int) c->GetPosition().x)) / tileWidth) + 
+                ((((int) c->GetPosition().y) / tileHeight) * tilesPerRow);
+                tileExitList.push_back(exitTilePos);
+                tileExitList.push_back(exitTilePos + 100);
                 std::cout << "Set exit tiles" << std::endl;
             } else if (isEnemy(tileCode, firstIDs)) {
                 Enemy* e = buildAnEnemy(enemySheet,

@@ -210,7 +210,7 @@ void Jaw::straightShoot()
 void Jaw::rightRun()
 {
     animReq("run", false);
-    vx = 6;
+    vx = 7;
     GetSprite().setScale(-1, 1);
 }
 
@@ -241,7 +241,7 @@ void Jaw::die()
 void Jaw::leftRun()
 {
     animReq("run", false);
-    vx = -6;
+    vx = -7;
     GetSprite().setScale(1,1);
 }
 void Jaw::setBoundary(float left, float up, float right, float lower) {
