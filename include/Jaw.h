@@ -9,9 +9,17 @@
 class Jaw:public Actor{
 public:
     Jaw(std::string config, std::string texture);
+    Jaw(std::string config, sf::Texture& t);
     void attack(Actor& actor);
     void die();
     void setBondLocation(sf::Vector2f bondLoc);
+    void Update(float elapsedTime);
+    void setBoundary(float left, float up, float right, float lower);
+    bool lowCollide();
+    
+private:
+    sf::Vector2i lowerright, upperleft;
 };
+
 
 #endif

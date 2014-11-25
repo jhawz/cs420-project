@@ -1,11 +1,13 @@
 #include "Level.h"
 void Level::loadLevel(int levelVal) {
     loadSpecifiedLevel("data/Level" + std::to_string(levelVal) + ".txt");
+    std::cout << "Loading level: " << levelVal << std::endl;
 }
 void Level::loadSpecifiedLevel(std::string fileName) {
     MapLoader* m = new MapLoader();
     m->loadMap(fileName);
     setBackGround(m->getBackground(1));
+    std::cout << "Beginning to load level" << std::endl;
     levelTiles.loadFromFile("textures/TiledEight32New.png");
     enemySheet.loadFromFile("textures/enemy.png");
     bondSheet.loadFromFile("textures/JB.png");
@@ -29,7 +31,14 @@ void Level::loadSpecifiedLevel(std::string fileName) {
                 tileExitList.push_back(x % tilesPerRow + ((x / tilesPerRow) *
                         tilesPerRow));
             }
-            } 
+            }
+            else if (tileCode == 286) //have to forgive the constant, = Jaws
+            {
+                std::cout << "Starting Jaws build" << std::endl;
+                Jaw* j = buildAJaw(enemySheet, tileCode - firstIDs[1], x);
+                jaw = j;
+                std::cout << "built jaws" << std::endl;
+            }
             else if (isEnemy(tileCode, firstIDs))
             {
                   Enemy* e = buildAnEnemy(enemySheet, 
@@ -165,6 +174,18 @@ Powerup* Level::buildAPowerup(sf::Texture& sheet, int positionInFrames,
     return p;
 }
 
+Jaw* Level::buildAJaw(sf::Texture& sheet, int positionInFrames,
+        int mapPositionInFrames)
+{
+    std::cout << "building jaws" << std::endl;
+    Jaw* j = new Jaw("actors.xml", sheet);
+    std::cout << "in buildAJaw: Jaw built" << std::endl;
+    j->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
+            ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
+    
+    return j;
+}
+
 VisibleGameObject* Level::getBackground() {
     return backGround;
 }
@@ -212,4 +233,9 @@ bool Level::isExitTile(int mapPositionInFrames)
             return true;
         }
         return false;
+}
+
+Jaw* Level::getJaws()
+{
+    return jaw;
 }

@@ -3,6 +3,7 @@
 #include "SFML/Graphics.hpp"
 #include "GameObjectManager.h"
 #include "Hud.h"
+#include "Jaw.h"
 
 class Game {
 public:

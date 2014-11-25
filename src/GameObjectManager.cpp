@@ -233,20 +233,27 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
     } else {
         newTop = 0;
     }
-    if (obj->type == 1) {
+    if (obj->type == VisibleGameObject::BOND) {
         static_cast<Bond*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
         if (obj->GetPosition().y >= 600) {
 
             static_cast<Bond*> (obj)->die();
         }
-    } else if (obj->type == 2) {
+    } else if (obj->type == VisibleGameObject::ENEMY) {
         static_cast<Enemy*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
         if (obj->GetPosition().y >= 600) {
             static_cast<Enemy*> (obj)->die();
         }
-    } else if (obj->type == 4) {
+
+    }else if (obj->type == VisibleGameObject::JAWS)
+        {
+            static_cast<Jaw*> (obj)->setBoundary(newLeft,
+                newTop, newRight, newBottom);
+            std::cout << "Fixing jaws boundary" << std::endl;
+       
+    }  else if (obj->type == VisibleGameObject::BULLET) {
         sf::Vector2i curBoundary = static_cast<Bullet*> (obj)->getBoundary();
         if (curBoundary.x > newLeft) {
             newLeft = curBoundary.x;
@@ -369,4 +376,9 @@ void GameObjectManager::increLevel() {
 
 void GameObjectManager::setExitList(std::vector<int> v) {
     exitList = v;
+}
+
+void GameObjectManager::resetLevelToOne()
+{
+    currentLevel = 20;
 }

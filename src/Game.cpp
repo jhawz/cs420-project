@@ -176,6 +176,9 @@ void Game::ShowMenu() {
             gameState = ShowingStory;
             break;
     }
+    std::cout << "Resetting level..." << std::endl;
+    gameObjectManager.resetLevelToOne();
+    std::cout << "Level Reset" << std::endl;
 }
 
 void Game::ShowStoryScreen() {
@@ -232,6 +235,13 @@ void Game::LoadLevel() {
     
     gameObjectManager.setExitList(exitPos);
 
+    if (gameObjectManager.getLevelCode() == 20)
+    {
+        Jaw* j = l->getJaws();
+        gameObjectManager.j = j;
+        gameObjectManager.Add("Jaws", j);
+    }
+    
     Bond* b = l->getBond();
     gameObjectManager.b = b;
     gameObjectManager.Add("Bond", b);

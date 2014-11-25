@@ -2,6 +2,7 @@
 #include "VisibleGameObject.h"
 #include "Level.h"
 #include "Bond.h"
+#include "Jaw.h"
 
 
 class GameObjectManager
@@ -24,6 +25,7 @@ public:
         int getLevelCode();
         void setCurLevel(Level* l);
         Bond* b;
+        Jaw* j;
         int const tileWidth = 32;
         int const tileHeight = 32;
         int const tilesPerRow = 100;
@@ -36,6 +38,7 @@ public:
         void martiniCollisions(VisibleGameObject* obj1, VisibleGameObject* obj2);
         void bondCollisions(VisibleGameObject* obj);
         void bulletCollisions(VisibleGameObject* obj1, VisibleGameObject* obj2);
+        void resetLevelToOne();
 private:
 	std::map<std::string, VisibleGameObject*> gameObjects;
         std::vector<int> collisionsList;
