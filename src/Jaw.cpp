@@ -22,7 +22,7 @@ Jaw::Jaw(std::string config, std::string texture):Actor::Actor(){
     }
     setOriginalImg(*img);
     type = VisibleGameObject::JAWS;
-    
+    alive = true;
     lives=12;
     
 }
@@ -46,7 +46,7 @@ Jaw::Jaw(std::string config, sf::Texture& t):Actor::Actor()
     Load(t, sf::Vector2i(0,0), sf::Vector2i(32, 64));
 
     type = VisibleGameObject::JAWS;
-    
+    alive = true;
     lives=12;
 }
 
@@ -59,27 +59,33 @@ void Jaw::attack(Actor& actor){
 void Jaw::Update(float elapsedTime) {
     Actor::Update(elapsedTime);
 
-    if (!lowCollide()) {
-        if (ay == 0)
-            ay = 2;
-    } else if (lowCollide()) {
-        // jumping = false;
-        ay = 0;
-        vy = 0;
-        SetPosition(GetPosition().x, lowerright.y - 64);
+        SetPosition(GetPosition().x, 480);
         standStill();
-    } if (rightpressed) {
+     if (rightpressed) {
             rightRun();
         } else if (leftpressed) {
             leftRun();
         } else if (isCurAnim("run")) {
             standStill();
         }
+   // checkForBond();
+    if (hasSeenBond)
+    {
+        SetPosition(bondLoc.x + 32, bondLoc.y);
+        std::cout << "Jaws Location: " << GetPosition().x << "," << GetPosition().y << std::endl;
+    }
     //establish movement
 //     if (isAlive())
 //        {
 //        patrol();
 //        }   
+}
+
+void Jaw::checkForBond(){
+    if (GetPosition().x - bondLoc.x >= -400 && GetPosition().x - bondLoc.x <= 400)
+    {
+        hasSeenBond = true;
+    }
 }
 
 void Jaw::die()
@@ -91,7 +97,7 @@ void Jaw::die()
     }
     else
     {
-      //  animReq("hurt", false);
+        animReq("hurt", false);
     }
 }
 
@@ -101,9 +107,10 @@ void Jaw::setBoundary(float left, float up, float right, float lower)
     upperleft = sf::Vector2i(left, up);
 }
 
-void Jaw::setBondLocation(sf::Vector2f)
+void Jaw::setBondLocation(sf::Vector2f loc)
 {
-    
+    //bondLoc = sf::Vector2i(loc.x, loc.y);
+    //std::cout << "bond location is: " << bondLoc.x << "," << bondLoc.y << std::endl;
 }
 
 bool Jaw::lowCollide() {

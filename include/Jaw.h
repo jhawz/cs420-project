@@ -16,9 +16,14 @@ public:
     void Update(float elapsedTime);
     void setBoundary(float left, float up, float right, float lower);
     bool lowCollide();
+    void checkForBond();
     
 private:
     sf::Vector2i lowerright, upperleft;
+    bool hasSeenBond = false;
+    sf::Vector2i bondLoc;
+    bool rightpressed = false;
+    bool leftpressed = false;
 };
 
 

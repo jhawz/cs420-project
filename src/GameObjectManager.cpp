@@ -251,8 +251,6 @@ void GameObjectManager::checkForTileCollision(VisibleGameObject* obj) {
         {
             static_cast<Jaw*> (obj)->setBoundary(newLeft,
                 newTop, newRight, newBottom);
-            std::cout << "Fixing jaws boundary" << std::endl;
-       
     }  else if (obj->type == VisibleGameObject::BULLET) {
         sf::Vector2i curBoundary = static_cast<Bullet*> (obj)->getBoundary();
         if (curBoundary.x > newLeft) {
