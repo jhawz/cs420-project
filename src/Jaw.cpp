@@ -183,16 +183,34 @@ void Jaw::straightShoot()
 {
         if ((shotClock.getElapsedTime().asSeconds() >= attackRate) 
                 && isAlive() && bondInRange()){
+            leftpressed = false;
+            rightpressed = false;
+            vx = 0;
             Actor::attack();
             shotClock.restart();
             grabbedBond = true;
+           // standStill();
+        }
+        else if ((shotClock.getElapsedTime().asSeconds() >= attackRate) &&
+                isAlive())
+        {
+            if (bondLoc.x > GetPosition().x && !rightpressed )
+            {
+                leftpressed = false;
+                rightpressed = true;
+            }
+            else if (bondLoc.x < GetPosition().x && vx != -6)
+            {
+                leftpressed = true;
+                rightpressed = false;
+            }
         }
 
 }
 void Jaw::rightRun()
 {
     animReq("run", false);
-    vx = 8;
+    vx = 6;
     GetSprite().setScale(-1, 1);
 }
 
@@ -208,7 +226,14 @@ void Jaw::die()
         Actor::die();
         vy = 0;
         vx = 0;
+        rightpressed = false;
+        leftpressed = false;
         animReq("die", false);
+        alive = false;
+    }
+    else
+    {
+        animReq("hurt", false);
     }
 }
 
@@ -216,7 +241,7 @@ void Jaw::die()
 void Jaw::leftRun()
 {
     animReq("run", false);
-    vx = -8;
+    vx = -6;
     GetSprite().setScale(1,1);
 }
 void Jaw::setBoundary(float left, float up, float right, float lower) {

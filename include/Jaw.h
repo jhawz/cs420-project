@@ -40,7 +40,7 @@ public:
     float attackRate;
     void die();
     bool bondInRange();
-    bool grabbedBond;
+    bool grabbedBond = false;
     private:
             sf::Vector2f upperleft,lowerright;
             sf::Vector2f origPos;

@@ -46,13 +46,18 @@ public:
         powerupList.clear();
         
         delete bond;
+        
+        if (jaw)
+        {
+            delete jaw;
+        }
     }
     void setBackGround(VisibleGameObject* backGround);
     VisibleGameObject* getBackground();
     std::string getLevelString();
     bool setLevelString(std::string levelString);
     void loadLevel(int levelVal);
-    void loadSpecifiedLevel(std::string file);
+    void loadSpecifiedLevel(std::string file, int backgroundVal);
     std::vector<std::string> getTileCodes();
     std::vector<int> getTileColList();
     std::vector<Tile*>& getTileList();

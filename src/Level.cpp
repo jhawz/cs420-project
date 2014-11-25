@@ -1,12 +1,11 @@
 #include "Level.h"
 void Level::loadLevel(int levelVal) {
-    loadSpecifiedLevel("data/Level" + std::to_string(levelVal) + ".txt");
-    std::cout << "Loading level: " << levelVal << std::endl;
+    loadSpecifiedLevel("data/Level" + std::to_string(levelVal) + ".txt", (levelVal / 5) + 1);
 }
-void Level::loadSpecifiedLevel(std::string fileName) {
+void Level::loadSpecifiedLevel(std::string fileName, int backgroundVal) {
     MapLoader* m = new MapLoader();
     m->loadMap(fileName);
-    setBackGround(m->getBackground(1));
+    setBackGround(m->getBackground(backgroundVal));
     std::cout << "Beginning to load level" << std::endl;
     levelTiles.loadFromFile("textures/TiledEight32New.png");
     enemySheet.loadFromFile("textures/enemy.png");

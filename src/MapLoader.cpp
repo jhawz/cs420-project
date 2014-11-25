@@ -49,22 +49,19 @@ VisibleGameObject* MapLoader::getBackground(int worldCode)
     switch (worldCode)
     {
         case 1:
-            bg->Load("textures/BackgroundOne_1.png");
+            bg->Load("textures/Background1.png");
             break;
         case 2:
-            bg->Load("textures/BackgroundOne_1.png");
+            bg->Load("textures/Background2.png");
             break;
         case 3:
-            bg->Load("textures/BackgroundOne_1.png");
+            bg->Load("textures/Background3.png");
             break;
         case 4:
-            bg->Load("textures/BackgroundOne_1.png");
-            break;
-        case 5:
-            bg->Load("textures/BackgroundOne_1.png");
+            bg->Load("textures/Background4.png");
             break;
         default:
-            break;
+            bg->Load("textures/Background4.png");
             
     }
     bg->SetPosition(0, 0);
