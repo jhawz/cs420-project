@@ -182,7 +182,8 @@ Jaw* Level::buildAJaw(sf::Texture& sheet, int positionInFrames,
     std::cout << "in buildAJaw: Jaw built" << std::endl;
     j->SetPosition((mapPositionInFrames % tilesPerRow) * tileWidth,
             ((mapPositionInFrames / tilesPerRow) * tileHeight) - tileHeight);
-    
+    j->setBoundary(0, 0, 700, 3200);
+    j->setOrigPos(sf::Vector2f(j->GetPosition().x, j->GetPosition().y));
     return j;
 }
 

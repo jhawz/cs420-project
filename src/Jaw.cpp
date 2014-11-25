@@ -1,91 +1,194 @@
 #include "Jaw.h"
 
-Jaw::Jaw(std::string config, std::string texture):Actor::Actor(){
-    objectType="Jaw";
+Jaw::Jaw(std::string config, std::string texture) : Actor::Actor() {
     pugi::xml_document doc;
     doc.load_file(config.c_str());
-    
-    pugi::xml_node jawnode = doc.child("root").find_child_by_attribute("Actor", "name", "Jaw");
-    
-    if (jawnode.empty()) {
+
+    pugi::xml_node enemynode = doc.child("root").find_child_by_attribute("Actor"
+            , "name", "Jaw");
+
+    if (enemynode.empty()) {
         //if there is an error in node initialization
-        std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-    //  std::cout << "start preparing frames" << std::endl;
-    prepareFrameInfo(jawnode);
-    // std::cout << "Finish preparing frames" << std::endl;
+    prepareFrameInfo(enemynode);
     Load(texture);
     sf::Image *img = new sf::Image();
     if (!img->loadFromFile(texture)) {
         return;
     }
     setOriginalImg(*img);
-    type = VisibleGameObject::JAWS;
     alive = true;
-    lives=12;
-    
+    type = VisibleGameObject::JAWS;
+    GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 0);
+    attackRate = 4.0;
+    rightpressed = true;
+    lives = 12;
 }
-
-Jaw::Jaw(std::string config, sf::Texture& t):Actor::Actor()
-{
-        objectType="Jaw";
+Jaw::Jaw(std::string config, sf::Texture& t) : Actor::Actor() {
     pugi::xml_document doc;
     doc.load_file(config.c_str());
     
-    pugi::xml_node jawnode = doc.child("root").find_child_by_attribute("Actor", "name", "Jaw");
+    pugi::xml_node enemynode = doc.child("root").find_child_by_attribute("Actor"
+            ,"name", "Jaw");
     
-    if (jawnode.empty()) {
+    if (enemynode.empty()) {
         //if there is an error in node initialization
-        std::cout << "Can't find Bond actor node..." << std::endl;
         return;
     }
-    //  std::cout << "start preparing frames" << std::endl;
-    prepareFrameInfo(jawnode);
-    // std::cout << "Finish preparing frames" << std::endl;
-    Load(t, sf::Vector2i(0,0), sf::Vector2i(32, 64));
-
-    type = VisibleGameObject::JAWS;
+    prepareFrameInfo(enemynode);
+    Load(t, sf::Vector2i(0, 0), sf::Vector2i(32, 64));
+    sf::Image *img = new sf::Image();
     alive = true;
-    lives=12;
+    type = VisibleGameObject::JAWS;
+    rightpressed = true;
+    GetSprite().setOrigin(GetSprite().getGlobalBounds().width / 2, 0);
+    attackRate = 4.0;
+    lives = 12;
 }
-
-void Jaw::attack(Actor& actor){
-    if (actor.type==VisibleGameObject::BOND &&closeContact(actor)) {
-        Actor::attack();
+void Jaw::leftwalk() {
+    if (!alive)return;
+    if (!rightdir) {
+        rightdir = true;
+     //   GetSprite().setScale(-1, 1);
     }
+    animReq("walk", false);
+    vx = -2;
+    vy = 0;
+    ax = 0;
+    ay = 0;
 }
-
+void Jaw::rightwalk() {
+    if (!alive)return;
+    if (rightdir) {
+        rightdir = false;
+   //     GetSprite().setScale(1, 1);
+    }
+    animReq("walk", false);
+    vx = 2;
+    vy = 0;
+    ax = 0;
+    ay = 0;
+}
 void Jaw::Update(float elapsedTime) {
     Actor::Update(elapsedTime);
 
-        SetPosition(GetPosition().x, 480);
-        standStill();
-     if (rightpressed) {
+   // std::cout << "Jaws' boundaries = (from Update()) " << upperleft.x<< "," <<
+   //         upperleft.y<< "," << lowerright.x << "," << lowerright.y << std::endl;
+ //   SetPosition(GetPosition().x, 480);
+    if (!lowCollide()) {
+        if (ay == 0)
+            ay = 2;
+    } else if (lowCollide()) {
+        // jumping = false;
+        ay = 0;
+        vy = 0;
+        SetPosition(GetPosition().x, lowerright.y - 64);
+        //standStill();
+    } if (rightpressed) {
             rightRun();
         } else if (leftpressed) {
             leftRun();
         } else if (isCurAnim("run")) {
             standStill();
         }
-   // checkForBond();
-    if (hasSeenBond)
+   // establish movement
+     if (isAlive())
+        {
+        patrol();
+        }   
+}
+void Jaw::patrol(){
+    
+    if (isAttacking)
     {
-        SetPosition(bondLoc.x + 32, bondLoc.y);
-        std::cout << "Jaws Location: " << GetPosition().x << "," << GetPosition().y << std::endl;
+        if (bondLoc.x < GetPosition().x)
+        {
+            if (!attackingLeft)
+            {
+                GetSprite().setScale(1, 1);
+                standStill();
+                setFacingLeft();
+                attackingLeft = true;
+                attackingRight = false;
+                rightpressed = false;
+                leftpressed = false;
+            }
+        }
+        else if (bondLoc.x > GetPosition().x)
+        {
+            if (!attackingRight)
+            {
+                GetSprite().setScale(-1, 1);
+                standStill();
+                setFacingRight();
+                attackingRight = true;
+                attackingLeft = false;
+                rightpressed = false;
+                leftpressed = false;
+            }
+        }
+        straightShoot();
     }
-    //establish movement
-//     if (isAlive())
-//        {
-//        patrol();
-//        }   
+    else if (leftCollide() || GetPosition().x < origPos.x - 150)
+    {
+        rightpressed = true;
+        leftpressed = false;
+    }
+    else if (rightCollide() || GetPosition().x > origPos.x + 150)
+    {
+        leftpressed = true;
+        rightpressed = false;
+    }
+    
+    if (attackCheck())
+    {
+        isAttacking = true;
+    }
+    else
+    {
+        isAttacking = false;
+    }
+}
+bool Jaw::attackCheck()
+{
+    //Ensure that bond is in range...
+    if (bondLoc.x - GetPosition().x < 200 
+            && bondLoc.x - GetPosition().x > -200
+            && bondLoc.y - GetPosition().y < 64
+            && bondLoc.y - GetPosition().y > -64)
+    {
+        //Dumb down difficulty a bit. Enemies only shoot if they see Bond!
+        if (GetSprite().getScale().x == 1 && GetPosition().x > bondLoc.x)
+        {
+            return true;
+        }
+        else if (GetSprite().getScale().x == -1 && GetPosition().x < bondLoc.x)
+        {
+            return true;
+        }
+        else
+            return false;
+    }
+}
+void Jaw::straightShoot()
+{
+        if ((shotClock.getElapsedTime().asSeconds() >= attackRate) 
+                && isAlive()){
+            setFiring(true);
+            Actor::attack();
+            shotClock.restart();
+        }
+}
+void Jaw::rightRun()
+{
+    animReq("run", false);
+    vx = 8;
+    GetSprite().setScale(-1, 1);
 }
 
-void Jaw::checkForBond(){
-    if (GetPosition().x - bondLoc.x >= -400 && GetPosition().x - bondLoc.x <= 400)
-    {
-        hasSeenBond = true;
-    }
+bool Jaw::isAlive(){
+    return alive;
 }
 
 void Jaw::die()
@@ -95,24 +198,36 @@ void Jaw::die()
     {
         Actor::die();
     }
-    else
-    {
-        animReq("hurt", false);
-    }
 }
 
-void Jaw::setBoundary(float left, float up, float right, float lower)
+
+void Jaw::leftRun()
 {
-    lowerright = sf::Vector2i(right, lower);
-    upperleft = sf::Vector2i(left, up);
+    animReq("run", false);
+    vx = -8;
+    GetSprite().setScale(1,1);
 }
-
-void Jaw::setBondLocation(sf::Vector2f loc)
-{
-    //bondLoc = sf::Vector2i(loc.x, loc.y);
-    //std::cout << "bond location is: " << bondLoc.x << "," << bondLoc.y << std::endl;
+void Jaw::setBoundary(float left, float up, float right, float lower) {
+    upperleft = sf::Vector2f(left, up);
+    lowerright = sf::Vector2f(right, lower);
 }
-
 bool Jaw::lowCollide() {
     return GetPosition().y + 64 >= lowerright.y;
+}
+bool Jaw::rightCollide() {
+    return GetPosition().x + 32 >= lowerright.x;
+}
+
+bool Jaw::leftCollide() {
+    return GetPosition().x <= upperleft.x;
+}
+void Jaw::setOrigPos(sf::Vector2f loc)
+{
+    origPos = loc;
+}
+sf::Vector2f Jaw::getBondLocation(){
+    return bondLoc;
+}
+void Jaw::setBondLocation(sf::Vector2f bL){
+    bondLoc = bL;
 }

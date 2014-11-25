@@ -3,7 +3,7 @@
 
 Animation::Animation(){
     curFrame=0;
-    period=sf::milliseconds(1000);
+    period=sf::milliseconds(100);
     frameCount=0;
     clock.restart();
 }
